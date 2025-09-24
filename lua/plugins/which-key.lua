@@ -14,20 +14,20 @@ return {
 
 		-- Leader keymaps
 		wk.add({
-
-			-- LSP direct mappings
-			{ "gd", desc = "Go to definition (fzf)" },
-			{ "gr", desc = "Go to references (fzf)" },
-			{ "gi", desc = "Go to implementation (fzf)" },
-			{ "gy", desc = "Go to type definition (fzf)" },
-			{ "gD", desc = "Go to declaration (fzf)" },
-			{ "ga", desc = "Code actions (fzf)" },
-			{ "gS", desc = "Document symbols (fzf)" },
-			{ "gW", desc = "Workspace symbols (fzf)" },
-			{ "gs", desc = "Signature help" },
-			{ "ge", desc = "Show line diagnostics" },
-			{ "rn", desc = "Rename symbol" },
-			{ "K", desc = "Hover documentation" },
+			-- LSP keymaps (using default Neovim pattern)
+			{ "gd", desc = "Go to Definition (fzf)" },
+			{ "gD", desc = "Go to Declaration (fzf)" },
+			{ "gr", group = "LSP References/Actions", icon = " " },
+			{ "grr", desc = "References (fzf)" },
+			{ "gra", desc = "Code Actions (fzf)" },
+			{ "grn", desc = "Rename Symbol" },
+			{ "gri", desc = "Implementations (fzf)" },
+			{ "grt", desc = "Type Definitions (fzf)" },
+			{ "gS", desc = "Document Symbols (fzf)" },
+			{ "gW", desc = "Workspace Symbols (fzf)" },
+			{ "gs", desc = "Signature Help" },
+			{ "ge", desc = "Show Diagnostics" },
+			{ "K", desc = "Hover Documentation" },
 
 			-- Swap/Rearrange operations (Treesitter)
 			{ "<leader>s", group = "Swap" },

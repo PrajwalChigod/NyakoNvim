@@ -9,43 +9,56 @@ return {
 			-- Direct LSP configuration without mason-lspconfig
 			-- Mason only provides the LSP binaries, we configure them manually
 
-			-- LSP keymaps using modern vim.keymap.set
+			-- LSP keymaps using default Neovim pattern but with fzf-lua
 			local function setup_lsp_keymaps(bufnr)
 				local opts = { buffer = bufnr, silent = true }
 
-				-- Direct mappings for go-to operations (always use fzf)
-				vim.keymap.set("n", "gd", function()
-					require("fzf-lua").lsp_definitions({ jump1 = false })
-				end, opts)
-				vim.keymap.set("n", "gr", function()
+				-- Override default LSP keymaps to use fzf-lua
+				vim.keymap.set("n", "grr", function()
 					require("fzf-lua").lsp_references({ jump1 = false })
-				end, opts)
-				vim.keymap.set("n", "gi", function()
+				end, vim.tbl_extend("force", opts, { desc = "LSP References (fzf)" }))
+
+				vim.keymap.set("n", "gra", function()
+					require("fzf-lua").lsp_code_actions()
+				end, vim.tbl_extend("force", opts, { desc = "LSP Code Actions (fzf)" }))
+
+				vim.keymap.set("n", "grn", vim.lsp.buf.rename,
+					vim.tbl_extend("force", opts, { desc = "LSP Rename" }))
+
+				vim.keymap.set("n", "gri", function()
 					require("fzf-lua").lsp_implementations({ jump1 = false })
-				end, opts)
-				vim.keymap.set("n", "gy", function()
+				end, vim.tbl_extend("force", opts, { desc = "LSP Implementations (fzf)" }))
+
+				vim.keymap.set("n", "grt", function()
 					require("fzf-lua").lsp_typedefs({ jump1 = false })
-				end, opts)
+				end, vim.tbl_extend("force", opts, { desc = "LSP Type Definitions (fzf)" }))
+
+				-- Additional useful LSP keymaps
+				vim.keymap.set("n", "gd", function()
+					require("fzf-lua").lsp_definitions()
+				end, vim.tbl_extend("force", opts, { desc = "LSP Definitions (fzf)" }))
+
 				vim.keymap.set("n", "gD", function()
 					require("fzf-lua").lsp_declarations({ jump1 = false })
-				end, opts)
+				end, vim.tbl_extend("force", opts, { desc = "LSP Declarations (fzf)" }))
 
-				-- Other LSP actions with leader prefix
-				vim.keymap.set("n", "ga", function()
-					require("fzf-lua").lsp_code_actions()
-				end, opts)
-				vim.keymap.set("n", "gW", function()
-					require("fzf-lua").lsp_workspace_symbols()
-				end, opts)
-
-				-- Built-in LSP functions
-				vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-				vim.keymap.set("n", "gs", vim.lsp.buf.signature_help, opts)
 				vim.keymap.set("n", "gS", function()
 					require("fzf-lua").lsp_document_symbols()
-				end, opts)
-				vim.keymap.set("n", "rn", vim.lsp.buf.rename, opts)
-				vim.keymap.set("n", "ge", vim.diagnostic.open_float, opts)
+				end, vim.tbl_extend("force", opts, { desc = "LSP Document Symbols (fzf)" }))
+
+				vim.keymap.set("n", "gW", function()
+					require("fzf-lua").lsp_workspace_symbols()
+				end, vim.tbl_extend("force", opts, { desc = "LSP Workspace Symbols (fzf)" }))
+
+				-- Built-in LSP functions
+				vim.keymap.set("n", "K", vim.lsp.buf.hover,
+					vim.tbl_extend("force", opts, { desc = "LSP Hover" }))
+				vim.keymap.set("n", "gs", vim.lsp.buf.signature_help,
+					vim.tbl_extend("force", opts, { desc = "LSP Signature Help" }))
+
+				-- Diagnostics (keeping ge for quick access)
+				vim.keymap.set("n", "ge", vim.diagnostic.open_float,
+					vim.tbl_extend("force", opts, { desc = "Show Diagnostics" }))
 			end
 
 			-- On attach function
