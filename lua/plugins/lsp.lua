@@ -22,8 +22,7 @@ return {
 					require("fzf-lua").lsp_code_actions()
 				end, vim.tbl_extend("force", opts, { desc = "LSP Code Actions (fzf)" }))
 
-				vim.keymap.set("n", "grn", vim.lsp.buf.rename,
-					vim.tbl_extend("force", opts, { desc = "LSP Rename" }))
+				vim.keymap.set("n", "grn", vim.lsp.buf.rename, vim.tbl_extend("force", opts, { desc = "LSP Rename" }))
 
 				vim.keymap.set("n", "gri", function()
 					require("fzf-lua").lsp_implementations({ jump1 = false })
@@ -51,14 +50,21 @@ return {
 				end, vim.tbl_extend("force", opts, { desc = "LSP Workspace Symbols (fzf)" }))
 
 				-- Built-in LSP functions
-				vim.keymap.set("n", "K", vim.lsp.buf.hover,
-					vim.tbl_extend("force", opts, { desc = "LSP Hover" }))
-				vim.keymap.set("n", "gs", vim.lsp.buf.signature_help,
-					vim.tbl_extend("force", opts, { desc = "LSP Signature Help" }))
+				vim.keymap.set("n", "K", vim.lsp.buf.hover, vim.tbl_extend("force", opts, { desc = "LSP Hover" }))
+				vim.keymap.set(
+					"n",
+					"gs",
+					vim.lsp.buf.signature_help,
+					vim.tbl_extend("force", opts, { desc = "LSP Signature Help" })
+				)
 
 				-- Diagnostics (keeping ge for quick access)
-				vim.keymap.set("n", "ge", vim.diagnostic.open_float,
-					vim.tbl_extend("force", opts, { desc = "Show Diagnostics" }))
+				vim.keymap.set(
+					"n",
+					"ge",
+					vim.diagnostic.open_float,
+					vim.tbl_extend("force", opts, { desc = "Show Diagnostics" })
+				)
 			end
 
 			-- On attach function
@@ -97,7 +103,16 @@ return {
 								autoSearchPaths = true,
 								useLibraryCodeForTypes = true,
 								autoImportCompletions = true,
-								diagnosticMode = "openFilesOnly",
+								diagnosticMode = "workspace",
+								reportMissingImports = true,
+								reportUnusedImport = true,
+								reportUnusedVariable = { "all" },
+								reportUndefinedVariable = true,
+								reportOptionalMemberAccess = true,
+								reportOptionalSubscript = true,
+								reportOptionalIterable = true,
+								reportPrivateImportUsage = true,
+								reportIncompatibleMethodOverride = true,
 							},
 						},
 					},
@@ -202,14 +217,104 @@ return {
 				},
 			}
 
-			-- Setup LSP servers
-			local lspconfig = require("lspconfig")
-			for server, config in pairs(servers) do
-				config.on_attach = on_attach
-				config.capabilities = capabilities
-				lspconfig[server].setup(config)
-			end
+			-- Setup LSP servers using new vim.lsp.config API
+
+			-- Lua Language Server
+			vim.lsp.config.lua_ls = {
+				cmd = { "lua-language-server" },
+				filetypes = { "lua" },
+				root_markers = { { ".luarc.json", ".luarc.jsonc" }, ".git" },
+				on_attach = on_attach,
+				capabilities = capabilities,
+				settings = servers.lua_ls.settings,
+			}
+
+			-- Python (basedpyright)
+			vim.lsp.config.basedpyright = {
+				cmd = { "basedpyright-langserver", "--stdio" },
+				filetypes = { "python" },
+				root_markers = { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", "Pipfile", ".git" },
+				on_attach = on_attach,
+				capabilities = capabilities,
+				settings = servers.basedpyright.settings,
+			}
+
+			-- TypeScript/JavaScript
+			vim.lsp.config.ts_ls = {
+				cmd = { "typescript-language-server", "--stdio" },
+				filetypes = { "javascript", "typescript", "javascriptreact", "typescriptreact" },
+				root_markers = { "tsconfig.json", "package.json", ".git" },
+				on_attach = on_attach,
+				capabilities = capabilities,
+				settings = servers.ts_ls.settings,
+			}
+
+			-- Rust
+			vim.lsp.config.rust_analyzer = {
+				cmd = { "rust-analyzer" },
+				filetypes = { "rust" },
+				root_markers = { "Cargo.toml", ".git" },
+				on_attach = on_attach,
+				capabilities = capabilities,
+				settings = servers.rust_analyzer.settings,
+			}
+
+			-- C/C++
+			vim.lsp.config.clangd = {
+				cmd = servers.clangd.cmd,
+				filetypes = { "c", "cpp", "objc", "objcpp", "cuda", "proto" },
+				root_markers = {
+					".clangd",
+					".clang-tidy",
+					".clang-format",
+					"compile_commands.json",
+					"compile_flags.txt",
+					"configure.ac",
+					".git",
+				},
+				on_attach = on_attach,
+				capabilities = capabilities,
+				init_options = servers.clangd.init_options,
+			}
+
+			-- Zig
+			vim.lsp.config.zls = {
+				cmd = { "zls" },
+				filetypes = { "zig" },
+				root_markers = { "build.zig", ".git" },
+				on_attach = on_attach,
+				capabilities = capabilities,
+			}
+
+			-- Bash
+			vim.lsp.config.bashls = {
+				cmd = { "bash-language-server", "start" },
+				filetypes = { "sh", "bash" },
+				root_markers = { ".git" },
+				on_attach = on_attach,
+				capabilities = capabilities,
+				settings = servers.bashls.settings,
+			}
+
+			-- TOML
+			vim.lsp.config.taplo = {
+				cmd = { "taplo", "lsp", "stdio" },
+				filetypes = { "toml" },
+				root_markers = { ".git" },
+				on_attach = on_attach,
+				capabilities = capabilities,
+				settings = servers.taplo.settings,
+			}
+
+			-- Enable all LSP servers
+			vim.lsp.enable("lua_ls")
+			vim.lsp.enable("basedpyright")
+			vim.lsp.enable("ts_ls")
+			vim.lsp.enable("rust_analyzer")
+			vim.lsp.enable("clangd")
+			vim.lsp.enable("zls")
+			vim.lsp.enable("bashls")
+			vim.lsp.enable("taplo")
 		end,
 	},
 }
-
