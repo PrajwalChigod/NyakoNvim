@@ -55,9 +55,9 @@ return {
 		{
 			"<leader>fs",
 			function()
-				require("fzf-lua").grep_string()
+				require("fzf-lua").grep_curbuf()
 			end,
-			desc = "Grep string",
+			desc = "Grep current buffer",
 		},
 		{
 			"<leader>fh",

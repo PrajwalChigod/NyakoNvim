@@ -16,7 +16,7 @@ vim.g.loaded_python_provider = 0
 opt.ignorecase = true
 opt.smartcase = true
 opt.hlsearch = true
-opt.incsearch = true
+opt.incsearch = false
 
 -- Indentation
 opt.tabstop = 4
