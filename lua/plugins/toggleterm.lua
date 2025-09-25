@@ -37,11 +37,41 @@ return {
 			},
 		})
 
+		-- Horizontal terminal
+		local horizontal_term = Terminal:new({
+			direction = "horizontal",
+		})
+
+		-- Vertical terminal
+		local vertical_term = Terminal:new({
+			direction = "vertical",
+		})
+
+		-- Tab terminal
+		local tab_term = Terminal:new({
+			direction = "tab",
+		})
+
 		function _FLOAT_TOGGLE()
 			float_term:toggle()
 		end
 
+		function _HORIZONTAL_TOGGLE()
+			horizontal_term:toggle()
+		end
+
+		function _VERTICAL_TOGGLE()
+			vertical_term:toggle()
+		end
+
+		function _TAB_TOGGLE()
+			tab_term:toggle()
+		end
+
 		vim.keymap.set("n", "<localleader>tf", "<cmd>lua _FLOAT_TOGGLE()<CR>", { desc = "Toggle floating terminal" })
+		vim.keymap.set("n", "<localleader>th", "<cmd>lua _HORIZONTAL_TOGGLE()<CR>", { desc = "Toggle horizontal terminal" })
+		vim.keymap.set("n", "<localleader>tv", "<cmd>lua _VERTICAL_TOGGLE()<CR>", { desc = "Toggle vertical terminal" })
+		vim.keymap.set("n", "<localleader>tt", "<cmd>lua _TAB_TOGGLE()<CR>", { desc = "Toggle tab terminal" })
 	end,
 }
 

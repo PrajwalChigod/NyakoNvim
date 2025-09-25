@@ -19,7 +19,6 @@ The following tools are required for full functionality:
 - **rg (ripgrep)** - For fast searching
 - **fzf** - For fuzzy finding
 - **fd** - For faster file finding performance
-- **lazygit** - For Git interface integration
 - **C compiler** - Required for Treesitter parsers (gcc, clang, or MSVC)
 
 ### Installation Commands
@@ -27,7 +26,7 @@ The following tools are required for full functionality:
 #### macOS
 ```bash
 # Core dependencies
-brew install bat ripgrep fzf fd lazygit
+brew install bat ripgrep fzf fd
 
 # C compiler is included with Xcode Command Line Tools
 xcode-select --install
@@ -37,13 +36,12 @@ xcode-select --install
 ```bash
 # Core dependencies
 sudo apt install bat ripgrep fzf fd-find build-essential
-# Install lazygit manually from https://github.com/jesseduffield/lazygit#installation
 ```
 
 #### Arch Linux
 ```bash
 # Core dependencies
-sudo pacman -S bat ripgrep fzf fd base-devel lazygit
+sudo pacman -S bat ripgrep fzf fd base-devel
 ```
 
 ### Project Setup

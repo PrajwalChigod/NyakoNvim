@@ -82,7 +82,6 @@ return {
 
 			-- Git Operations
 			{ "<leader>g", group = "Git" },
-			{ "<leader>gg", desc = "LazyGit" },
 			{ "<leader>gs", desc = "Stage Hunk" },
 			{ "<leader>gr", desc = "Reset Hunk" },
 			{ "<leader>gp", desc = "Preview Hunk" },
