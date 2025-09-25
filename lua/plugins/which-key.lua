@@ -51,6 +51,9 @@ return {
 			{ "<leader>e", desc = "Open file explorer (Oil)" },
 			{ "<leader>nh", desc = "Clear search highlights" },
 
+			-- FZF Operations
+			{ "<leader>f", group = "Fzf Find" },
+
 			-- Tab Operations
 			{ "<leader>t", group = "Tabs" },
 			{ "<leader>tt", desc = "New tab" },
