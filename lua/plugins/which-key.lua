@@ -12,7 +12,6 @@ return {
 			-- your configuration comes here
 		})
 
-		-- Leader keymaps
 		wk.add({
 			-- LSP keymaps (using default Neovim pattern)
 			{ "gd", desc = "Go to Definition (fzf)" },
@@ -36,22 +35,12 @@ return {
 			{ "<leader>sf", desc = "Swap next function" },
 			{ "<leader>sF", desc = "Swap previous function" },
 
-			-- Linting operations
-			{ "<leader>l", group = "Lint" },
-			{ "<leader>ll", desc = "Run linter" },
-			{ "<leader>lt", desc = "Toggle auto-lint on save" },
-			{ "<leader>lr", desc = "Reset/clear lint messages" },
-			{ "<leader>ln", desc = "Next lint issue" },
-			{ "<leader>lp", desc = "Previous lint issue" },
-			{ "<leader>li", desc = "Show linter info" },
-
-			-- Formatting operations
-			{ "<leader>m", group = "Format" },
-			{ "<leader>mf", desc = "Format file" },
-			{ "<leader>mr", desc = "Format range" },
-			{ "<leader>mt", desc = "Toggle format on save" },
-			{ "<leader>mi", desc = "Show formatter info" },
-			{ "<leader>mc", desc = "Conform info" },
+			-- Tab Operations
+			{ "<leader>t", group = "Tabs" },
+			{ "<leader>tt", desc = "New tab" },
+			{ "<leader>tf", desc = "New tab with file picker" },
+			{ "<leader>tx", desc = "Close current tab" },
+			{ "<leader>tb", desc = "Open buffer in new tab" },
 
 			-- Debug operations
 			{ "<leader>d", group = "Debug" },
@@ -74,10 +63,10 @@ return {
 			{ "<leader>xf", desc = "Open diagnostic float" },
 			{ "<leader>xl", desc = "Set loclist with diagnostics" },
 			{ "<leader>xq", desc = "Set quickfix with diagnostics" },
-		})
 
-		-- Local Leader keymaps
-		wk.add({
+			-- File Explorer
+			{ "<leader>e", desc = "Open file explorer (Oil)" },
+
 			-- Git Operations
 			{ "<localleader>g", group = "Git" },
 			{ "<localleader>gg", desc = "LazyGit" },
@@ -94,13 +83,6 @@ return {
 			{ "<localleader>glb", desc = "Toggle Line Blame" },
 			{ "<localleader>gld", desc = "Toggle Deleted" },
 
-			-- Tab Operations
-			{ "<leader>t", group = "Tabs" },
-			{ "<leader>tt", desc = "New tab" },
-			{ "<leader>tf", desc = "New tab with file picker" },
-			{ "<leader>tx", desc = "Close current tab" },
-			{ "<leader>tb", desc = "Open buffer in new tab" },
-
 			-- Terminal Operations
 			{ "<localleader>t", group = "Terminal" },
 			{ "<localleader>t", desc = "Toggle main terminal" },
@@ -108,16 +90,30 @@ return {
 			{ "<localleader>th", desc = "Toggle horizontal terminal" },
 			{ "<localleader>tv", desc = "Toggle vertical terminal" },
 
+			-- Linting operations
+			{ "<localleader>l", group = "Lint" },
+			{ "<localleader>ll", desc = "Run linter" },
+			{ "<localleader>lt", desc = "Toggle auto-lint on save" },
+			{ "<localleader>lr", desc = "Reset/clear lint messages" },
+			{ "<localleader>ln", desc = "Next lint issue" },
+			{ "<localleader>lp", desc = "Previous lint issue" },
+			{ "<localleader>li", desc = "Show linter info" },
+
+			-- Formatting operations
+			{ "<localleader>f", group = "Format" },
+			{ "<localleader>ff", desc = "Format file (indent + format)" },
+			{ "<localleader>fr", desc = "Format range" },
+			{ "<localleader>ft", desc = "Toggle format on save" },
+			{ "<localleader>fa", desc = "Auto-indent file" },
+			{ "<localleader>fi", desc = "Show formatter info" },
+			{ "<localleader>fc", desc = "Conform info" },
+
 			-- Buffer Management
 			{ "<localleader>b", group = "Buffer" },
 			{ "<localleader>bd", desc = "Delete Current Buffer" },
 			{ "<localleader>bo", desc = "Delete Other Buffers" },
 			{ "<localleader>bi", desc = "Toggle Pin" },
 			{ "<localleader>bI", desc = "Delete Non-pinned Buffers" },
-
-			-- File Explorer
-			{ "<leader>e", desc = "Open file explorer (Oil)" },
-
 		})
 	end,
 }

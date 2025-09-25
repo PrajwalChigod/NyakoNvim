@@ -106,16 +106,16 @@ return {
 			end,
 		})
 
-		-- Formatting keymaps with <leader>m* pattern
-		vim.keymap.set("n", "<leader>mf", format_file, { desc = "Format file (indent + format)" })
-		vim.keymap.set("v", "<leader>mr", format_range, { desc = "Format range" })
-		vim.keymap.set("n", "<leader>mt", toggle_format_on_save, { desc = "Toggle format on save" })
-		vim.keymap.set("n", "<leader>ma", auto_indent, { desc = "Auto-indent file" })
-		vim.keymap.set("n", "<leader>mi", function()
+		-- Formatting keymaps with <localleader>f* pattern
+		vim.keymap.set("n", "<localleader>ff", format_file, { desc = "Format file (indent + format)" })
+		vim.keymap.set("v", "<localleader>fr", format_range, { desc = "Format range" })
+		vim.keymap.set("n", "<localleader>ft", toggle_format_on_save, { desc = "Toggle format on save" })
+		vim.keymap.set("n", "<localleader>fa", auto_indent, { desc = "Auto-indent file" })
+		vim.keymap.set("n", "<localleader>fi", function()
 			local formatter = get_formatter_name()
 			vim.notify("Current formatter: " .. formatter .. " for " .. vim.bo.filetype, vim.log.levels.INFO)
 		end, { desc = "Show formatter info" })
-		vim.keymap.set("n", "<leader>mc", "<cmd>ConformInfo<CR>", { desc = "Conform info" })
+		vim.keymap.set("n", "<localleader>fc", "<cmd>ConformInfo<CR>", { desc = "Conform info" })
 	end,
 }
 
