@@ -1,21 +1,3 @@
--- Auto-open alpha dashboard
-local alpha_group = vim.api.nvim_create_augroup("AlphaDashboard", { clear = true })
-
-vim.api.nvim_create_autocmd("User", {
-	group = alpha_group,
-	pattern = "LazyVimStarted",
-	callback = function()
-		local stats = require("lazy").stats()
-		local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
-
-		-- Update footer with actual startup time
-		local alpha = require("alpha")
-		local dashboard = require("alpha.themes.dashboard")
-		dashboard.section.footer.val = "⚡ Neovim loaded " .. stats.count .. " plugins in " .. ms .. "ms"
-		pcall(alpha.redraw)
-	end,
-})
-
 -- ===============================================
 -- FILE HANDLING & EDITOR BEHAVIOR
 -- ===============================================
@@ -106,8 +88,6 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
 		end
 	end,
 })
-
--- Note: Format on save is now handled by conform.nvim plugin
 
 -- ===============================================
 -- TERMINAL & QUICKFIX

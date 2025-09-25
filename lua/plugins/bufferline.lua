@@ -2,8 +2,7 @@ return {
 	"akinsho/bufferline.nvim",
 	version = "*",
 	dependencies = { "nvim-tree/nvim-web-devicons" },
-	event = "VeryLazy",
-	priority = 900,
+	event = "BufReadPost",
 	keys = {
 		{ "<localleader>bi", "<Cmd>BufferLineTogglePin<CR>", desc = "Toggle pin" },
 		{ "<localleader>bI", "<Cmd>BufferLineGroupClose ungrouped<CR>", desc = "Delete non-pinned buffers" },

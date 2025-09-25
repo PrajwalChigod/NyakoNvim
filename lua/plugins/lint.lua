@@ -90,23 +90,32 @@ return {
 			end,
 		})
 
-		-- Linting keymaps with <localleader>l* pattern
-		vim.keymap.set("n", "<localleader>ll", run_lint, { desc = "Run linter" })
-		vim.keymap.set("n", "<localleader>lt", toggle_auto_lint, { desc = "Toggle auto-lint on save" })
-		vim.keymap.set("n", "<localleader>lr", function()
-			vim.diagnostic.reset()
-			vim.notify("Lint messages cleared", vim.log.levels.INFO)
-		end, { desc = "Reset/clear lint messages" })
-		vim.keymap.set("n", "<localleader>ln", vim.diagnostic.goto_next, { desc = "Next lint issue" })
-		vim.keymap.set("n", "<localleader>lp", vim.diagnostic.goto_prev, { desc = "Previous lint issue" })
-		vim.keymap.set("n", "<localleader>li", function()
-			local linter = get_linter_name()
-			if linter then
-				vim.notify("Current linter: " .. linter .. " for " .. vim.bo.filetype, vim.log.levels.INFO)
-			else
-				vim.notify("No linter configured for " .. vim.bo.filetype, vim.log.levels.WARN)
+		-- Create LintInfo command
+		vim.api.nvim_create_user_command("LintInfo", function()
+			local lint = require("lint")
+			local ft = vim.bo.filetype
+			local linters = lint.linters_by_ft[ft]
+
+			if not linters or #linters == 0 then
+				vim.notify("No linters configured for " .. ft .. " files", vim.log.levels.WARN)
+				return
 			end
-		end, { desc = "Show linter info" })
+
+			local info = "Linter info for " .. ft .. ":\n"
+			for _, linter_name in ipairs(linters) do
+				local linter = lint.linters[linter_name]
+				if linter then
+					info = info .. "• " .. linter_name .. " (cmd: " .. (linter.cmd or "unknown") .. ")\n"
+				else
+					info = info .. "• " .. linter_name .. " (not found)\n"
+				end
+			end
+
+			vim.notify(info, vim.log.levels.INFO)
+		end, { desc = "Show linter information" })
+
+		-- Linting keymaps with g* pattern
+		vim.keymap.set("n", "gl", run_lint, { desc = "Run linter" })
 	end,
 }
 
