@@ -1,6 +1,13 @@
 return {
 	{
 		"mfussenegger/nvim-dap",
+		cmd = { "DapToggleBreakpoint", "DapContinue", "DapStepOver", "DapStepInto", "DapStepOut" },
+		keys = {
+			{ "<leader>db", desc = "Toggle breakpoint" },
+			{ "<leader>dc", desc = "Continue" },
+			{ "<leader>di", desc = "Step into" },
+			{ "<leader>do", desc = "Step over" },
+		},
 		dependencies = {
 			"rcarriga/nvim-dap-ui",
 			"nvim-neotest/nvim-nio",

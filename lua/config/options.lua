@@ -1,12 +1,10 @@
 local opt = vim.opt
 
--- Line numbers
 opt.number = true
 opt.relativenumber = true
 
 -- Set leader key
 vim.g.mapleader = " "
-vim.g.maplocalleader = ";"
 
 -- Disable Python providers
 vim.g.loaded_python3_provider = 0
@@ -57,15 +55,14 @@ opt.clipboard = "unnamedplus"
 -- Mouse
 opt.mouse = "a"
 
--- Better completion (updated below in performance section)
-
 -- File encoding
 opt.fileencoding = "utf-8"
 
 -- Performance optimizations
-opt.updatetime = 200 -- Faster CursorHold events (default 4000ms)
+opt.updatetime = 100 -- Faster CursorHold events and diagnostics (default 4000ms)
 opt.redrawtime = 1500 -- Prevent slow redraws from hanging editor
 opt.synmaxcol = 200 -- Limit syntax highlighting on long lines
+
 -- opt.lazyredraw = true
 opt.ttyfast = true -- Fast terminal connection assumption
 
@@ -76,7 +73,7 @@ opt.diffopt:append("internal,algorithm:patience")
 opt.completeopt = "menuone,noselect,preview" -- Better than just "menuone,noselect"
 
 -- Fix timeout conflict
-opt.timeoutlen = 300 -- Match which-key timeout for consistency
+opt.timeoutlen = 250 -- Snappier which-key response for better UX
 
 -- Invisible characters
 opt.list = true

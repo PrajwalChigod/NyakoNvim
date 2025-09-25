@@ -58,13 +58,6 @@ return {
 					vim.tbl_extend("force", opts, { desc = "LSP Signature Help" })
 				)
 
-				-- Diagnostics (keeping ge for quick access)
-				vim.keymap.set(
-					"n",
-					"ge",
-					vim.diagnostic.open_float,
-					vim.tbl_extend("force", opts, { desc = "Show Diagnostics" })
-				)
 			end
 
 			-- On attach function
@@ -216,8 +209,6 @@ return {
 					},
 				},
 			}
-
-			-- Setup LSP servers using new vim.lsp.config API
 
 			-- Lua Language Server
 			vim.lsp.config.lua_ls = {

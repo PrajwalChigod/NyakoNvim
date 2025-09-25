@@ -3,17 +3,27 @@ return {
 	event = "VeryLazy",
 	init = function()
 		vim.o.timeout = true
-		vim.o.timeoutlen = 300
+		vim.o.timeoutlen = 250
 	end,
 	config = function()
 		local wk = require("which-key")
 
 		wk.setup({
-			-- your configuration comes here
+			preset = "classic",
+			layout = {
+				height = { min = 4, max = 25 },
+				width = { min = 20, max = 50 },
+				spacing = 3,
+				align = "left",
+			},
 		})
 
 		wk.add({
-			-- LSP keymaps (using default Neovim pattern)
+			-- ===============================================
+			-- G-PREFIX KEYMAPS (LSP, Formatting, Linting)
+			-- ===============================================
+
+			-- LSP Navigation & Actions
 			{ "gd", desc = "Go to Definition (fzf)" },
 			{ "gD", desc = "Go to Declaration (fzf)" },
 			{ "gr", group = "LSP References/Actions", icon = " " },
@@ -25,15 +35,21 @@ return {
 			{ "gS", desc = "Document Symbols (fzf)" },
 			{ "gW", desc = "Workspace Symbols (fzf)" },
 			{ "gs", desc = "Signature Help" },
-			{ "ge", desc = "Show Diagnostics" },
 			{ "K", desc = "Hover Documentation" },
 
-			-- Swap/Rearrange operations (Treesitter)
-			{ "<leader>s", group = "Swap" },
-			{ "<leader>sp", desc = "Swap next parameter" },
-			{ "<leader>sP", desc = "Swap previous parameter" },
-			{ "<leader>sf", desc = "Swap next function" },
-			{ "<leader>sF", desc = "Swap previous function" },
+			-- Formatting Operations
+			{ "gf", desc = "Format (file/range)" },
+
+			-- Linting Operations
+			{ "gl", desc = "Run linter" },
+
+			-- ===============================================
+			-- LEADER KEYMAPS
+			-- ===============================================
+
+			-- File & Navigation Operations
+			{ "<leader>e", desc = "Open file explorer (Oil)" },
+			{ "<leader>nh", desc = "Clear search highlights" },
 
 			-- Tab Operations
 			{ "<leader>t", group = "Tabs" },
@@ -42,7 +58,7 @@ return {
 			{ "<leader>tx", desc = "Close current tab" },
 			{ "<leader>tb", desc = "Open buffer in new tab" },
 
-			-- Debug operations
+			-- Debug Operations
 			{ "<leader>d", group = "Debug" },
 			{ "<leader>db", desc = "Toggle breakpoint" },
 			{ "<leader>dB", desc = "Set conditional breakpoint" },
@@ -55,7 +71,7 @@ return {
 			{ "<leader>du", desc = "Toggle DAP UI" },
 			{ "<leader>de", desc = "Evaluate expression" },
 
-			-- Diagnostics operations
+			-- Diagnostics Operations
 			{ "<leader>x", group = "Diagnostics" },
 			{ "<leader>xt", desc = "Toggle diagnostics (enable/disable)" },
 			{ "<leader>xn", desc = "Next diagnostic" },
@@ -64,49 +80,38 @@ return {
 			{ "<leader>xl", desc = "Set loclist with diagnostics" },
 			{ "<leader>xq", desc = "Set quickfix with diagnostics" },
 
-			-- File Explorer
-			{ "<leader>e", desc = "Open file explorer (Oil)" },
-
 			-- Git Operations
-			{ "<localleader>g", group = "Git" },
-			{ "<localleader>gg", desc = "LazyGit" },
-			{ "<localleader>gs", desc = "Stage Hunk" },
-			{ "<localleader>gr", desc = "Reset Hunk" },
-			{ "<localleader>gp", desc = "Preview Hunk" },
-			{ "<localleader>gb", desc = "Blame Line" },
-			{ "<localleader>gd", desc = "Diff This" },
-			{ "<localleader>gS", desc = "Stage Buffer" },
-			{ "<localleader>gR", desc = "Reset Buffer" },
-			{ "<localleader>gu", desc = "Undo Stage Hunk" },
-			{ "<localleader>gD", desc = "Diff This ~" },
-			{ "<localleader>gt", desc = "Toggle Signs" },
-			{ "<localleader>glb", desc = "Toggle Line Blame" },
-			{ "<localleader>gld", desc = "Toggle Deleted" },
+			{ "<leader>g", group = "Git" },
+			{ "<leader>gg", desc = "LazyGit" },
+			{ "<leader>gs", desc = "Stage Hunk" },
+			{ "<leader>gr", desc = "Reset Hunk" },
+			{ "<leader>gp", desc = "Preview Hunk" },
+			{ "<leader>gb", desc = "Blame Line" },
+			{ "<leader>gd", desc = "Diff This" },
+			{ "<leader>gS", desc = "Stage Buffer" },
+			{ "<leader>gR", desc = "Reset Buffer" },
+			{ "<leader>gu", desc = "Undo Stage Hunk" },
+			{ "<leader>gD", desc = "Diff This ~" },
+			{ "<leader>gt", desc = "Toggle Signs" },
+			{ "<leader>glb", desc = "Toggle Line Blame" },
+			{ "<leader>gld", desc = "Toggle Deleted" },
+
+			-- ===============================================
+			-- LOCALLEADER KEYMAPS
+			-- ===============================================
+
+			-- Swap/Rearrange Operations (Treesitter)
+			{ "<localleader>s", group = "Swap" },
+			{ "<localleader>sp", desc = "Swap next parameter" },
+			{ "<localleader>sP", desc = "Swap previous parameter" },
+			{ "<localleader>sf", desc = "Swap next function" },
+			{ "<localleader>sF", desc = "Swap previous function" },
 
 			-- Terminal Operations
 			{ "<localleader>t", group = "Terminal" },
-			{ "<localleader>t", desc = "Toggle main terminal" },
 			{ "<localleader>tf", desc = "Toggle floating terminal" },
 			{ "<localleader>th", desc = "Toggle horizontal terminal" },
 			{ "<localleader>tv", desc = "Toggle vertical terminal" },
-
-			-- Linting operations
-			{ "<localleader>l", group = "Lint" },
-			{ "<localleader>ll", desc = "Run linter" },
-			{ "<localleader>lt", desc = "Toggle auto-lint on save" },
-			{ "<localleader>lr", desc = "Reset/clear lint messages" },
-			{ "<localleader>ln", desc = "Next lint issue" },
-			{ "<localleader>lp", desc = "Previous lint issue" },
-			{ "<localleader>li", desc = "Show linter info" },
-
-			-- Formatting operations
-			{ "<localleader>f", group = "Format" },
-			{ "<localleader>ff", desc = "Format file (indent + format)" },
-			{ "<localleader>fr", desc = "Format range" },
-			{ "<localleader>ft", desc = "Toggle format on save" },
-			{ "<localleader>fa", desc = "Auto-indent file" },
-			{ "<localleader>fi", desc = "Show formatter info" },
-			{ "<localleader>fc", desc = "Conform info" },
 
 			-- Buffer Management
 			{ "<localleader>b", group = "Buffer" },

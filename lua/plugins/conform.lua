@@ -65,19 +65,10 @@ return {
 			return conform.formatters_by_ft[ft] ~= nil
 		end
 
-		-- Auto-indent function
-		local function auto_indent()
-			local save_cursor = vim.api.nvim_win_get_cursor(0)
-			vim.cmd("normal! gg=G")
-			vim.api.nvim_win_set_cursor(0, save_cursor)
-			vim.notify("File auto-indented", vim.log.levels.INFO)
-		end
-
-		-- Format file with auto-indent
+		-- Format file using external formatter only
 		local function format_file()
 			local formatter = get_formatter_name()
-			-- Auto-indent first, then format
-			auto_indent()
+			vim.notify("Formatting with " .. formatter .. "...", vim.log.levels.INFO)
 			conform.format({ lsp_format = "fallback" })
 		end
 
@@ -106,16 +97,9 @@ return {
 			end,
 		})
 
-		-- Formatting keymaps with <localleader>f* pattern
-		vim.keymap.set("n", "<localleader>ff", format_file, { desc = "Format file (indent + format)" })
-		vim.keymap.set("v", "<localleader>fr", format_range, { desc = "Format range" })
-		vim.keymap.set("n", "<localleader>ft", toggle_format_on_save, { desc = "Toggle format on save" })
-		vim.keymap.set("n", "<localleader>fa", auto_indent, { desc = "Auto-indent file" })
-		vim.keymap.set("n", "<localleader>fi", function()
-			local formatter = get_formatter_name()
-			vim.notify("Current formatter: " .. formatter .. " for " .. vim.bo.filetype, vim.log.levels.INFO)
-		end, { desc = "Show formatter info" })
-		vim.keymap.set("n", "<localleader>fc", "<cmd>ConformInfo<CR>", { desc = "Conform info" })
+		-- Formatting keymaps with g* pattern
+		vim.keymap.set("n", "gf", format_file, { desc = "Format file" })
+		vim.keymap.set("v", "gf", format_range, { desc = "Format range" })
 	end,
 }
 
