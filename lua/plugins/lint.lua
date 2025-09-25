@@ -90,16 +90,16 @@ return {
 			end,
 		})
 
-		-- Linting keymaps with <leader>l* pattern
-		vim.keymap.set("n", "<leader>ll", run_lint, { desc = "Run linter" })
-		vim.keymap.set("n", "<leader>lt", toggle_auto_lint, { desc = "Toggle auto-lint on save" })
-		vim.keymap.set("n", "<leader>lr", function()
+		-- Linting keymaps with <localleader>l* pattern
+		vim.keymap.set("n", "<localleader>ll", run_lint, { desc = "Run linter" })
+		vim.keymap.set("n", "<localleader>lt", toggle_auto_lint, { desc = "Toggle auto-lint on save" })
+		vim.keymap.set("n", "<localleader>lr", function()
 			vim.diagnostic.reset()
 			vim.notify("Lint messages cleared", vim.log.levels.INFO)
 		end, { desc = "Reset/clear lint messages" })
-		vim.keymap.set("n", "<leader>ln", vim.diagnostic.goto_next, { desc = "Next lint issue" })
-		vim.keymap.set("n", "<leader>lp", vim.diagnostic.goto_prev, { desc = "Previous lint issue" })
-		vim.keymap.set("n", "<leader>li", function()
+		vim.keymap.set("n", "<localleader>ln", vim.diagnostic.goto_next, { desc = "Next lint issue" })
+		vim.keymap.set("n", "<localleader>lp", vim.diagnostic.goto_prev, { desc = "Previous lint issue" })
+		vim.keymap.set("n", "<localleader>li", function()
 			local linter = get_linter_name()
 			if linter then
 				vim.notify("Current linter: " .. linter .. " for " .. vim.bo.filetype, vim.log.levels.INFO)
