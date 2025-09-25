@@ -3,7 +3,6 @@ return {
 	version = "*",
 	config = function()
 		require("toggleterm").setup({
-			size = 20,
 			open_mapping = [[<localleader>t]],
 			hide_numbers = true,
 			shade_filetypes = {},
@@ -68,10 +67,10 @@ return {
 			tab_term:toggle()
 		end
 
-		vim.keymap.set("n", "<localleader>tf", "<cmd>lua _FLOAT_TOGGLE()<CR>", { desc = "Toggle floating terminal" })
-		vim.keymap.set("n", "<localleader>th", "<cmd>lua _HORIZONTAL_TOGGLE()<CR>", { desc = "Toggle horizontal terminal" })
-		vim.keymap.set("n", "<localleader>tv", "<cmd>lua _VERTICAL_TOGGLE()<CR>", { desc = "Toggle vertical terminal" })
-		vim.keymap.set("n", "<localleader>tt", "<cmd>lua _TAB_TOGGLE()<CR>", { desc = "Toggle tab terminal" })
+		vim.keymap.set("n", "<localleader>tf", "<cmd>ToggleTerm direction=float<CR>", { desc = "Toggle floating terminal" })
+		vim.keymap.set("n", "<localleader>th", "<cmd>ToggleTerm direction=horizontal<CR>", { desc = "Toggle horizontal terminal" })
+		vim.keymap.set("n", "<localleader>tv", "<cmd>ToggleTerm direction=vertical size=60<CR>", { desc = "Toggle vertical terminal" })
+		vim.keymap.set("n", "<localleader>tt", "<cmd>ToggleTerm direction=tab<CR>", { desc = "Toggle tab terminal" })
 	end,
 }
 
