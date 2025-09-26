@@ -68,7 +68,7 @@ return {
 
 			-- Enhanced capabilities with completion
 			local capabilities = vim.lsp.protocol.make_client_capabilities()
-			capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
+			capabilities = require("blink.cmp").get_lsp_capabilities(capabilities)
 
 			-- LSP server configurations for all your languages
 			local servers = {
