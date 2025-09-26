@@ -116,11 +116,17 @@ return {
 			{ "<localleader>tv", desc = "Toggle vertical terminal" },
 
 			-- Buffer Management
-			{ "<localleader>b", group = "Buffer" },
-			{ "<localleader>bd", desc = "Delete Current Buffer" },
-			{ "<localleader>bo", desc = "Delete Other Buffers" },
-			{ "<localleader>bi", desc = "Toggle Pin" },
-			{ "<localleader>bI", desc = "Delete Non-pinned Buffers" },
+			{ "<leader>b", group = "Buffer" },
+			{ "<leader>bi", desc = "Toggle Pin Buffer" },
+			{ "<leader>bn", desc = "Go to Right Buffer" },
+			{ "<leader>bp", desc = "Go to Left Buffer" },
+			{ "<leader>bd", group = "Buffer Delete" },
+			{ "<leader>bdd", desc = "Delete Current Buffer" },
+			{ "<leader>bdi", desc = "Delete Non-pinned Buffers" },
+			{ "<leader>bds", desc = "Delete All Non-active Buffers" },
+			{ "<leader>bs", group = "Buffer Split" },
+			{ "<leader>bsv", desc = "Split Vertically" },
+			{ "<leader>bsh", desc = "Split Horizontally" },
 		})
 	end,
 }
