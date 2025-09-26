@@ -30,9 +30,6 @@ keymap("n", "<C-j>", "<C-w>j", { desc = "Go to bottom split" })
 keymap("n", "<C-k>", "<C-w>k", { desc = "Go to top split" })
 keymap("n", "<C-l>", "<C-w>l", { desc = "Go to right split" })
 
--- Buffer navigation
-keymap("n", "]b", "<cmd>bnext<CR>", { desc = "Next buffer" })
-keymap("n", "[b", "<cmd>bprevious<CR>", { desc = "Previous buffer" })
 
 -- ===============================================
 -- MOVEMENT & SEARCH

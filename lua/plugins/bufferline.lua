@@ -4,10 +4,14 @@ return {
 	dependencies = { "nvim-tree/nvim-web-devicons" },
 	event = "BufReadPost",
 	keys = {
-		{ "<localleader>bi", "<Cmd>BufferLineTogglePin<CR>", desc = "Toggle pin" },
-		{ "<localleader>bI", "<Cmd>BufferLineGroupClose ungrouped<CR>", desc = "Delete non-pinned buffers" },
-		{ "<localleader>bo", "<Cmd>BufferLineCloseOthers<CR>", desc = "Delete other buffers" },
-		{ "<localleader>bd", "<cmd>bp|sp|bn|bd!<CR>", desc = "Delete current buffer (keep tab)" },
+		{ "<leader>bi", "<Cmd>BufferLineTogglePin<CR>", desc = "Toggle pin buffer" },
+		{ "<leader>bn", "<Cmd>BufferLineCycleNext<CR>", desc = "Go to right buffer" },
+		{ "<leader>bp", "<Cmd>BufferLineCyclePrev<CR>", desc = "Go to left buffer" },
+		{ "<leader>bdd", "<cmd>bp|sp|bn|bd!<CR>", desc = "Delete current buffer (keep tab)" },
+		{ "<leader>bdi", "<Cmd>BufferLineGroupClose ungrouped<CR>", desc = "Delete non-pinned buffers" },
+		{ "<leader>bsv", "<cmd>vsplit<CR>", desc = "Split current buffer vertically" },
+		{ "<leader>bsh", "<cmd>split<CR>", desc = "Split current buffer horizontally" },
+		{ "<leader>bds", "<Cmd>BufferLineCloseOthers<CR>", desc = "Delete all non-active buffers" },
 	},
 	config = function()
 		require("bufferline").setup({
