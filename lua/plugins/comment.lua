@@ -10,8 +10,8 @@ return {
 			padding = true,
 			-- Whether the cursor should stay at its position
 			sticky = true,
-			-- Lines to be ignored while (un)comment
-			ignore = nil,
+			-- Lines to be ignored while (un)comment (empty lines, whitespace-only)
+			ignore = "^(%s*)$",
 			-- LHS of toggle mappings in NORMAL mode
 			toggler = {
 				line = "gcc", -- Line-comment toggle keymap
@@ -33,11 +33,27 @@ return {
 				basic = true, -- Operator-pending mapping; `gcc` `gbc` `gc[count]{motion}` `gb[count]{motion}`
 				extra = true, -- Extra mapping; `gco`, `gcO`, `gcA`
 			},
-			-- Function to call before (un)comment
+			-- Function to call before (un)comment (treesitter context awareness)
 			pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook(),
 			-- Function to call after (un)comment
 			post_hook = nil,
 		})
+
+		-- Additional useful keymaps for enhanced commenting workflows
+		local api = require("Comment.api")
+
+		-- Comment entire function/class using treesitter text objects
+		vim.keymap.set("n", "gcf", function()
+			api.call("toggle.linewise", "g@")(vim.fn.getline(".") and "af" or "")
+		end, { desc = "Comment function" })
+
+		vim.keymap.set("n", "gcc", function()
+			api.call("toggle.linewise", "g@")(vim.fn.getline(".") and "ac" or "")
+		end, { desc = "Comment class" })
+
+		-- Visual mode enhancement for better block commenting
+		vim.keymap.set("v", "gc", "<Plug>(comment_toggle_linewise_visual)", { desc = "Comment selection" })
+		vim.keymap.set("v", "gb", "<Plug>(comment_toggle_blockwise_visual)", { desc = "Block comment selection" })
 	end,
 }
 

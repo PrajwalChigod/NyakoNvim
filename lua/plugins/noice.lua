@@ -73,7 +73,7 @@ return {
 			},
 			views = {
 				notify = {
-					timeout = 3000, -- 3 seconds for regular notifications
+					timeout = 2000, -- 2 seconds for regular notifications
 				},
 				mini = {
 					timeout = 2000, -- 2 seconds for mini view
@@ -93,17 +93,17 @@ return {
 						event = "msg_show",
 						kind = "echomsg",
 					},
-					opts = { timeout = 3000 },
+					opts = { timeout = 2000 },
 					view = "notify",
 				},
 				{
 					filter = { error = true },
-					opts = { timeout = 5000 }, -- 5 seconds for errors
+					opts = { timeout = 2000 }, -- 2 seconds for errors
 					view = "notify",
 				},
 				{
 					filter = { warning = true },
-					opts = { timeout = 4000 }, -- 4 seconds for warnings
+					opts = { timeout = 2000 }, -- 2 seconds for warnings
 					view = "notify",
 				},
 			},

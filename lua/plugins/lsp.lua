@@ -58,6 +58,12 @@ return {
 					vim.tbl_extend("force", opts, { desc = "LSP Signature Help" })
 				)
 
+				-- Insert mode LSP keymaps with <C-g>* pattern
+				-- Keep only useful actions that don't break insert mode flow
+				vim.keymap.set("i", "<C-g>K", vim.lsp.buf.hover, vim.tbl_extend("force", opts, { desc = "LSP Hover (insert mode)" }))
+
+				vim.keymap.set("i", "<C-g>s", vim.lsp.buf.signature_help, vim.tbl_extend("force", opts, { desc = "LSP Signature Help (insert mode)" }))
+
 			end
 
 			-- On attach function
