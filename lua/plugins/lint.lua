@@ -116,6 +116,9 @@ return {
 
 		-- Linting keymaps with g* pattern
 		vim.keymap.set("n", "gl", run_lint, { desc = "Run linter" })
+
+		-- Insert mode linting
+		vim.keymap.set("i", "<C-g>l", run_lint, { desc = "Run linter (insert mode)" })
 	end,
 }
 

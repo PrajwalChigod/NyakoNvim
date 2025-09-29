@@ -73,7 +73,7 @@ return {
 				show_duplicate_prefix = true,
 				persist_buffer_sort = true,
 				move_wraps_at_ends = false,
-				separator_style = "slant",
+				separator_style = "thick",
 				enforce_regular_tabs = false,
 				always_show_bufferline = true,
 				hover = {

@@ -7,9 +7,6 @@ local keymap = vim.keymap.set
 -- Exit insert mode with jj
 keymap("i", "jj", "<Esc>", { desc = "Exit insert mode" })
 
--- Quick save with Ctrl+s
-keymap("n", "<C-s>", "<cmd>w<CR>", { desc = "Save file" })
-keymap("i", "<C-s>", "<Esc><cmd>w<CR>a", { desc = "Save file (insert mode)" })
 
 -- File explorer
 keymap("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
@@ -17,8 +14,6 @@ keymap("n", "<leader>-", "<CMD>Oil .<CR>", { desc = "Open current directory" })
 keymap("n", "<leader>e", "<CMD>Oil<CR>", { desc = "Open file explorer" })
 
 
--- Clear search highlights
-keymap("n", "<leader>nh", ":nohl<CR>", { desc = "Clear search highlights" })
 
 -- ===============================================
 -- WINDOW & BUFFER NAVIGATION
