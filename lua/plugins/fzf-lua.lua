@@ -133,7 +133,7 @@ return {
 					wrap = "nowrap",
 					hidden = "nohidden",
 					vertical = "down:45%",
-					horizontal = "right:60%",
+					horizontal = "right:50%",
 					layout = "flex",
 					flip_columns = 120,
 					title = true,
@@ -254,7 +254,7 @@ return {
 				file_icons = true,
 				color_icons = true,
 				grep_opts = "--binary-files=without-match --line-number --recursive --color=auto --perl-regexp -e",
-				rg_opts = "--column --line-number --no-heading --color=always --smart-case --max-columns=4096 -e",
+				rg_opts = "--column --line-number --no-heading --color=always --smart-case --max-columns=512 -e",
 			},
 			buffers = {
 				prompt = "Buffers❯ ",

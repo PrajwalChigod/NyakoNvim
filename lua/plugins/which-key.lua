@@ -133,13 +133,12 @@ return {
 			{ "<C-s>S", desc = "Surround line", mode = "i" },
 
 			-- Completion (Blink.cmp)
-			{ "<C-c>", desc = "Toggle completion", mode = "i" },
 			{ "<C-n>", desc = "Next completion item", mode = "i" },
 			{ "<C-p>", desc = "Previous completion item", mode = "i" },
 			{ "<C-d>", desc = "Scroll documentation down", mode = "i" },
 			{ "<C-f>", desc = "Scroll documentation up", mode = "i" },
 			{ "<CR>", desc = "Accept completion", mode = "i" },
-			{ "<C-y>", desc = "Accept completion (alternative)", mode = "i" },
+			{ "<C-Space>", desc = "Accept completion", mode = "i" },
 			{ "<Tab>", desc = "Next snippet/completion", mode = "i" },
 			{ "<S-Tab>", desc = "Previous snippet/completion", mode = "i" },
 

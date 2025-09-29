@@ -303,15 +303,37 @@ return {
 				settings = servers.taplo.settings,
 			}
 
-			-- Enable all LSP servers
-			vim.lsp.enable("lua_ls")
-			vim.lsp.enable("basedpyright")
-			vim.lsp.enable("ts_ls")
-			vim.lsp.enable("rust_analyzer")
-			vim.lsp.enable("clangd")
-			vim.lsp.enable("zls")
-			vim.lsp.enable("bashls")
-			vim.lsp.enable("taplo")
+			-- Enable LSP servers on-demand per filetype for faster startup
+			local lsp_filetypes = {
+				lua = "lua_ls",
+				python = "basedpyright",
+				javascript = "ts_ls",
+				typescript = "ts_ls",
+				javascriptreact = "ts_ls",
+				typescriptreact = "ts_ls",
+				rust = "rust_analyzer",
+				c = "clangd",
+				cpp = "clangd",
+				objc = "clangd",
+				objcpp = "clangd",
+				cuda = "clangd",
+				proto = "clangd",
+				zig = "zls",
+				sh = "bashls",
+				bash = "bashls",
+				toml = "taplo",
+			}
+
+			-- Auto-enable LSP when opening relevant filetypes
+			vim.api.nvim_create_autocmd("FileType", {
+				pattern = vim.tbl_keys(lsp_filetypes),
+				callback = function(args)
+					local lsp_name = lsp_filetypes[args.match]
+					if lsp_name then
+						vim.lsp.enable(lsp_name)
+					end
+				end,
+			})
 		end,
 	},
 }

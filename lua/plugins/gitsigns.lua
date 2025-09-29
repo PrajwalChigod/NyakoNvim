@@ -1,6 +1,14 @@
 return {
 	"lewis6991/gitsigns.nvim",
 	event = { "BufReadPre", "BufNewFile" },
+	cond = function()
+		-- Only load in git repositories
+		local function is_git_repo()
+			local git_dir = vim.fn.finddir(".git", vim.fn.expand("%:p:h") .. ";")
+			return git_dir ~= ""
+		end
+		return is_git_repo()
+	end,
 	config = function()
 		local gitsigns = require("gitsigns")
 
@@ -38,9 +46,9 @@ return {
 			},
 			current_line_blame_formatter = "<author>, <author_time:%Y-%m-%d> - <summary>",
 			sign_priority = 6,
-			update_debounce = 100,
+			update_debounce = 200,
 			status_formatter = nil,
-			max_file_length = 40000,
+			max_file_length = 10000,
 			preview_config = {
 				border = "single",
 				style = "minimal",

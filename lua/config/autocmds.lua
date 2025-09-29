@@ -8,46 +8,49 @@ local general_group = vim.api.nvim_create_augroup("GeneralSettings", { clear = t
 vim.api.nvim_create_autocmd("TextYankPost", {
 	group = general_group,
 	callback = function()
-		vim.highlight.on_yank({ higroup = "IncSearch", timeout = 200 })
+		vim.highlight.on_yank({ higroup = "IncSearch", timeout = 150 })
 	end,
 })
 
--- Remove trailing whitespace on save
-vim.api.nvim_create_autocmd("BufWritePre", {
-	group = general_group,
-	pattern = "*",
-	callback = function()
-		local save_cursor = vim.fn.getpos(".")
-		pcall(function()
-			vim.cmd([[%s/\s\+$//e]])
-		end)
-		vim.fn.setpos(".", save_cursor)
-	end,
-})
+-- Defer non-critical autocommands for faster startup
+vim.defer_fn(function()
+	-- Remove trailing whitespace on save
+	vim.api.nvim_create_autocmd("BufWritePre", {
+		group = general_group,
+		pattern = "*",
+		callback = function()
+			local save_cursor = vim.fn.getpos(".")
+			pcall(function()
+				vim.cmd([[%s/\s\+$//e]])
+			end)
+			vim.fn.setpos(".", save_cursor)
+		end,
+	})
 
--- Auto-create directories when saving files
-vim.api.nvim_create_autocmd("BufWritePre", {
-	group = general_group,
-	callback = function(event)
-		if event.match:match("^%w%w+:[\\/][\\/]") then
-			return
-		end
-		local file = vim.uv.fs_realpath(event.match) or event.match
-		vim.fn.mkdir(vim.fn.fnamemodify(file, ":p:h"), "p")
-	end,
-})
+	-- Auto-create directories when saving files
+	vim.api.nvim_create_autocmd("BufWritePre", {
+		group = general_group,
+		callback = function(event)
+			if event.match:match("^%w%w+:[\\/][\\/]") then
+				return
+			end
+			local file = vim.uv.fs_realpath(event.match) or event.match
+			vim.fn.mkdir(vim.fn.fnamemodify(file, ":p:h"), "p")
+		end,
+	})
 
--- Remember cursor position
-vim.api.nvim_create_autocmd("BufReadPost", {
-	group = general_group,
-	callback = function()
-		local mark = vim.api.nvim_buf_get_mark(0, '"')
-		local lcount = vim.api.nvim_buf_line_count(0)
-		if mark[1] > 0 and mark[1] <= lcount then
-			pcall(vim.api.nvim_win_set_cursor, 0, mark)
-		end
-	end,
-})
+	-- Remember cursor position
+	vim.api.nvim_create_autocmd("BufReadPost", {
+		group = general_group,
+		callback = function()
+			local mark = vim.api.nvim_buf_get_mark(0, '"')
+			local lcount = vim.api.nvim_buf_line_count(0)
+			if mark[1] > 0 and mark[1] <= lcount then
+				pcall(vim.api.nvim_win_set_cursor, 0, mark)
+			end
+		end,
+	})
+end, 50)
 
 -- Auto-resize splits when window is resized
 vim.api.nvim_create_autocmd("VimResized", {

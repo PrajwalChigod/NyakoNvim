@@ -36,7 +36,7 @@ return {
 				max_name_length = 30,
 				max_prefix_length = 30,
 				truncate_names = true,
-				tab_size = 21,
+				tab_size = 18,
 				diagnostics = "nvim_lsp",
 				diagnostics_update_in_insert = false,
 				diagnostics_indicator = function(count, level, diagnostics_dict, context)
