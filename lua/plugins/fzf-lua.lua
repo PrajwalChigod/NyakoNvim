@@ -217,9 +217,9 @@ return {
 				git_icons = true,
 				file_icons = true,
 				color_icons = true,
-				find_opts = [[-type f -not -path '*/\.git/*' -not -path '*/node_modules/*' -not -path '*/.next/*' -not -path '*/target/*' -not -path '*/build/*' -printf '%P\n']],
-				rg_opts = "--color=never --files --hidden --follow -g '!.git' -g '!node_modules' -g '!.next' -g '!target' -g '!build' -g '!*.pyc' -g '!__pycache__'",
-				fd_opts = "--color=never --type f --hidden --follow --exclude .git --exclude node_modules --exclude .next --exclude target --exclude build --exclude __pycache__ --exclude '*.pyc'",
+				find_opts = [[-type f -not -path '*/\.git/*' -not -path '*/node_modules/*' -not -path '*/.next/*' -not -path '*/target/*' -not -path '*/build/*' -not -path '*/dist/*' -not -path '*/.venv/*' -not -path '*/venv/*' -not -path '*/.cache/*' -printf '%P\n']],
+				rg_opts = "--color=never --files --hidden --follow -g '!.git' -g '!node_modules' -g '!.next' -g '!target' -g '!build' -g '!dist' -g '!.venv' -g '!venv' -g '!.cache' -g '!*.pyc' -g '!__pycache__'",
+				fd_opts = "--color=never --type f --hidden --follow --exclude .git --exclude node_modules --exclude .next --exclude target --exclude build --exclude dist --exclude .venv --exclude venv --exclude .cache --exclude __pycache__ --exclude '*.pyc'",
 			},
 			git = {
 				files = {

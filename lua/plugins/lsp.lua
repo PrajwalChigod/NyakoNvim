@@ -72,7 +72,7 @@ return {
 				vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
 			end
 
-			-- Enhanced capabilities with completion
+			-- Enhanced capabilities with completion (cached globally for all servers)
 			local capabilities = vim.lsp.protocol.make_client_capabilities()
 			capabilities = require("blink.cmp").get_lsp_capabilities(capabilities)
 
@@ -122,24 +122,24 @@ return {
 					settings = {
 						typescript = {
 							inlayHints = {
-								includeInlayParameterNameHints = "all",
+								includeInlayParameterNameHints = "literals", -- Only for literals, not all arguments
 								includeInlayParameterNameHintsWhenArgumentMatchesName = false,
 								includeInlayFunctionParameterTypeHints = true,
-								includeInlayVariableTypeHints = true,
+								includeInlayVariableTypeHints = false, -- Often obvious from context
 								includeInlayPropertyDeclarationTypeHints = true,
 								includeInlayFunctionLikeReturnTypeHints = true,
-								includeInlayEnumMemberValueHints = true,
+								includeInlayEnumMemberValueHints = false, -- Rarely needed
 							},
 						},
 						javascript = {
 							inlayHints = {
-								includeInlayParameterNameHints = "all",
+								includeInlayParameterNameHints = "literals", -- Only for literals, not all arguments
 								includeInlayParameterNameHintsWhenArgumentMatchesName = false,
 								includeInlayFunctionParameterTypeHints = true,
-								includeInlayVariableTypeHints = true,
+								includeInlayVariableTypeHints = false, -- Often obvious from context
 								includeInlayPropertyDeclarationTypeHints = true,
 								includeInlayFunctionLikeReturnTypeHints = true,
-								includeInlayEnumMemberValueHints = true,
+								includeInlayEnumMemberValueHints = false, -- Rarely needed
 							},
 						},
 					},
