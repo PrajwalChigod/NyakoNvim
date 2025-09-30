@@ -28,7 +28,7 @@ opt.smartindent = true
 opt.termguicolors = true
 opt.signcolumn = "yes"
 opt.wrap = false
-opt.scrolloff = 8
+opt.scrolloff = 4
 opt.sidescrolloff = 8
 opt.cursorline = true
 opt.colorcolumn = "120"
@@ -59,12 +59,12 @@ opt.mouse = "a"
 opt.fileencoding = "utf-8"
 
 -- Performance optimizations
-opt.updatetime = 100 -- Faster CursorHold events and diagnostics (default 4000ms)
+opt.updatetime = 200 -- Balanced CursorHold events and diagnostics (default 4000ms)
 opt.redrawtime = 1500 -- Prevent slow redraws from hanging editor
-opt.synmaxcol = 200 -- Limit syntax highlighting on long lines
+opt.synmaxcol = 180 -- Limit syntax highlighting on long lines
 
 -- opt.lazyredraw = true
-opt.ttyfast = true -- Fast terminal connection assumption
+-- Note: ttyfast is deprecated in Neovim and has no effect
 
 -- Better diff performance
 opt.diffopt:append("internal,algorithm:patience")
@@ -83,28 +83,16 @@ opt.listchars = { tab = "⋅ ", trail = "·", nbsp = "␣" }
 opt.cmdheight = 1
 opt.showmode = false
 
--- Folding
+-- Folding (using indent method - simpler and more reliable)
 opt.foldmethod = "indent"
 opt.foldlevel = 99
+opt.foldenable = false -- Don't fold by default, but folds are available
 
 -- Disable netrw for oil.nvim
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
--- Performance: Disable built-in plugins for faster startup
-vim.g.loaded_matchit = 1
-vim.g.loaded_matchparen = 1
-vim.g.loaded_logiPat = 1
-vim.g.loaded_rrhelper = 1
-vim.g.loaded_tarPlugin = 1
-vim.g.loaded_man = 1
-vim.g.loaded_gzip = 1
-vim.g.loaded_zipPlugin = 1
-vim.g.loaded_2html_plugin = 1
-vim.g.loaded_shada_plugin = 1
-vim.g.loaded_spellfile_plugin = 1
-vim.g.loaded_tutor_mode_plugin = 1
-vim.g.loaded_remote_plugins = 1
+-- Note: Built-in plugin disabling is handled in lua/config/lazy.lua for consistency
 
 -- Performance: Improve diff algorithm
 vim.opt.diffopt:append("linematch:60")

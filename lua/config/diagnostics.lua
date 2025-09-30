@@ -91,13 +91,13 @@ local function toggle_diagnostics()
 	end
 end
 
--- Diagnostics keymaps with <leader>x* pattern
-vim.keymap.set("n", "<leader>xt", toggle_diagnostics, { desc = "Toggle diagnostics (enable/disable)" })
-vim.keymap.set("n", "<leader>xn", vim.diagnostic.goto_next, { desc = "Next diagnostic" })
-vim.keymap.set("n", "<leader>xp", vim.diagnostic.goto_prev, { desc = "Previous diagnostic" })
-vim.keymap.set("n", "<leader>xf", vim.diagnostic.open_float, { desc = "Open diagnostic float" })
-vim.keymap.set("n", "<leader>xl", vim.diagnostic.setloclist, { desc = "Set loclist with diagnostics" })
-vim.keymap.set("n", "<leader>xq", vim.diagnostic.setqflist, { desc = "Set quickfix with diagnostics" })
+-- Diagnostics keymaps with ge* pattern (diagnostic errors/issues)
+vim.keymap.set("n", "get", toggle_diagnostics, { desc = "Toggle diagnostics (enable/disable)" })
+vim.keymap.set("n", "gen", vim.diagnostic.goto_next, { desc = "Next diagnostic" })
+vim.keymap.set("n", "gep", vim.diagnostic.goto_prev, { desc = "Previous diagnostic" })
+vim.keymap.set("n", "gef", vim.diagnostic.open_float, { desc = "Open diagnostic float" })
+vim.keymap.set("n", "gel", vim.diagnostic.setloclist, { desc = "Set loclist with diagnostics" })
+vim.keymap.set("n", "geq", vim.diagnostic.setqflist, { desc = "Set quickfix with diagnostics" })
 
 -- Return the toggle function for external use
 return {

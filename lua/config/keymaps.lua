@@ -8,10 +8,28 @@ local keymap = vim.keymap.set
 keymap("i", "jj", "<Esc>", { desc = "Exit insert mode" })
 
 
--- File explorer
-keymap("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
-keymap("n", "<leader>-", "<CMD>Oil .<CR>", { desc = "Open current directory" })
-keymap("n", "<leader>e", "<CMD>Oil<CR>", { desc = "Open file explorer" })
+-- File explorer (Oil)
+keymap("n", "<leader>oo", "<CMD>Oil<CR>", { desc = "Open file explorer" })
+keymap("n", "<leader>op", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+keymap("n", "<leader>o-", "<CMD>Oil .<CR>", { desc = "Open current directory" })
+
+-- Quick access to config
+keymap("n", "<leader>ec", function()
+	vim.cmd("cd ~/.config/nvim")
+	require("fzf-lua").files({ cwd = "~/.config/nvim" })
+end, { desc = "Edit Neovim config" })
+
+keymap("n", "<leader>er", function()
+	-- Save current file if modified
+	if vim.bo.modified then
+		vim.cmd("write")
+	end
+	-- Reload config
+	vim.cmd("source $MYVIMRC")
+	-- Sync plugins
+	vim.cmd("Lazy sync")
+	vim.notify("Config reloaded and plugins synced!", vim.log.levels.INFO)
+end, { desc = "Reload config and sync plugins" })
 
 
 
@@ -78,3 +96,13 @@ keymap("t", "<Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
 -- Disable Q key (ex mode)
 keymap("n", "Q", "<nop>")
+
+-- ===============================================
+-- FOLD OPERATIONS (Restrict to essential only)
+-- ===============================================
+-- Keep: za (toggle), zA (toggle recursive), zd (delete), zD (delete recursive)
+-- Disable all other fold commands
+local fold_cmds = { "zc", "zC", "zo", "zO", "zm", "zM", "zr", "zR", "zv", "zx", "zX", "zf", "zE", "zi", "zn", "zN", "zj", "zk" }
+for _, cmd in ipairs(fold_cmds) do
+	keymap("n", cmd, "<nop>", { desc = "Disabled fold command" })
+end

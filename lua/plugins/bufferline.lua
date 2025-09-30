@@ -5,8 +5,8 @@ return {
 	event = "BufReadPost",
 	keys = {
 		{ "<leader>bi", "<Cmd>BufferLineTogglePin<CR>", desc = "Toggle pin buffer" },
-		{ "<leader>bn", "<Cmd>BufferLineCycleNext<CR>", desc = "Go to right buffer" },
-		{ "<leader>bp", "<Cmd>BufferLineCyclePrev<CR>", desc = "Go to left buffer" },
+		{ "<Tab>", "<Cmd>BufferLineCycleNext<CR>", desc = "Next buffer", mode = "n" },
+		{ "<S-Tab>", "<Cmd>BufferLineCyclePrev<CR>", desc = "Previous buffer", mode = "n" },
 		{ "<leader>bdd", "<cmd>bp|sp|bn|bd!<CR>", desc = "Delete current buffer (keep tab)" },
 		{ "<leader>bdi", "<Cmd>BufferLineGroupClose ungrouped<CR>", desc = "Delete non-pinned buffers" },
 		{ "<leader>bsv", "<cmd>vsplit<CR>", desc = "Split current buffer vertically" },
@@ -36,7 +36,7 @@ return {
 				max_name_length = 30,
 				max_prefix_length = 30,
 				truncate_names = true,
-				tab_size = 21,
+				tab_size = 18,
 				diagnostics = "nvim_lsp",
 				diagnostics_update_in_insert = false,
 				diagnostics_indicator = function(count, level, diagnostics_dict, context)

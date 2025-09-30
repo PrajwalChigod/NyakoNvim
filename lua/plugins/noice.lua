@@ -1,6 +1,6 @@
 return {
 	"folke/noice.nvim",
-	event = "VeryLazy",
+	event = { "CmdlineEnter", "VimEnter" },
 	dependencies = {
 		"MunifTanjim/nui.nvim",
 		"rcarriga/nvim-notify",
@@ -73,10 +73,10 @@ return {
 			},
 			views = {
 				notify = {
-					timeout = 2000, -- 2 seconds for regular notifications
+					timeout = 1500, -- 1.5 seconds for regular notifications
 				},
 				mini = {
-					timeout = 2000, -- 2 seconds for mini view
+					timeout = 1500, -- 1.5 seconds for mini view
 				},
 			},
 			routes = {
@@ -85,7 +85,7 @@ return {
 						event = "msg_show",
 						kind = "echo",
 					},
-					opts = { timeout = 2000 },
+					opts = { timeout = 1500 },
 					view = "notify",
 				},
 				{
@@ -93,17 +93,17 @@ return {
 						event = "msg_show",
 						kind = "echomsg",
 					},
-					opts = { timeout = 2000 },
+					opts = { timeout = 1500 },
 					view = "notify",
 				},
 				{
 					filter = { error = true },
-					opts = { timeout = 2000 }, -- 2 seconds for errors
+					opts = { timeout = 1500 }, -- 1.5 seconds for errors
 					view = "notify",
 				},
 				{
 					filter = { warning = true },
-					opts = { timeout = 2000 }, -- 2 seconds for warnings
+					opts = { timeout = 1500 }, -- 1.5 seconds for warnings
 					view = "notify",
 				},
 			},

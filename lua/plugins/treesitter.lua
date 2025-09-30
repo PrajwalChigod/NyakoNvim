@@ -49,7 +49,7 @@ return {
 					enable = true,
 					-- Disable slow treesitter highlight for large files
 					disable = function(lang, buf)
-						local max_filesize = 100 * 1024 -- 100 KB
+						local max_filesize = 50 * 1024 -- 50 KB (~1500 lines)
 						local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
 						if ok and stats and stats.size > max_filesize then
 							return true
@@ -72,27 +72,42 @@ return {
 					keymaps = {
 						init_selection = "<C-space>",
 						node_incremental = "<C-space>",
-						scope_incremental = "<C-space>",
+						scope_incremental = "<C-S-space>",
 						node_decremental = "<M-space>",
 					},
 				},
 
-				-- Treesitter-based folding
-				fold = {
-					enable = true,
-				},
 			})
 
-			-- Enable treesitter folding
-			vim.opt.foldmethod = "expr"
-			vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
-			vim.opt.foldenable = false -- Don't fold by default
+			-- Note: Folding is configured in options.lua using indent method
 		end,
 	},
 
 	{
 		"nvim-treesitter/nvim-treesitter-textobjects",
-		event = "VeryLazy",
+		keys = {
+			-- Text object selections
+			{ "af", mode = { "x", "o" } },
+			{ "if", mode = { "x", "o" } },
+			{ "ac", mode = { "x", "o" } },
+			{ "ic", mode = { "x", "o" } },
+			{ "ap", mode = { "x", "o" } },
+			{ "ip", mode = { "x", "o" } },
+			{ "ab", mode = { "x", "o" } },
+			{ "ib", mode = { "x", "o" } },
+			{ "al", mode = { "x", "o" } },
+			{ "il", mode = { "x", "o" } },
+			{ "aa", mode = { "x", "o" } },
+			{ "ia", mode = { "x", "o" } },
+			-- Movement
+			{ "]f" }, { "[f" }, { "]F" }, { "[F" },
+			{ "]c" }, { "[c" }, { "]C" }, { "[C" },
+			{ "]p" }, { "[p" }, { "]P" }, { "[P" },
+			{ "]k" }, { "[k" }, { "]K" }, { "[K" },
+			-- Swap
+			{ "<localleader>sp" }, { "<localleader>sP" },
+			{ "<localleader>sf" }, { "<localleader>sF" },
+		},
 		config = function()
 			require("nvim-treesitter.configs").setup({
 				textobjects = {

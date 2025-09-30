@@ -20,47 +20,26 @@ return {
 
 		wk.add({
 			-- ===============================================
-			-- NORMAL MODE KEYMAPS
+			-- NORMAL MODE
 			-- ===============================================
 
-			-- ===============================================
-			-- LSP & DEVELOPMENT (g* prefix)
-			-- ===============================================
-
-			-- LSP Navigation
-			{ "gd", desc = "Go to Definition (fzf)" },
-			{ "gD", desc = "Go to Declaration (fzf)" },
-			{ "gS", desc = "Document Symbols (fzf)" },
-			{ "gW", desc = "Workspace Symbols (fzf)" },
-
-			-- LSP References & Actions (gr* group)
-			{ "gr", group = "LSP References/Actions" },
-			{ "grr", desc = "References (fzf)" },
-			{ "gra", desc = "Code Actions (fzf)" },
-			{ "grn", desc = "Rename Symbol" },
-			{ "gri", desc = "Implementations (fzf)" },
-			{ "grt", desc = "Type Definitions (fzf)" },
 
 			-- LSP Information
 			{ "K", desc = "Hover Documentation" },
 			{ "gs", desc = "Signature Help" },
 
-			-- Code Tools
-			{ "gf", desc = "Format (file/range)" },
-			{ "gl", desc = "Run linter" },
+			-- Enhanced Movement
+			{ "J", desc = "Join lines (keep cursor)" },
+			{ "n", desc = "Next search (centered)" },
+			{ "N", desc = "Previous search (centered)" },
+			{ "<C-d>", desc = "Page down (centered)" },
+			{ "<C-u>", desc = "Page up (centered)" },
 
-			-- Comment Operations (gc* group)
-			{ "gc", group = "Comment Operations" },
-			{ "gcc", desc = "Toggle line comment" },
-			{ "gcf", desc = "Comment function" },
-			{ "gbc", desc = "Toggle block comment" },
-			{ "gcO", desc = "Add comment above" },
-			{ "gco", desc = "Add comment below" },
-			{ "gcA", desc = "Add comment at end of line" },
-
-			-- ===============================================
-			-- NAVIGATION & MOVEMENT
-			-- ===============================================
+			-- Window Navigation
+			{ "<C-h>", desc = "Left split" },
+			{ "<C-j>", desc = "Bottom split" },
+			{ "<C-k>", desc = "Top split" },
+			{ "<C-l>", desc = "Right split" },
 
 			-- Flash Navigation
 			{ "s", desc = "Flash jump", mode = { "n", "x", "o" } },
@@ -68,179 +47,197 @@ return {
 			{ "r", desc = "Remote flash", mode = "o" },
 			{ "R", desc = "Treesitter search", mode = { "o", "x" } },
 
-			-- Window Navigation
-			{ "<C-h>", desc = "Go to left split" },
-			{ "<C-j>", desc = "Go to bottom split" },
-			{ "<C-k>", desc = "Go to top split" },
-			{ "<C-l>", desc = "Go to right split" },
-
-			-- Enhanced Movement
-			{ "n", desc = "Next search result (centered)" },
-			{ "N", desc = "Previous search result (centered)" },
-			{ "<C-d>", desc = "Page down (centered)" },
-			{ "<C-u>", desc = "Page up (centered)" },
-			{ "J", desc = "Join lines (keep cursor position)" },
-
-			-- File Explorer
-			{ "-", desc = "Open parent directory (Oil)" },
-
-			-- ===============================================
-			-- TEXT OBJECTS
-			-- ===============================================
-			{ "ih", desc = "Select git hunk", mode = { "o", "x" } },
-
-			-- ===============================================
-			-- TREESITTER SELECTIONS
-			-- ===============================================
+			-- Treesitter Selection
 			{ "<C-space>", desc = "Init/Increment selection" },
 			{ "<C-S-space>", desc = "Scope incremental" },
 			{ "<M-space>", desc = "Node decremental" },
 
+			-- Text Objects
+			{ "ih", desc = "Git hunk", mode = { "o", "x" } },
+
+			-- Buffer Navigation
+			{ "<Tab>", desc = "Next buffer" },
+			{ "<S-Tab>", desc = "Previous buffer" },
+
 			-- ===============================================
-			-- VISUAL MODE KEYMAPS
+			-- LSP & DEVELOPMENT (g* prefix)
 			-- ===============================================
-			-- Movement & Editing
+
+			-- Navigation
+			{ "gd", desc = "Definition" },
+			{ "gD", desc = "Declaration" },
+			{ "gS", desc = "Document Symbols" },
+			{ "gW", desc = "Workspace Symbols" },
+
+			-- References & Actions (gr*)
+			{ "gr", group = "References/Actions" },
+			{ "grr", desc = "References" },
+			{ "gra", desc = "Code Actions" },
+			{ "grn", desc = "Rename" },
+			{ "gri", desc = "Implementations" },
+			{ "grt", desc = "Type Definitions" },
+
+			-- Code Tools
+			{ "gf", desc = "Format" },
+			{ "gl", desc = "Lint" },
+
+			-- Diagnostics (ge*)
+			{ "ge", group = "Diagnostics" },
+			{ "get", desc = "Toggle" },
+			{ "gen", desc = "Next" },
+			{ "gep", desc = "Previous" },
+			{ "gef", desc = "Float" },
+			{ "gel", desc = "Loclist" },
+			{ "geq", desc = "Quickfix" },
+
+			-- Comments (gc*)
+			{ "gc", group = "Comment" },
+			{ "gcc", desc = "Toggle line" },
+			{ "gcf", desc = "Function" },
+			{ "gbc", desc = "Block" },
+			{ "gcO", desc = "Above" },
+			{ "gco", desc = "Below" },
+			{ "gcA", desc = "End of line" },
+
+			-- ===============================================
+			-- VISUAL MODE
+			-- ===============================================
+
 			{ "J", desc = "Move line down", mode = "v" },
 			{ "K", desc = "Move line up", mode = "v" },
 			{ "<", desc = "Indent left", mode = "v" },
 			{ ">", desc = "Indent right", mode = "v" },
-
-			-- Comments
-			{ "gc", desc = "Comment selection", mode = "v" },
-			{ "gb", desc = "Block comment selection", mode = "v" },
-
-			-- Treesitter (visual mode)
+			{ "gc", desc = "Comment", mode = "v" },
+			{ "gb", desc = "Block comment", mode = "v" },
 			{ "<C-space>", desc = "Increment selection", mode = "v" },
 			{ "<C-S-space>", desc = "Scope incremental", mode = "v" },
 			{ "<M-space>", desc = "Node decremental", mode = "v" },
 
-
 			-- ===============================================
-			-- INSERT MODE KEYMAPS
+			-- INSERT MODE
 			-- ===============================================
 
-			-- Mode Switch
-			{ "jj", desc = "Exit insert mode", mode = "i" },
+			{ "jj", desc = "Exit insert", mode = "i" },
 
-			-- LSP Actions (<C-g>* group)
-			{ "<C-g>K", desc = "Hover Documentation", mode = "i" },
-			{ "<C-g>s", desc = "Signature Help", mode = "i" },
-			{ "<C-g>f", desc = "Format File", mode = "i" },
-			{ "<C-g>l", desc = "Run Linter", mode = "i" },
+			-- LSP Actions (<C-g>*)
+			{ "<C-g>K", desc = "Hover", mode = "i" },
+			{ "<C-g>s", desc = "Signature", mode = "i" },
+			{ "<C-g>f", desc = "Format", mode = "i" },
+			{ "<C-g>l", desc = "Lint", mode = "i" },
 
-			-- Surround (<C-s>* group)
+			-- Surround (<C-s>*)
 			{ "<C-s>s", desc = "Surround selection", mode = "i" },
 			{ "<C-s>S", desc = "Surround line", mode = "i" },
 
-			-- Completion (Blink.cmp)
-			{ "<C-c>", desc = "Toggle completion", mode = "i" },
-			{ "<C-n>", desc = "Next completion item", mode = "i" },
-			{ "<C-p>", desc = "Previous completion item", mode = "i" },
-			{ "<C-d>", desc = "Scroll documentation down", mode = "i" },
-			{ "<C-f>", desc = "Scroll documentation up", mode = "i" },
+			-- Completion
+			{ "<C-n>", desc = "Next completion", mode = "i" },
+			{ "<C-p>", desc = "Previous completion", mode = "i" },
+			{ "<C-d>", desc = "Scroll doc down", mode = "i" },
+			{ "<C-f>", desc = "Scroll doc up", mode = "i" },
 			{ "<CR>", desc = "Accept completion", mode = "i" },
-			{ "<C-y>", desc = "Accept completion (alternative)", mode = "i" },
-			{ "<Tab>", desc = "Next snippet/completion", mode = "i" },
-			{ "<S-Tab>", desc = "Previous snippet/completion", mode = "i" },
+			{ "<C-Space>", desc = "Accept completion", mode = "i" },
+			{ "<Tab>", desc = "Next snippet", mode = "i" },
+			{ "<S-Tab>", desc = "Previous snippet", mode = "i" },
 
 			-- ===============================================
-			-- COMMAND MODE KEYMAPS
+			-- COMMAND MODE
 			-- ===============================================
 
-			-- Flash in command mode
 			{ "<c-s>", desc = "Toggle flash search", mode = "c" },
 
 			-- ===============================================
-			-- TERMINAL MODE KEYMAPS
+			-- TERMINAL MODE
 			-- ===============================================
 
-			{ "<Esc>", desc = "Exit terminal mode", mode = "t" },
+			{ "<Esc>", desc = "Exit terminal", mode = "t" },
 
 			-- ===============================================
-			-- LEADER KEYMAPS
+			-- LEADER (<leader>)
 			-- ===============================================
 
-			-- File & Navigation
-			{ "<leader>e", desc = "Open file explorer (Oil)" },
+			-- Oil File Explorer (<leader>o)
+			{ "<leader>o", group = "Oil" },
+			{ "<leader>oo", desc = "File explorer" },
+			{ "<leader>op", desc = "Parent directory" },
+			{ "<leader>o-", desc = "Current directory" },
 
-			-- FZF Find Operations
-			{ "<leader>f", group = "Fzf Find" },
+			-- Editor (<leader>e)
+			{ "<leader>e", group = "Editor" },
+			{ "<leader>ec", desc = "Edit config" },
+			{ "<leader>er", desc = "Reload config & sync plugins" },
 
-			-- Tab Management
+			-- Find (<leader>f)
+			{ "<leader>f", group = "Find" },
+
+			-- Tabs (<leader>t)
 			{ "<leader>t", group = "Tabs" },
 			{ "<leader>tt", desc = "New tab" },
-			{ "<leader>tf", desc = "New tab with file picker" },
-			{ "<leader>tx", desc = "Close current tab" },
-			{ "<leader>tb", desc = "Open buffer in new tab" },
+			{ "<leader>tf", desc = "New tab with picker" },
+			{ "<leader>tx", desc = "Close tab" },
+			{ "<leader>tb", desc = "Buffer in new tab" },
 
-			-- Buffer Management
+			-- Buffer (<leader>b)
 			{ "<leader>b", group = "Buffer" },
-			{ "<leader>bi", desc = "Toggle Pin Buffer" },
-			{ "<leader>bn", desc = "Go to Right Buffer" },
-			{ "<leader>bp", desc = "Go to Left Buffer" },
-			{ "<leader>bd", group = "Buffer Delete" },
-			{ "<leader>bdd", desc = "Delete Current Buffer" },
-			{ "<leader>bdi", desc = "Delete Non-pinned Buffers" },
-			{ "<leader>bds", desc = "Delete All Non-active Buffers" },
-			{ "<leader>bs", group = "Buffer Split" },
-			{ "<leader>bsv", desc = "Split Vertically" },
-			{ "<leader>bsh", desc = "Split Horizontally" },
+			{ "<leader>bi", desc = "Pin/Unpin" },
+			{ "<leader>bd", group = "Delete" },
+			{ "<leader>bdd", desc = "Current" },
+			{ "<leader>bdi", desc = "Non-pinned" },
+			{ "<leader>bds", desc = "Non-active" },
+			{ "<leader>bs", group = "Split" },
+			{ "<leader>bsv", desc = "Vertical" },
+			{ "<leader>bsh", desc = "Horizontal" },
 
-			-- Debug Operations
+			-- Debug (<leader>d)
 			{ "<leader>d", group = "Debug" },
-			{ "<leader>db", desc = "Toggle breakpoint" },
-			{ "<leader>dB", desc = "Set conditional breakpoint" },
+			{ "<leader>db", desc = "Breakpoint" },
+			{ "<leader>dB", desc = "Conditional breakpoint" },
 			{ "<leader>dc", desc = "Continue" },
 			{ "<leader>di", desc = "Step into" },
 			{ "<leader>do", desc = "Step over" },
 			{ "<leader>dO", desc = "Step out" },
-			{ "<leader>dr", desc = "Run/Start debugging" },
-			{ "<leader>dt", desc = "Terminate debug session" },
-			{ "<leader>du", desc = "Toggle DAP UI" },
-			{ "<leader>de", desc = "Evaluate expression" },
+			{ "<leader>dr", desc = "Run" },
+			{ "<leader>dt", desc = "Terminate" },
+			{ "<leader>du", desc = "UI" },
+			{ "<leader>de", desc = "Evaluate" },
 
-			-- Diagnostics Operations
-			{ "<leader>x", group = "Diagnostics" },
-			{ "<leader>xt", desc = "Toggle diagnostics (enable/disable)" },
-			{ "<leader>xn", desc = "Next diagnostic" },
-			{ "<leader>xp", desc = "Previous diagnostic" },
-			{ "<leader>xf", desc = "Open diagnostic float" },
-			{ "<leader>xl", desc = "Set loclist with diagnostics" },
-			{ "<leader>xq", desc = "Set quickfix with diagnostics" },
-
-			-- Git Operations
+			-- Git (<leader>g)
 			{ "<leader>g", group = "Git" },
-			{ "<leader>gs", desc = "Stage Hunk" },
-			{ "<leader>gr", desc = "Reset Hunk" },
-			{ "<leader>gp", desc = "Preview Hunk" },
-			{ "<leader>gb", desc = "Blame Line" },
-			{ "<leader>gd", desc = "Diff This" },
-			{ "<leader>gS", desc = "Stage Buffer" },
-			{ "<leader>gR", desc = "Reset Buffer" },
-			{ "<leader>gu", desc = "Undo Stage Hunk" },
-			{ "<leader>gD", desc = "Diff This ~" },
-			{ "<leader>gt", desc = "Toggle Signs" },
-			{ "<leader>glb", desc = "Toggle Line Blame" },
-			{ "<leader>gld", desc = "Toggle Deleted" },
+			{ "<leader>gs", desc = "Stage hunk" },
+			{ "<leader>gr", desc = "Reset hunk" },
+			{ "<leader>gp", desc = "Preview hunk" },
+			{ "<leader>gb", desc = "Blame line" },
+			{ "<leader>gd", desc = "Diff this" },
+			{ "<leader>gS", desc = "Stage buffer" },
+			{ "<leader>gR", desc = "Reset buffer" },
+			{ "<leader>gu", desc = "Undo stage" },
+			{ "<leader>gD", desc = "Diff this ~" },
+			{ "<leader>gt", desc = "Toggle signs" },
+			{ "<leader>glb", desc = "Toggle line blame" },
+			{ "<leader>gld", desc = "Toggle deleted" },
+
+			-- Session (<leader>q)
+			{ "<leader>q", group = "Session" },
+			{ "<leader>qs", desc = "Restore session" },
+			{ "<leader>ql", desc = "Restore last session" },
+			{ "<leader>qd", desc = "Stop session recording" },
 
 			-- ===============================================
-			-- LOCALLEADER KEYMAPS
+			-- LOCALLEADER (<localleader>)
 			-- ===============================================
 
-			-- Treesitter Text Objects (Swap/Rearrange)
+			-- Swap (<localleader>s)
 			{ "<localleader>s", group = "Swap" },
-			{ "<localleader>sp", desc = "Swap next parameter" },
-			{ "<localleader>sP", desc = "Swap previous parameter" },
-			{ "<localleader>sf", desc = "Swap next function" },
-			{ "<localleader>sF", desc = "Swap previous function" },
+			{ "<localleader>sp", desc = "Next parameter" },
+			{ "<localleader>sP", desc = "Previous parameter" },
+			{ "<localleader>sf", desc = "Next function" },
+			{ "<localleader>sF", desc = "Previous function" },
 
-			-- Terminal Operations
+			-- Terminal (<localleader>t)
 			{ "<localleader>t", group = "Terminal" },
-			{ "<localleader>tf", desc = "Toggle floating terminal" },
-			{ "<localleader>th", desc = "Toggle horizontal terminal" },
-			{ "<localleader>tv", desc = "Toggle vertical terminal" },
-			{ "<localleader>tt", desc = "Toggle tab terminal" },
-
+			{ "<localleader>tf", desc = "Floating" },
+			{ "<localleader>th", desc = "Horizontal" },
+			{ "<localleader>tv", desc = "Vertical" },
+			{ "<localleader>tt", desc = "Tab" },
 		})
 	end,
 }

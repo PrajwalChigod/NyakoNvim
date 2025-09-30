@@ -117,9 +117,11 @@ return {
 		},
 	},
 	config = function()
-		local fzf = require("fzf-lua")
-		local actions = require("fzf-lua.actions")
-		fzf.setup({
+		-- Defer heavy setup until first actual use
+		vim.defer_fn(function()
+			local fzf = require("fzf-lua")
+			local actions = require("fzf-lua.actions")
+			fzf.setup({
 			-- Global options
 			winopts = {
 				height = 0.85,
@@ -133,7 +135,7 @@ return {
 					wrap = "nowrap",
 					hidden = "nohidden",
 					vertical = "down:45%",
-					horizontal = "right:60%",
+					horizontal = "right:50%",
 					layout = "flex",
 					flip_columns = 120,
 					title = true,
@@ -217,9 +219,9 @@ return {
 				git_icons = true,
 				file_icons = true,
 				color_icons = true,
-				find_opts = [[-type f -not -path '*/\.git/*' -not -path '*/node_modules/*' -not -path '*/.next/*' -not -path '*/target/*' -not -path '*/build/*' -printf '%P\n']],
-				rg_opts = "--color=never --files --hidden --follow -g '!.git' -g '!node_modules' -g '!.next' -g '!target' -g '!build' -g '!*.pyc' -g '!__pycache__'",
-				fd_opts = "--color=never --type f --hidden --follow --exclude .git --exclude node_modules --exclude .next --exclude target --exclude build --exclude __pycache__ --exclude '*.pyc'",
+				find_opts = [[-type f -not -path '*/\.git/*' -not -path '*/node_modules/*' -not -path '*/.next/*' -not -path '*/target/*' -not -path '*/build/*' -not -path '*/dist/*' -not -path '*/.venv/*' -not -path '*/venv/*' -not -path '*/.cache/*' -printf '%P\n']],
+				rg_opts = "--color=never --files --hidden --follow -g '!.git' -g '!node_modules' -g '!.next' -g '!target' -g '!build' -g '!dist' -g '!.venv' -g '!venv' -g '!.cache' -g '!*.pyc' -g '!__pycache__'",
+				fd_opts = "--color=never --type f --hidden --follow --exclude .git --exclude node_modules --exclude .next --exclude target --exclude build --exclude dist --exclude .venv --exclude venv --exclude .cache --exclude __pycache__ --exclude '*.pyc'",
 			},
 			git = {
 				files = {
@@ -254,7 +256,7 @@ return {
 				file_icons = true,
 				color_icons = true,
 				grep_opts = "--binary-files=without-match --line-number --recursive --color=auto --perl-regexp -e",
-				rg_opts = "--column --line-number --no-heading --color=always --smart-case --max-columns=4096 -e",
+				rg_opts = "--column --line-number --no-heading --color=always --smart-case --max-columns=512 -e",
 			},
 			buffers = {
 				prompt = "Buffers❯ ",
@@ -267,8 +269,9 @@ return {
 				prompt = "History❯ ",
 				cwd_only = false,
 				stat_file = true,
-				include_current_session = true,
+				include_current_session = false, -- Exclude current session for faster results
 			},
 		})
+		end, 0)
 	end,
 }
