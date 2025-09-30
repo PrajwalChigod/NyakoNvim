@@ -39,19 +39,7 @@ return {
 			post_hook = nil,
 		})
 
-		-- Additional useful keymaps for enhanced commenting workflows
-		local api = require("Comment.api")
-
-		-- Comment entire function/class using treesitter text objects
-		vim.keymap.set("n", "gcf", function()
-			api.call("toggle.linewise", "g@")(vim.fn.getline(".") and "af" or "")
-		end, { desc = "Comment function" })
-
-		vim.keymap.set("n", "gcc", function()
-			api.call("toggle.linewise", "g@")(vim.fn.getline(".") and "ac" or "")
-		end, { desc = "Comment class" })
-
-		-- Visual mode enhancement for better block commenting
+		-- Visual mode commenting
 		vim.keymap.set("v", "gc", "<Plug>(comment_toggle_linewise_visual)", { desc = "Comment selection" })
 		vim.keymap.set("v", "gb", "<Plug>(comment_toggle_blockwise_visual)", { desc = "Block comment selection" })
 	end,

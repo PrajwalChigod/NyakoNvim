@@ -12,37 +12,49 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 	end,
 })
 
+-- Helper: Check if buffer is too large (>1MB)
+local function is_large_buffer(bufnr)
+	bufnr = bufnr or vim.api.nvim_get_current_buf()
+	local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(bufnr))
+	return ok and stats and stats.size > 1024 * 1024
+end
+
 -- Defer non-critical autocommands for faster startup
 vim.defer_fn(function()
-	-- Remove trailing whitespace on save
+	-- Combined BufWritePre: remove trailing whitespace and auto-create directories
 	vim.api.nvim_create_autocmd("BufWritePre", {
 		group = general_group,
 		pattern = "*",
-		callback = function()
+		callback = function(event)
+			-- Skip for large files
+			if is_large_buffer(event.buf) then
+				return
+			end
+
+			-- Remove trailing whitespace
 			local save_cursor = vim.fn.getpos(".")
 			pcall(function()
 				vim.cmd([[%s/\s\+$//e]])
 			end)
 			vim.fn.setpos(".", save_cursor)
-		end,
-	})
 
-	-- Auto-create directories when saving files
-	vim.api.nvim_create_autocmd("BufWritePre", {
-		group = general_group,
-		callback = function(event)
-			if event.match:match("^%w%w+:[\\/][\\/]") then
-				return
+			-- Auto-create directories when saving files
+			if not event.match:match("^%w%w+:[\\/][\\/]") then
+				local file = vim.uv.fs_realpath(event.match) or event.match
+				vim.fn.mkdir(vim.fn.fnamemodify(file, ":p:h"), "p")
 			end
-			local file = vim.uv.fs_realpath(event.match) or event.match
-			vim.fn.mkdir(vim.fn.fnamemodify(file, ":p:h"), "p")
 		end,
 	})
 
 	-- Remember cursor position
 	vim.api.nvim_create_autocmd("BufReadPost", {
 		group = general_group,
-		callback = function()
+		callback = function(event)
+			-- Skip for large files
+			if is_large_buffer(event.buf) then
+				return
+			end
+
 			local mark = vim.api.nvim_buf_get_mark(0, '"')
 			local lcount = vim.api.nvim_buf_line_count(0)
 			if mark[1] > 0 and mark[1] <= lcount then
@@ -52,11 +64,44 @@ vim.defer_fn(function()
 	})
 end, 50)
 
--- Auto-resize splits when window is resized
+-- Auto-resize splits when window is resized (debounced to prevent rapid redraws)
+local resize_timer = nil
 vim.api.nvim_create_autocmd("VimResized", {
 	group = general_group,
 	callback = function()
-		vim.cmd("tabdo wincmd =")
+		if resize_timer then
+			vim.fn.timer_stop(resize_timer)
+		end
+		resize_timer = vim.fn.timer_start(100, function()
+			vim.cmd("tabdo wincmd =")
+			resize_timer = nil
+		end)
+	end,
+})
+
+-- Warn before opening large files (>1MB)
+vim.api.nvim_create_autocmd("BufReadPre", {
+	group = general_group,
+	callback = function(event)
+		local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(event.buf))
+		if ok and stats and stats.size > 1024 * 1024 then
+			local size_mb = string.format("%.2f", stats.size / (1024 * 1024))
+			vim.notify(
+				string.format("Large file detected (%s MB). Performance may be affected.", size_mb),
+				vim.log.levels.WARN
+			)
+		end
+	end,
+})
+
+-- Clean old undofiles (>10 days) on startup
+vim.api.nvim_create_autocmd("VimEnter", {
+	group = general_group,
+	callback = function()
+		local undodir = vim.fn.expand("~/.vim/undodir")
+		if vim.fn.isdirectory(undodir) == 1 then
+			vim.fn.system(string.format("find %s -type f -mtime +10 -delete", undodir))
+		end
 	end,
 })
 

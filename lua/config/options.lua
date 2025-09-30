@@ -83,9 +83,10 @@ opt.listchars = { tab = "⋅ ", trail = "·", nbsp = "␣" }
 opt.cmdheight = 1
 opt.showmode = false
 
--- Folding
+-- Folding (using indent method - simpler and more reliable)
 opt.foldmethod = "indent"
 opt.foldlevel = 99
+opt.foldenable = false -- Don't fold by default, but folds are available
 
 -- Disable netrw for oil.nvim
 vim.g.loaded_netrw = 1

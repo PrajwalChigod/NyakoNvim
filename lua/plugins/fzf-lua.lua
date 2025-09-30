@@ -117,9 +117,11 @@ return {
 		},
 	},
 	config = function()
-		local fzf = require("fzf-lua")
-		local actions = require("fzf-lua.actions")
-		fzf.setup({
+		-- Defer heavy setup until first actual use
+		vim.defer_fn(function()
+			local fzf = require("fzf-lua")
+			local actions = require("fzf-lua.actions")
+			fzf.setup({
 			-- Global options
 			winopts = {
 				height = 0.85,
@@ -267,8 +269,9 @@ return {
 				prompt = "History❯ ",
 				cwd_only = false,
 				stat_file = true,
-				include_current_session = true,
+				include_current_session = false, -- Exclude current session for faster results
 			},
 		})
+		end, 0)
 	end,
 }

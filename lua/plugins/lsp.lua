@@ -9,68 +9,66 @@ return {
 			-- Direct LSP configuration without mason-lspconfig
 			-- Mason only provides the LSP binaries, we configure them manually
 
-			-- LSP keymaps using default Neovim pattern but with fzf-lua
-			local function setup_lsp_keymaps(bufnr)
-				local opts = { buffer = bufnr, silent = true }
+			-- LSP keymaps using LspAttach autocmd (modern Neovim 0.8+ pattern)
+			vim.api.nvim_create_autocmd("LspAttach", {
+				group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
+				callback = function(event)
+					local bufnr = event.buf
+					local opts = { buffer = bufnr, silent = true }
 
-				-- Override default LSP keymaps to use fzf-lua
-				vim.keymap.set("n", "grr", function()
-					require("fzf-lua").lsp_references({ jump1 = false })
-				end, vim.tbl_extend("force", opts, { desc = "LSP References (fzf)" }))
+					-- Override default LSP keymaps to use fzf-lua
+					vim.keymap.set("n", "grr", function()
+						require("fzf-lua").lsp_references({ jump1 = false })
+					end, vim.tbl_extend("force", opts, { desc = "LSP References (fzf)" }))
 
-				vim.keymap.set("n", "gra", function()
-					require("fzf-lua").lsp_code_actions()
-				end, vim.tbl_extend("force", opts, { desc = "LSP Code Actions (fzf)" }))
+					vim.keymap.set("n", "gra", function()
+						require("fzf-lua").lsp_code_actions()
+					end, vim.tbl_extend("force", opts, { desc = "LSP Code Actions (fzf)" }))
 
-				vim.keymap.set("n", "grn", vim.lsp.buf.rename, vim.tbl_extend("force", opts, { desc = "LSP Rename" }))
+					vim.keymap.set("n", "grn", vim.lsp.buf.rename, vim.tbl_extend("force", opts, { desc = "LSP Rename" }))
 
-				vim.keymap.set("n", "gri", function()
-					require("fzf-lua").lsp_implementations({ jump1 = false })
-				end, vim.tbl_extend("force", opts, { desc = "LSP Implementations (fzf)" }))
+					vim.keymap.set("n", "gri", function()
+						require("fzf-lua").lsp_implementations({ jump1 = false })
+					end, vim.tbl_extend("force", opts, { desc = "LSP Implementations (fzf)" }))
 
-				vim.keymap.set("n", "grt", function()
-					require("fzf-lua").lsp_typedefs({ jump1 = false })
-				end, vim.tbl_extend("force", opts, { desc = "LSP Type Definitions (fzf)" }))
+					vim.keymap.set("n", "grt", function()
+						require("fzf-lua").lsp_typedefs({ jump1 = false })
+					end, vim.tbl_extend("force", opts, { desc = "LSP Type Definitions (fzf)" }))
 
-				-- Additional useful LSP keymaps
-				vim.keymap.set("n", "gd", function()
-					require("fzf-lua").lsp_definitions()
-				end, vim.tbl_extend("force", opts, { desc = "LSP Definitions (fzf)" }))
+					-- Additional useful LSP keymaps
+					vim.keymap.set("n", "gd", function()
+						require("fzf-lua").lsp_definitions()
+					end, vim.tbl_extend("force", opts, { desc = "LSP Definitions (fzf)" }))
 
-				vim.keymap.set("n", "gD", function()
-					require("fzf-lua").lsp_declarations({ jump1 = false })
-				end, vim.tbl_extend("force", opts, { desc = "LSP Declarations (fzf)" }))
+					vim.keymap.set("n", "gD", function()
+						require("fzf-lua").lsp_declarations({ jump1 = false })
+					end, vim.tbl_extend("force", opts, { desc = "LSP Declarations (fzf)" }))
 
-				vim.keymap.set("n", "gS", function()
-					require("fzf-lua").lsp_document_symbols()
-				end, vim.tbl_extend("force", opts, { desc = "LSP Document Symbols (fzf)" }))
+					vim.keymap.set("n", "gS", function()
+						require("fzf-lua").lsp_document_symbols()
+					end, vim.tbl_extend("force", opts, { desc = "LSP Document Symbols (fzf)" }))
 
-				vim.keymap.set("n", "gW", function()
-					require("fzf-lua").lsp_workspace_symbols()
-				end, vim.tbl_extend("force", opts, { desc = "LSP Workspace Symbols (fzf)" }))
+					vim.keymap.set("n", "gW", function()
+						require("fzf-lua").lsp_workspace_symbols()
+					end, vim.tbl_extend("force", opts, { desc = "LSP Workspace Symbols (fzf)" }))
 
-				-- Built-in LSP functions
-				vim.keymap.set("n", "K", vim.lsp.buf.hover, vim.tbl_extend("force", opts, { desc = "LSP Hover" }))
-				vim.keymap.set(
-					"n",
-					"gs",
-					vim.lsp.buf.signature_help,
-					vim.tbl_extend("force", opts, { desc = "LSP Signature Help" })
-				)
+					-- Built-in LSP functions
+					vim.keymap.set("n", "K", vim.lsp.buf.hover, vim.tbl_extend("force", opts, { desc = "LSP Hover" }))
+					vim.keymap.set(
+						"n",
+						"gs",
+						vim.lsp.buf.signature_help,
+						vim.tbl_extend("force", opts, { desc = "LSP Signature Help" })
+					)
 
-				-- Insert mode LSP keymaps with <C-g>* pattern
-				-- Keep only useful actions that don't break insert mode flow
-				vim.keymap.set("i", "<C-g>K", vim.lsp.buf.hover, vim.tbl_extend("force", opts, { desc = "LSP Hover (insert mode)" }))
+					-- Insert mode LSP keymaps with <C-g>* pattern
+					vim.keymap.set("i", "<C-g>K", vim.lsp.buf.hover, vim.tbl_extend("force", opts, { desc = "LSP Hover (insert mode)" }))
+					vim.keymap.set("i", "<C-g>s", vim.lsp.buf.signature_help, vim.tbl_extend("force", opts, { desc = "LSP Signature Help (insert mode)" }))
 
-				vim.keymap.set("i", "<C-g>s", vim.lsp.buf.signature_help, vim.tbl_extend("force", opts, { desc = "LSP Signature Help (insert mode)" }))
-
-			end
-
-			-- On attach function
-			local function on_attach(client, bufnr)
-				setup_lsp_keymaps(bufnr)
-				vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
-			end
+					-- Set omnifunc for buffer
+					vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
+				end,
+			})
 
 			-- Enhanced capabilities with completion (cached globally for all servers)
 			local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -221,7 +219,6 @@ return {
 				cmd = { "lua-language-server" },
 				filetypes = { "lua" },
 				root_markers = { { ".luarc.json", ".luarc.jsonc" }, ".git" },
-				on_attach = on_attach,
 				capabilities = capabilities,
 				settings = servers.lua_ls.settings,
 			}
@@ -231,7 +228,6 @@ return {
 				cmd = { "basedpyright-langserver", "--stdio" },
 				filetypes = { "python" },
 				root_markers = { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", "Pipfile", ".git" },
-				on_attach = on_attach,
 				capabilities = capabilities,
 				settings = servers.basedpyright.settings,
 			}
@@ -241,7 +237,6 @@ return {
 				cmd = { "typescript-language-server", "--stdio" },
 				filetypes = { "javascript", "typescript", "javascriptreact", "typescriptreact" },
 				root_markers = { "tsconfig.json", "package.json", ".git" },
-				on_attach = on_attach,
 				capabilities = capabilities,
 				settings = servers.ts_ls.settings,
 			}
@@ -251,7 +246,6 @@ return {
 				cmd = { "rust-analyzer" },
 				filetypes = { "rust" },
 				root_markers = { "Cargo.toml", ".git" },
-				on_attach = on_attach,
 				capabilities = capabilities,
 				settings = servers.rust_analyzer.settings,
 			}
@@ -269,7 +263,6 @@ return {
 					"configure.ac",
 					".git",
 				},
-				on_attach = on_attach,
 				capabilities = capabilities,
 				init_options = servers.clangd.init_options,
 			}
@@ -279,7 +272,6 @@ return {
 				cmd = { "zls" },
 				filetypes = { "zig" },
 				root_markers = { "build.zig", ".git" },
-				on_attach = on_attach,
 				capabilities = capabilities,
 			}
 
@@ -288,7 +280,6 @@ return {
 				cmd = { "bash-language-server", "start" },
 				filetypes = { "sh", "bash" },
 				root_markers = { ".git" },
-				on_attach = on_attach,
 				capabilities = capabilities,
 				settings = servers.bashls.settings,
 			}
@@ -298,7 +289,6 @@ return {
 				cmd = { "taplo", "lsp", "stdio" },
 				filetypes = { "toml" },
 				root_markers = { ".git" },
-				on_attach = on_attach,
 				capabilities = capabilities,
 				settings = servers.taplo.settings,
 			}
