@@ -53,7 +53,7 @@ sudo pacman -S bat ripgrep fzf fd base-devel
 
 2. **Clone this repository:**
    ```bash
-   git clone <repository-url> ~/.config/nvim
+   git clone https://github.com/PrajwalChigod/nvim.git ~/.config/nvim
    ```
 
 3. **Start Neovim:**

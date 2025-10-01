@@ -28,35 +28,6 @@
 | `<leader>tb` | Normal | Open buffer in new tab |
 | `<leader>tf` | Normal | New tab with file picker |
 
-## File Explorer (Oil)
-
-| Key | Mode | Description |
-|-----|------|-------------|
-| `<leader>oo` | Normal | Open file explorer |
-| `<leader>op` | Normal | Open parent directory |
-| `<leader>o-` | Normal | Open current directory |
-
-## Fuzzy Finding (FZF)
-
-| Key | Mode | Description |
-|-----|------|-------------|
-| `<leader>ff` | Normal | Find files |
-| `<leader>fg` | Normal | Find git files |
-| `<leader>fo` | Normal | Find recent files |
-| `<leader>fb` | Normal | Find buffers |
-| `<leader>fw` | Normal | Find word under cursor |
-| `<leader>fW` | Normal | Find WORD under cursor |
-| `<leader>fr` | Normal | Live grep |
-| `<leader>fs` | Normal | Grep current buffer |
-| `<leader>fh` | Normal | Help tags |
-| `<leader>fk` | Normal | Keymaps |
-| `<leader>fc` | Normal | Commands |
-| `<leader>f:` | Normal | Command history |
-| `<leader>f/` | Normal | Search history |
-| `<leader>fm` | Normal | Marks |
-| `<leader>fj` | Normal | Jumps |
-| `<leader>fl` | Normal | Resume last search |
-
 ## LSP Operations
 
 ### Navigation
@@ -103,6 +74,110 @@
 |-----|------|-------------|
 | `gf` | Normal/Visual | Format file/range |
 | `gl` | Normal | Run linter |
+
+## Window Management
+
+### Navigation (Configured Shortcuts)
+| Key | Mode | Description |
+|-----|------|-------------|
+| `<C-h>` | Normal | Go to left split |
+| `<C-j>` | Normal | Go to bottom split |
+| `<C-k>` | Normal | Go to top split |
+| `<C-l>` | Normal | Go to right split |
+
+### Default Window Navigation (`<C-w>` prefix)
+| Key | Mode | Description |
+|-----|------|-------------|
+| `<C-w>h` | Normal | Go to left window |
+| `<C-w>j` | Normal | Go to down window |
+| `<C-w>k` | Normal | Go to up window |
+| `<C-w>l` | Normal | Go to right window |
+| `<C-w>w` | Normal | Cycle to next window |
+| `<C-w>W` | Normal | Cycle to previous window |
+| `<C-w>t` | Normal | Go to top-left window |
+| `<C-w>b` | Normal | Go to bottom-right window |
+| `<C-w>p` | Normal | Go to previous window |
+
+### Window Splitting
+| Key | Mode | Description |
+|-----|------|-------------|
+| `<C-w>s` | Normal | Split window horizontally |
+| `<C-w>v` | Normal | Split window vertically |
+| `<C-w>n` | Normal | New window with empty buffer |
+| `<C-w>q` | Normal | Quit current window |
+| `<C-w>c` | Normal | Close current window |
+| `<C-w>o` | Normal | Close all other windows (only this one) |
+
+### Window Moving
+| Key | Mode | Description |
+|-----|------|-------------|
+| `<C-w>r` | Normal | Rotate windows downwards/rightwards |
+| `<C-w>R` | Normal | Rotate windows upwards/leftwards |
+| `<C-w>x` | Normal | Exchange window with next one |
+| `<C-w>H` | Normal | Move window to far left |
+| `<C-w>J` | Normal | Move window to very bottom |
+| `<C-w>K` | Normal | Move window to very top |
+| `<C-w>L` | Normal | Move window to far right |
+| `<C-w>T` | Normal | Move window to new tab |
+
+### Window Resizing
+| Key | Mode | Description |
+|-----|------|-------------|
+| `<C-w>=` | Normal | Make all windows equal size |
+| `<C-w>-` | Normal | Decrease window height |
+| `<C-w>+` | Normal | Increase window height |
+| `<C-w><` | Normal | Decrease window width |
+| `<C-w>>` | Normal | Increase window width |
+| `<C-w>_` | Normal | Maximize window height |
+| `<C-w>\|` | Normal | Maximize window width |
+
+### Other Window Operations
+| Key | Mode | Description |
+|-----|------|-------------|
+| `<C-w>f` | Normal | Open file under cursor in new window |
+| `<C-w>gf` | Normal | Open file under cursor in new tab |
+| `<C-w>}` | Normal | Preview tag under cursor |
+| `<C-w>z` | Normal | Close preview window |
+
+## File Explorer (Oil)
+
+| Key | Mode | Description |
+|-----|------|-------------|
+| `-` | Normal | Open file explorer |
+| `g?` | Oil Buffer | Show help |
+| `<CR>` | Oil Buffer | Select/Open file or directory |
+| `<C-t>` | Oil Buffer | Open in new tab |
+| `p` | Oil Buffer | Preview file |
+| `x` | Oil Buffer | Close oil buffer |
+| `r` | Oil Buffer | Refresh |
+| `_` | Oil Buffer | Go to parent directory |
+| `` ` `` | Oil Buffer | Change directory (cd) |
+| `~` | Oil Buffer | Change directory for tab (tcd) |
+| `gs` | Oil Buffer | Change sort order |
+| `gx` | Oil Buffer | Open with external program |
+| `g.` | Oil Buffer | Toggle hidden files |
+| `g\` | Oil Buffer | Toggle trash view |
+
+## Fuzzy Finding (FZF)
+
+| Key | Mode | Description |
+|-----|------|-------------|
+| `<leader>ff` | Normal | Find files |
+| `<leader>fg` | Normal | Find git files |
+| `<leader>fo` | Normal | Find recent files |
+| `<leader>fb` | Normal | Find buffers |
+| `<leader>fw` | Normal | Find word under cursor |
+| `<leader>fW` | Normal | Find WORD under cursor |
+| `<leader>fr` | Normal | Live grep |
+| `<leader>fs` | Normal | Grep current buffer |
+| `<leader>fh` | Normal | Help tags |
+| `<leader>fk` | Normal | Keymaps |
+| `<leader>fc` | Normal | Commands |
+| `<leader>f:` | Normal | Command history |
+| `<leader>f/` | Normal | Search history |
+| `<leader>fm` | Normal | Marks |
+| `<leader>fj` | Normal | Jumps |
+| `<leader>fl` | Normal | Resume last search |
 
 ## Comments (gc*)
 

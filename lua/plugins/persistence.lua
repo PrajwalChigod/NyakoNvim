@@ -7,6 +7,22 @@ return {
 		pre_save = nil, -- a function to call before saving the session
 		save_empty = false, -- don't save if there are no open file buffers
 	},
+	init = function()
+		-- Auto-restore session when opening nvim with a directory or no args
+		vim.api.nvim_create_autocmd("VimEnter", {
+			group = vim.api.nvim_create_augroup("persistence_autoload", { clear = true }),
+			callback = function()
+				local argc = vim.fn.argc()
+				-- Load if no args, or if single arg is a directory
+				if not vim.g.started_with_stdin then
+					if argc == 0 or (argc == 1 and vim.fn.isdirectory(vim.fn.argv(0)) == 1) then
+						require("persistence").load()
+					end
+				end
+			end,
+			nested = true,
+		})
+	end,
 	keys = {
 		{
 			"<leader>qs",

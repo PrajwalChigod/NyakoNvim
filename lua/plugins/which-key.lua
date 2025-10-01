@@ -55,6 +55,9 @@ return {
 			-- Text Objects
 			{ "ih", desc = "Git hunk", mode = { "o", "x" } },
 
+			-- File Explorer
+			{ "-", desc = "Open file explorer" },
+
 			-- Buffer Navigation
 			{ "<Tab>", desc = "Next buffer" },
 			{ "<S-Tab>", desc = "Previous buffer" },
@@ -154,12 +157,6 @@ return {
 			-- ===============================================
 			-- LEADER (<leader>)
 			-- ===============================================
-
-			-- Oil File Explorer (<leader>o)
-			{ "<leader>o", group = "Oil" },
-			{ "<leader>oo", desc = "File explorer" },
-			{ "<leader>op", desc = "Parent directory" },
-			{ "<leader>o-", desc = "Current directory" },
 
 			-- Editor (<leader>e)
 			{ "<leader>e", group = "Editor" },

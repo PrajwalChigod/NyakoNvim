@@ -7,11 +7,8 @@ local keymap = vim.keymap.set
 -- Exit insert mode with jj
 keymap("i", "jj", "<Esc>", { desc = "Exit insert mode" })
 
-
 -- File explorer (Oil)
-keymap("n", "<leader>oo", "<CMD>Oil<CR>", { desc = "Open file explorer" })
-keymap("n", "<leader>op", "<CMD>Oil<CR>", { desc = "Open parent directory" })
-keymap("n", "<leader>o-", "<CMD>Oil .<CR>", { desc = "Open current directory" })
+keymap("n", "-", "<CMD>Oil<CR>", { desc = "Open file explorer" })
 
 -- Quick access to config
 keymap("n", "<leader>ec", function()
