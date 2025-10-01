@@ -94,6 +94,33 @@ vim.api.nvim_create_autocmd("BufReadPre", {
 	end,
 })
 
+-- Auto-detect and change to project root directory
+vim.api.nvim_create_autocmd("BufEnter", {
+	group = general_group,
+	callback = function()
+		-- Root markers to look for (ordered by priority)
+		local root_patterns = { ".git", "package.json", "Cargo.toml", "pyproject.toml", "go.mod", ".root" }
+		local path = vim.fn.expand("%:p:h")
+
+		-- Only change root for actual files, not special buffers
+		if vim.bo.buftype ~= "" then
+			return
+		end
+
+		-- Find root by walking up directory tree
+		local root = vim.fs.find(root_patterns, { path = path, upward = true })[1]
+		if root then
+			local root_dir = vim.fs.dirname(root)
+			local current_dir = vim.fn.getcwd()
+
+			-- Only change if we're not already at the root
+			if root_dir ~= current_dir then
+				vim.cmd("cd " .. root_dir)
+			end
+		end
+	end,
+})
+
 -- Clean old undofiles (>10 days) on startup
 vim.api.nvim_create_autocmd("VimEnter", {
 	group = general_group,

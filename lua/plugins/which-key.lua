@@ -62,6 +62,10 @@ return {
 			{ "<Tab>", desc = "Next buffer" },
 			{ "<S-Tab>", desc = "Previous buffer" },
 
+			-- Aerial Navigation
+			{ "]s", desc = "Next symbol (Aerial)" },
+			{ "[s", desc = "Previous symbol (Aerial)" },
+
 			-- ===============================================
 			-- LSP & DEVELOPMENT (g* prefix)
 			-- ===============================================
@@ -137,9 +141,9 @@ return {
 			{ "<C-p>", desc = "Previous completion", mode = "i" },
 			{ "<C-d>", desc = "Scroll doc down", mode = "i" },
 			{ "<C-f>", desc = "Scroll doc up", mode = "i" },
+			{ "<Tab>", desc = "Accept completion", mode = "i" },
 			{ "<CR>", desc = "Accept completion", mode = "i" },
 			{ "<C-Space>", desc = "Accept completion", mode = "i" },
-			{ "<Tab>", desc = "Next snippet", mode = "i" },
 			{ "<S-Tab>", desc = "Previous snippet", mode = "i" },
 
 			-- ===============================================
@@ -158,17 +162,22 @@ return {
 			-- LEADER (<leader>)
 			-- ===============================================
 
+			-- Aerial (<leader>a)
+			{ "<leader>a", "<cmd>AerialToggle<cr>", desc = "Aerial (toggle outline)" },
+			{ "<leader>aA", desc = "Toggle nav window" },
+
 			-- Editor (<leader>e)
 			{ "<leader>e", group = "Editor" },
 			{ "<leader>ec", desc = "Edit config" },
 			{ "<leader>er", desc = "Reload config & sync plugins" },
 
 			-- Find (<leader>f)
-			{ "<leader>f", group = "Find" },
+			{ "<leader>f", desc = "Find (files)" },
+			{ "<leader>fa", desc = "Symbols (current file)" },
+			{ "<leader>fA", desc = "Symbols (workspace)" },
 
 			-- Tabs (<leader>t)
-			{ "<leader>t", group = "Tabs" },
-			{ "<leader>tt", desc = "New tab" },
+			{ "<leader>t", desc = "Tabs (new)" },
 			{ "<leader>tf", desc = "New tab with picker" },
 			{ "<leader>tx", desc = "Close tab" },
 			{ "<leader>tb", desc = "Buffer in new tab" },
@@ -217,6 +226,16 @@ return {
 			{ "<leader>qs", desc = "Restore session" },
 			{ "<leader>ql", desc = "Restore last session" },
 			{ "<leader>qd", desc = "Stop session recording" },
+
+			-- Surround (<leader>s)
+			{ "<leader>s", desc = "Surround (word)" },
+			{ "<leader>S", desc = "Surround WORD" },
+			{ "<leader>sl", desc = "Surround line" },
+			{ "<leader>sc", desc = "Change surround" },
+			{ "<leader>sd", desc = "Delete surround" },
+
+			-- Zen Mode
+			{ "<leader>z", desc = "Toggle Zen Mode" },
 
 			-- ===============================================
 			-- LOCALLEADER (<localleader>)

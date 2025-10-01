@@ -17,13 +17,15 @@
 |-----|------|-------------|
 | `<Tab>` | Normal | Next buffer |
 | `<S-Tab>` | Normal | Previous buffer |
+| `]s` | Normal | Next symbol (Aerial) |
+| `[s` | Normal | Previous symbol (Aerial) |
 | `<leader>bi` | Normal | Toggle pin buffer |
 | `<leader>bdd` | Normal | Delete current buffer |
 | `<leader>bdi` | Normal | Delete non-pinned buffers |
 | `<leader>bds` | Normal | Delete all non-active buffers |
 | `<leader>bsv` | Normal | Split buffer vertically |
 | `<leader>bsh` | Normal | Split buffer horizontally |
-| `<leader>tt` | Normal | New tab |
+| `<leader>t` | Normal | New tab |
 | `<leader>tx` | Normal | Close current tab |
 | `<leader>tb` | Normal | Open buffer in new tab |
 | `<leader>tf` | Normal | New tab with file picker |
@@ -162,7 +164,7 @@
 
 | Key | Mode | Description |
 |-----|------|-------------|
-| `<leader>ff` | Normal | Find files |
+| `<leader>f` | Normal | Find files |
 | `<leader>fg` | Normal | Find git files |
 | `<leader>fo` | Normal | Find recent files |
 | `<leader>fb` | Normal | Find buffers |
@@ -170,6 +172,8 @@
 | `<leader>fW` | Normal | Find WORD under cursor |
 | `<leader>fr` | Normal | Live grep |
 | `<leader>fs` | Normal | Grep current buffer |
+| `<leader>fa` | Normal | Symbols in current file (fzf) |
+| `<leader>fA` | Normal | Symbols in workspace (fzf) |
 | `<leader>fh` | Normal | Help tags |
 | `<leader>fk` | Normal | Keymaps |
 | `<leader>fc` | Normal | Commands |
@@ -178,6 +182,27 @@
 | `<leader>fm` | Normal | Marks |
 | `<leader>fj` | Normal | Jumps |
 | `<leader>fl` | Normal | Resume last search |
+
+## Aerial (Code Outline)
+
+| Key | Mode | Description |
+|-----|------|-------------|
+| `<leader>a` | Normal | Toggle Aerial outline sidebar |
+| `<leader>aA` | Normal | Toggle Aerial floating nav window |
+| `]s` | Normal | Next symbol (Aerial) |
+| `[s` | Normal | Previous symbol (Aerial) |
+
+### Inside Aerial Window
+| Key | Description |
+|-----|-------------|
+| `<CR>` | Jump to symbol |
+| `p` | Preview (scroll without jumping) |
+| `o` / `za` | Toggle fold (expand/collapse) |
+| `q` | Close aerial |
+| `{` / `}` | Previous/next symbol |
+| `<C-v>` | Jump in vertical split |
+| `<C-s>` | Jump in horizontal split |
+| `?` / `g?` | Show help |
 
 ## Comments (gc*)
 
@@ -214,11 +239,12 @@
 
 | Key | Mode | Description |
 |-----|------|-------------|
-| `ys{motion}` | Normal | Add surround (e.g., `ysiw"`) |
-| `yss` | Normal | Surround entire line |
-| `cs` | Normal | Change surround (e.g., `cs"'`) |
-| `ds` | Normal | Delete surround (e.g., `ds"`) |
-| `S` | Visual | Surround selection |
+| `<leader>s` | Normal | Surround word (then type delimiter like `"`, `'`, `)`, `]`, `}`) |
+| `<leader>S` | Normal | Surround WORD |
+| `<leader>sl` | Normal | Surround entire line |
+| `<leader>sc` | Normal | Change surround (e.g., `<leader>sc"'` changes `"` to `'`) |
+| `<leader>sd` | Normal | Delete surround (e.g., `<leader>sd"` removes quotes) |
+| `gS` | Visual | Surround selection (line-wise) |
 | `<C-s>s` | Insert | Surround selection |
 | `<C-s>S` | Insert | Surround line |
 
@@ -328,6 +354,12 @@
 | `<leader>ql` | Normal | Restore last session |
 | `<leader>qd` | Normal | Stop session recording |
 
+## Zen Mode
+
+| Key | Mode | Description |
+|-----|------|-------------|
+| `<leader>z` | Normal | Toggle Zen Mode (distraction-free) |
+
 ## Completion (Blink.cmp)
 
 | Key | Mode | Description |
@@ -336,9 +368,9 @@
 | `<C-p>` | Insert | Previous completion |
 | `<C-d>` | Insert | Scroll docs down |
 | `<C-f>` | Insert | Scroll docs up |
+| `<Tab>` | Insert | Accept completion |
 | `<CR>` | Insert | Accept completion |
 | `<C-Space>` | Insert | Accept completion |
-| `<Tab>` | Insert | Next snippet/completion |
 | `<S-Tab>` | Insert | Previous snippet/completion |
 
 ## Dashboard
