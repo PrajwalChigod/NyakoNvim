@@ -1,6 +1,104 @@
-# Neovim Configuration
+# 🐱 nekonvim
 
-A modern Neovim configuration with essential plugins for an enhanced editing experience.
+A sleek, purr-fectly crafted Neovim configuration that's fast, lightweight, and ready for serious development work. Built with carefully selected plugins and sensible defaults for developers who want power without the complexity.
+
+## 📋 Table of Contents
+
+- [✨ Why nekonvim?](#-why-nekonvim)
+- [📦 Quick Start](#-quick-start)
+- [Requirements](#1-requirements)
+- [Installation](#2-dependencies-and-project-installation-setup)
+- [Language Support](#4-available-lsp-servers-and-installation-commands)
+- [Debugging](#5-available-debug-tools-and-installation-commands)
+- [Key Plugins](#8-key-plugins--what-they-do)
+- [Learning Guide](#-learning-nekonvim)
+- [Contributing](#-contributing)
+
+## ✨ Why nekonvim?
+
+### 🚀 Lightning Fast
+- **Blazing startup**: Loads 40+ plugins in under 50ms thanks to lazy loading
+- **Optimized performance**: Smart buffer management, minimal redraw times, and efficient syntax highlighting
+- **Instant completions**: Powered by [blink.cmp](https://github.com/saghen/blink.cmp) for zero-delay autocomplete
+
+### 🎯 Developer Experience First
+- **Zero configuration needed**: Works out of the box with sensible defaults
+- **Comprehensive LSP support**: 8+ languages configured with auto-formatting, linting, and debugging
+- **Smart keybindings**: Intuitive, mnemonic keymaps with [which-key](https://github.com/folke/which-key.nvim) integration
+- **Session persistence**: Pick up exactly where you left off
+
+### 🎨 Beautiful & Modern UI
+- **Catppuccin Mocha theme**: Easy on the eyes with custom color tweaks
+- **Clean status line**: Essential info without clutter via [lualine](https://github.com/nvim-lualine/lualine.nvim)
+- **Smooth animations**: Enhanced UI with [noice.nvim](https://github.com/folke/noice.nvim)
+- **Smart buffer tabs**: Visual buffer management with [bufferline](https://github.com/akinsho/bufferline.nvim)
+
+### 🛠️ Batteries Included
+- **Full DAP debugging**: Step through Python, JavaScript, Rust, C/C++, Go, and more
+- **Advanced fuzzy finding**: Lightning-fast file/text search with [fzf-lua](https://github.com/ibhagwan/fzf-lua)
+- **Git integration**: Stage hunks, blame, and diff without leaving your editor
+- **Treesitter magic**: Syntax-aware selections, smart text objects, and code navigation
+- **File explorer**: Modern file management with [oil.nvim](https://github.com/stevearc/oil.nvim)
+
+### 🧠 Smart Features
+- **Flash navigation**: Jump anywhere on screen with [flash.nvim](https://github.com/folke/flash.nvim)
+- **Auto-pairs & surround**: Intelligent bracket/quote handling
+- **Scope-aware buffers**: Tab-local buffer management
+- **Format on save**: Consistent code style with [conform.nvim](https://github.com/stevearc/conform.nvim)
+
+## 📦 Quick Start
+
+```bash
+# Backup existing config (if any)
+mv ~/.config/nvim ~/.config/nvim.backup
+
+# Clone nekonvim
+git clone https://github.com/PrajwalChigod/nekonvim.git ~/.config/nvim
+
+# Install dependencies (macOS)
+brew install bat ripgrep fzf fd
+
+# Launch Neovim - plugins install automatically!
+nvim
+```
+
+**That's it!** 🎉 Open a file and start coding. See [full installation guide](#2-dependencies-and-project-installation-setup) for other platforms.
+
+## 🌍 Supported Languages
+
+nekonvim comes pre-configured with LSP, formatting, linting, and debugging for:
+
+<table>
+<tr>
+<td>
+
+**Systems & Scripting**
+- 🦀 Rust
+- 🔷 C/C++
+- ⚡ Zig
+- 🐚 Bash/Shell
+
+</td>
+<td>
+
+**Web & Frontend**
+- 🟨 JavaScript/TypeScript
+- 🎨 HTML/CSS
+- 📦 JSON/YAML/TOML
+
+</td>
+<td>
+
+**Dynamic Languages**
+- 🐍 Python
+- 🌙 Lua
+- 🐹 Go
+
+</td>
+</tr>
+</table>
+
+**Full tooling support**: Each language gets LSP autocomplete, formatting, linting, and debugging (where applicable). See [tooling matrix](#9-tooling-matrix) for details.
 
 ## 1. Requirements
 
@@ -53,7 +151,7 @@ sudo pacman -S bat ripgrep fzf fd base-devel
 
 2. **Clone this repository:**
    ```bash
-   git clone <repository-url> ~/.config/nvim
+   git clone https://github.com/PrajwalChigod/nekonvim.git ~/.config/nvim
    ```
 
 3. **Start Neovim:**
@@ -195,7 +293,28 @@ Formatting is handled by conform.nvim. Install formatters via Mason:
 :MasonInstall ruff stylua prettier clang-format shfmt taplo sqlfluff
 ```
 
-## 8. Tooling Matrix
+## 8. Key Plugins & What They Do
+
+Here's what powers nekonvim:
+
+| Plugin | Purpose | Why It's Awesome |
+|--------|---------|------------------|
+| **lazy.nvim** | Plugin manager | Lightning-fast lazy loading, zero config needed |
+| **blink.cmp** | Completion | Fastest completion engine, no delays |
+| **fzf-lua** | Fuzzy finder | Find anything instantly - files, text, commands |
+| **nvim-lspconfig** | LSP client | Full IDE features - autocomplete, go-to-def, refactor |
+| **conform.nvim** | Formatter | Auto-format on save, multiple formatters per file |
+| **nvim-lint** | Linter | Real-time error detection across 10+ languages |
+| **nvim-dap** | Debugger | Full debugging with breakpoints, watches, stepping |
+| **nvim-treesitter** | Parser | Smart syntax highlighting, code navigation, text objects |
+| **gitsigns.nvim** | Git integration | See changes inline, stage hunks, blame, diff |
+| **flash.nvim** | Motion | Jump anywhere with 2 keystrokes |
+| **oil.nvim** | File explorer | Edit your filesystem like a buffer |
+| **catppuccin** | Theme | Beautiful, carefully crafted color scheme |
+| **which-key** | Keybind helper | Never forget a keybinding again |
+| **toggleterm** | Terminal | Integrated terminals - floating, split, tabbed |
+
+## 9. Tooling Matrix
 
 Complete reference matrix for all configured languages and their tooling:
 
@@ -243,3 +362,64 @@ Complete reference matrix for all configured languages and their tooling:
 - **Python**: `ruff` handles both linting and formatting for optimal performance
 - **JavaScript/TypeScript**: Uses same tooling (ESLint, Prettier, ts_ls)
 
+---
+
+## 🎓 Learning nekonvim
+
+### First Steps
+1. **Open the dashboard**: Launch `nvim` without arguments to see the welcome screen
+2. **Check keybindings**: Press `<Space>` (leader key) and wait - which-key will show you all options
+3. **Find files**: `<Space>ff` to fuzzy find files, `<Space>fr` to live grep
+4. **Explore config**: `<Space>ec` to browse the configuration
+
+### Essential Keybindings
+- **Leader key**: `<Space>` - Most commands start here
+- **File navigation**: `<Space>ff` (find files), `-` (file explorer)
+- **Buffer management**: `<Tab>` (next buffer), `<Shift-Tab>` (previous buffer)
+- **LSP actions**: `gd` (go to definition), `grr` (find references), `gra` (code actions)
+- **Git**: `<Space>g` prefix for all git operations
+- **Fuzzy find**: `<Space>f` prefix for all search operations
+
+📖 **Full keymap reference**: See [KEYMAPS.md](./KEYMAPS.md) for the complete cheatsheet
+
+### Pro Tips
+- **Session restore**: `<Space>qs` restores your last session with all buffers and splits
+- **Format on save**: Enabled by default for all configured languages
+- **Insert mode LSP**: Press `<C-g>` in insert mode for LSP actions without leaving insert
+- **Flash navigation**: Press `s` in normal mode, type 2 chars, jump anywhere instantly
+- **Buffer pinning**: Pin important buffers with `<Space>bi` to prevent accidental closing
+
+---
+
+## 🤝 Contributing
+
+nekonvim is a personal configuration, but suggestions and improvements are welcome! Found a bug or have an idea?
+
+- **Report issues**: [GitHub Issues](https://github.com/PrajwalChigod/nekonvim/issues)
+- **Suggest features**: Open a discussion or PR
+- **Share your setup**: Fork and customize to your heart's content!
+
+---
+
+## 📄 License
+
+MIT License - Feel free to use, modify, and distribute as you wish.
+
+---
+
+## ⭐ Show Your Support
+
+If nekonvim makes your coding life easier, consider:
+- ⭐ **Starring** the repo
+- 🐱 **Sharing** with fellow developers
+- 💬 **Spreading the word** about nekonvim
+
+---
+
+<div align="center">
+
+**Made with 💜 and 🐱 by developers, for developers**
+
+*Happy coding!* 🚀
+
+</div>

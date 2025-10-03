@@ -1,7 +1,14 @@
 return {
 	"kylechui/nvim-surround",
 	version = "*", -- Use for stability; omit to use `main` branch for the latest features
-	event = "VeryLazy",
+	event = { "BufReadPost", "BufNewFile" },
+	keys = {
+		{ "<leader>s", "ysiw", desc = "Surround word", remap = true },
+		{ "<leader>S", "ysiW", desc = "Surround WORD", remap = true },
+		{ "<leader>sl", "yss", desc = "Surround line", remap = true },
+		{ "<leader>sc", "cs", desc = "Change surround", remap = true },
+		{ "<leader>sd", "ds", desc = "Delete surround", remap = true },
+	},
 	config = function()
 		require("nvim-surround").setup({
 			-- Configuration here, or leave empty to use defaults
@@ -12,10 +19,10 @@ return {
 				normal_cur = "yss",
 				normal_line = "yS",
 				normal_cur_line = "ySS",
-				visual = "S",
+				visual = false, -- Disable S in visual mode (use for flash.nvim)
 				visual_line = "gS",
-				delete = "ds",
-				change = "cs",
+				delete = false, -- Disabled, use <leader>sd instead
+				change = false, -- Disabled, use <leader>sc instead
 				change_line = "cS",
 			},
 			aliases = {

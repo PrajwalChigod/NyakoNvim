@@ -1,6 +1,10 @@
 return {
 	"nvimdev/dashboard-nvim",
 	event = "VimEnter",
+	cond = function()
+		-- Only load dashboard if nvim was opened without arguments
+		return vim.fn.argc() == 0
+	end,
 	config = function()
 		require("dashboard").setup({
 			theme = "doom",

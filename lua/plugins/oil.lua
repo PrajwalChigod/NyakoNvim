@@ -3,7 +3,7 @@ return {
 	dependencies = { "nvim-tree/nvim-web-devicons" },
 	config = function()
 		require("oil").setup({
-			default_file_explorer = true,
+			default_file_explorer = false,
 			columns = {
 				"icon",
 			},
@@ -35,11 +35,10 @@ return {
 				["g?"] = "actions.show_help",
 				["<CR>"] = "actions.select",
 				["<C-t>"] = "actions.select_tab",
-				["<C-p>"] = "actions.preview",
-				["<C-c>"] = "actions.close",
-				["<C-l>"] = "actions.refresh",
-				["-"] = "actions.parent",
-				["_"] = "actions.open_cwd",
+				["p"] = "actions.preview",
+				["x"] = "actions.close",
+				["r"] = "actions.refresh",
+				["_"] = "actions.parent",
 				["`"] = "actions.cd",
 				["~"] = "actions.tcd",
 				["gs"] = "actions.change_sort",

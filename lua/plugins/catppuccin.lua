@@ -37,7 +37,7 @@ return {
 			},
 			color_overrides = {
 				mocha = {
-					base = "#11111b", -- This sets the background to crust color
+					base = "#000000", -- This sets the background to crust color
 					mantle = "#181825",
 					crust = "#11111b",
 				},
