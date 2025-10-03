@@ -4,7 +4,7 @@ return {
 	dependencies = { "nvim-tree/nvim-web-devicons" },
 	keys = {
 		{
-			"<leader>f",
+			"<leader>ff",
 			function()
 				require("fzf-lua").files()
 			end,

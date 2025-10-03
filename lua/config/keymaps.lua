@@ -73,7 +73,7 @@ keymap("n", "J", "mzJ`z", { desc = "Join lines" })
 -- TAB MANAGEMENT
 -- ===============================================
 
-keymap("n", "<leader>t", "<cmd>tabnew<CR>", { desc = "Open new tab" })
+keymap("n", "<leader>tt", "<cmd>tabnew<CR>", { desc = "Open new tab" })
 keymap("n", "<leader>tx", "<cmd>tabclose<CR>", { desc = "Close current tab" })
 keymap("n", "<leader>tb", "<cmd>tab sb<CR>", { desc = "Open buffer in new tab" })
 

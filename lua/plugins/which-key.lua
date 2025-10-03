@@ -172,12 +172,14 @@ return {
 			{ "<leader>er", desc = "Reload config & sync plugins" },
 
 			-- Find (<leader>f)
-			{ "<leader>f", desc = "Find (files)" },
+			{ "<leader>f", group = "Find" },
+			{ "<leader>ff", desc = "Find files" },
 			{ "<leader>fa", desc = "Symbols (current file)" },
 			{ "<leader>fA", desc = "Symbols (workspace)" },
 
 			-- Tabs (<leader>t)
-			{ "<leader>t", desc = "Tabs (new)" },
+			{ "<leader>t", group = "Tabs" },
+			{ "<leader>tt", desc = "New tab" },
 			{ "<leader>tf", desc = "New tab with picker" },
 			{ "<leader>tx", desc = "Close tab" },
 			{ "<leader>tb", desc = "Buffer in new tab" },

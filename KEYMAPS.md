@@ -25,7 +25,7 @@
 | `<leader>bds` | Normal | Delete all non-active buffers |
 | `<leader>bsv` | Normal | Split buffer vertically |
 | `<leader>bsh` | Normal | Split buffer horizontally |
-| `<leader>t` | Normal | New tab |
+| `<leader>tt` | Normal | New tab |
 | `<leader>tx` | Normal | Close current tab |
 | `<leader>tb` | Normal | Open buffer in new tab |
 | `<leader>tf` | Normal | New tab with file picker |
@@ -164,7 +164,7 @@
 
 | Key | Mode | Description |
 |-----|------|-------------|
-| `<leader>f` | Normal | Find files |
+| `<leader>ff` | Normal | Find files |
 | `<leader>fg` | Normal | Find git files |
 | `<leader>fo` | Normal | Find recent files |
 | `<leader>fb` | Normal | Find buffers |
