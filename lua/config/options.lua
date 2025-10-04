@@ -2,7 +2,6 @@ local opt = vim.opt
 
 opt.number = true
 opt.relativenumber = true
-
 -- Set leader key
 vim.g.mapleader = " "
 

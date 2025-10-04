@@ -9,6 +9,7 @@ keymap("i", "jj", "<Esc>", { desc = "Exit insert mode" })
 
 -- File explorer (Oil)
 keymap("n", "-", "<CMD>Oil<CR>", { desc = "Open file explorer" })
+keymap("n", "~", "<CMD>Oil .<CR>", { desc = "Oil open parent dir" })
 
 -- Quick access to config
 keymap("n", "<leader>ec", function()
