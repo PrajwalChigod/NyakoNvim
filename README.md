@@ -403,7 +403,7 @@ NekoVim is a personal configuration, but suggestions and improvements are welcom
 
 ## 📄 License
 
-MIT License - Feel free to use, modify, and distribute as you wish.
+Apache 2.0 License
 
 ---
 
