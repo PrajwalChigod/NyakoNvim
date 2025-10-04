@@ -9,6 +9,10 @@ vim.g.mapleader = " "
 vim.g.loaded_python3_provider = 0
 vim.g.loaded_python_provider = 0
 
+-- Disable netrw for oil.nvim
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 -- Search
 opt.ignorecase = true
 opt.smartcase = true
@@ -86,10 +90,6 @@ opt.showmode = false
 opt.foldmethod = "indent"
 opt.foldlevel = 99
 opt.foldenable = false -- Don't fold by default, but folds are available
-
--- Disable netrw for oil.nvim
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
 
 -- Note: Built-in plugin disabling is handled in lua/config/lazy.lua for consistency
 
