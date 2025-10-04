@@ -1,20 +1,20 @@
-# 🐱 nekonvim
+# 🐱 NekoVim
 
 A sleek, purr-fectly crafted Neovim configuration that's fast, lightweight, and ready for serious development work. Built with carefully selected plugins and sensible defaults for developers who want power without the complexity.
 
 ## 📋 Table of Contents
 
-- [✨ Why nekonvim?](#-why-nekonvim)
+- [✨ Why NekoVim?](#-why-nekovim)
 - [📦 Quick Start](#-quick-start)
 - [Requirements](#1-requirements)
 - [Installation](#2-dependencies-and-project-installation-setup)
 - [Language Support](#4-available-lsp-servers-and-installation-commands)
 - [Debugging](#5-available-debug-tools-and-installation-commands)
 - [Key Plugins](#8-key-plugins--what-they-do)
-- [Learning Guide](#-learning-nekonvim)
+- [Learning Guide](#-learning-nekovim)
 - [Contributing](#-contributing)
 
-## ✨ Why nekonvim?
+## ✨ Why NekoVim?
 
 ### 🚀 Lightning Fast
 - **Blazing startup**: Loads 40+ plugins in under 50ms thanks to lazy loading
@@ -52,8 +52,8 @@ A sleek, purr-fectly crafted Neovim configuration that's fast, lightweight, and 
 # Backup existing config (if any)
 mv ~/.config/nvim ~/.config/nvim.backup
 
-# Clone nekonvim
-git clone https://github.com/PrajwalChigod/nekonvim.git ~/.config/nvim
+# Clone NekoVim
+git clone https://github.com/PrajwalChigod/NekoVim.git ~/.config/nvim
 
 # Install dependencies (macOS)
 brew install bat ripgrep fzf fd
@@ -66,7 +66,7 @@ nvim
 
 ## 🌍 Supported Languages
 
-nekonvim comes pre-configured with LSP, formatting, linting, and debugging for:
+NekoVim comes pre-configured with LSP, formatting, linting, and debugging for:
 
 <table>
 <tr>
@@ -151,7 +151,7 @@ sudo pacman -S bat ripgrep fzf fd base-devel
 
 2. **Clone this repository:**
    ```bash
-   git clone https://github.com/PrajwalChigod/nekonvim.git ~/.config/nvim
+   git clone https://github.com/PrajwalChigod/NekoVim.git ~/.config/nvim
    ```
 
 3. **Start Neovim:**
@@ -295,7 +295,7 @@ Formatting is handled by conform.nvim. Install formatters via Mason:
 
 ## 8. Key Plugins & What They Do
 
-Here's what powers nekonvim:
+Here's what powers NekoVim:
 
 | Plugin | Purpose | Why It's Awesome |
 |--------|---------|------------------|
@@ -364,7 +364,7 @@ Complete reference matrix for all configured languages and their tooling:
 
 ---
 
-## 🎓 Learning nekonvim
+## 🎓 Learning NekoVim
 
 ### First Steps
 1. **Open the dashboard**: Launch `nvim` without arguments to see the welcome screen
@@ -393,9 +393,9 @@ Complete reference matrix for all configured languages and their tooling:
 
 ## 🤝 Contributing
 
-nekonvim is a personal configuration, but suggestions and improvements are welcome! Found a bug or have an idea?
+NekoVim is a personal configuration, but suggestions and improvements are welcome! Found a bug or have an idea?
 
-- **Report issues**: [GitHub Issues](https://github.com/PrajwalChigod/nekonvim/issues)
+- **Report issues**: [GitHub Issues](https://github.com/PrajwalChigod/NekoVim/issues)
 - **Suggest features**: Open a discussion or PR
 - **Share your setup**: Fork and customize to your heart's content!
 
@@ -409,10 +409,10 @@ MIT License - Feel free to use, modify, and distribute as you wish.
 
 ## ⭐ Show Your Support
 
-If nekonvim makes your coding life easier, consider:
+If NekoVim makes your coding life easier, consider:
 - ⭐ **Starring** the repo
 - 🐱 **Sharing** with fellow developers
-- 💬 **Spreading the word** about nekonvim
+- 💬 **Spreading the word** about NekoVim
 
 ---
 

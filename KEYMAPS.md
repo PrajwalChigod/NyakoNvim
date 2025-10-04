@@ -1,4 +1,4 @@
-# Nekonvim Keymaps Cheatsheet
+# NekoVim Keymaps Cheatsheet
 
 ## Basic Navigation
 
