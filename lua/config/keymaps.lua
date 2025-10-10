@@ -7,6 +7,16 @@ local keymap = vim.keymap.set
 -- Exit insert mode with jj
 keymap("i", "jj", "<Esc>", { desc = "Exit insert mode" })
 
+-- Clear highlights and return to normal mode with Esc
+keymap("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search highlights" })
+keymap("i", "<Esc>", "<Esc><cmd>nohlsearch<CR>", { desc = "Exit insert mode and clear highlights" })
+keymap("v", "<Esc>", "<Esc><cmd>nohlsearch<CR>", { desc = "Exit visual mode and clear highlights" })
+
+-- Save all buffers with Ctrl+s (works in all modes, like VS Code)
+keymap("n", "<C-s>", "<cmd>wa<CR>", { desc = "Save all buffers" })
+keymap("i", "<C-s>", "<Esc><cmd>wa<CR>", { desc = "Exit insert mode and save all buffers" })
+keymap("v", "<C-s>", "<Esc><cmd>wa<CR>", { desc = "Exit visual mode and save all buffers" })
+
 -- File explorer (Oil)
 keymap("n", "-", "<CMD>Oil<CR>", { desc = "Open file explorer" })
 keymap("n", "~", "<CMD>Oil .<CR>", { desc = "Oil open parent dir" })

@@ -100,7 +100,7 @@ return {
 								autoSearchPaths = true,
 								useLibraryCodeForTypes = true,
 								autoImportCompletions = true,
-								diagnosticMode = "workspace",
+								diagnosticMode = "openFilesOnly",
 								reportMissingImports = true,
 								reportUnusedImport = true,
 								reportUnusedVariable = { "all" },
