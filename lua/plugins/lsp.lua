@@ -18,7 +18,7 @@ return {
 
 					-- Override default LSP keymaps to use fzf-lua
 					vim.keymap.set("n", "grr", function()
-						require("fzf-lua").lsp_references({ jump1 = false })
+						require("fzf-lua").lsp_references()
 					end, vim.tbl_extend("force", opts, { desc = "LSP References (fzf)" }))
 
 					vim.keymap.set("n", "gra", function()
@@ -28,11 +28,11 @@ return {
 					vim.keymap.set("n", "grn", vim.lsp.buf.rename, vim.tbl_extend("force", opts, { desc = "LSP Rename" }))
 
 					vim.keymap.set("n", "gri", function()
-						require("fzf-lua").lsp_implementations({ jump1 = false })
+						require("fzf-lua").lsp_implementations()
 					end, vim.tbl_extend("force", opts, { desc = "LSP Implementations (fzf)" }))
 
 					vim.keymap.set("n", "grt", function()
-						require("fzf-lua").lsp_typedefs({ jump1 = false })
+						require("fzf-lua").lsp_typedefs()
 					end, vim.tbl_extend("force", opts, { desc = "LSP Type Definitions (fzf)" }))
 
 					-- Additional useful LSP keymaps
@@ -41,7 +41,7 @@ return {
 					end, vim.tbl_extend("force", opts, { desc = "LSP Definitions (fzf)" }))
 
 					vim.keymap.set("n", "gD", function()
-						require("fzf-lua").lsp_declarations({ jump1 = false })
+						require("fzf-lua").lsp_declarations()
 					end, vim.tbl_extend("force", opts, { desc = "LSP Declarations (fzf)" }))
 
 					vim.keymap.set("n", "gS", function()
