@@ -70,11 +70,26 @@ return {
 				end,
 			})
 
-			-- Enhanced capabilities with completion (cached globally for all servers)
+			-- LSP Performance: Reduce logging and limit workspace scanning
+			vim.lsp.set_log_level("ERROR") -- Only log errors, not info/debug
+			vim.lsp.config['*'] = {
+				flags = {
+					debounce_text_changes = 300, -- Increase from default 150ms for large projects
+					allow_incremental_sync = true,
+				},
+				on_init = function(client)
+					if client.server_capabilities then
+						client.server_capabilities.workspace = client.server_capabilities.workspace or {}
+						client.server_capabilities.workspace.workspaceFolders = {
+							supported = false,
+							changeNotifications = false,
+						}
+					end
+				end,
+			}
 			local capabilities = vim.lsp.protocol.make_client_capabilities()
 			capabilities = require("blink.cmp").get_lsp_capabilities(capabilities)
 
-			-- LSP server configurations for all your languages
 			local servers = {
 				-- Lua (Neovim configuration)
 				lua_ls = {

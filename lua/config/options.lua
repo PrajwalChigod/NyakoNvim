@@ -1,5 +1,30 @@
 local opt = vim.opt
 
+-- ===============================================
+-- PERFORMANCE: Disable built-in plugins
+-- ===============================================
+-- Disable built-in plugins that cause startup overhead (for large projects)
+vim.g.loaded_gzip = 1
+vim.g.loaded_zip = 1
+vim.g.loaded_zipPlugin = 1
+vim.g.loaded_tar = 1
+vim.g.loaded_tarPlugin = 1
+vim.g.loaded_getscript = 1
+vim.g.loaded_getscriptPlugin = 1
+vim.g.loaded_vimball = 1
+vim.g.loaded_vimballPlugin = 1
+vim.g.loaded_2html_plugin = 1
+vim.g.loaded_matchit = 1
+vim.g.loaded_matchparen = 1 -- Matching parens cause lag in large files
+vim.g.loaded_logiPat = 1
+vim.g.loaded_rrhelper = 1
+vim.g.loaded_spellfile_plugin = 1
+
+-- Disable unused providers
+vim.g.loaded_perl_provider = 0
+vim.g.loaded_ruby_provider = 0
+vim.g.loaded_node_provider = 0
+
 opt.number = true
 opt.relativenumber = true
 -- Set leader key
@@ -33,7 +58,7 @@ opt.signcolumn = "yes"
 opt.wrap = false
 opt.scrolloff = 4
 opt.sidescrolloff = 8
-opt.cursorline = true
+opt.cursorline = false -- Disable for large projects (reduces redraws)
 opt.colorcolumn = "120"
 
 -- Splits
@@ -62,9 +87,35 @@ opt.mouse = "a"
 opt.fileencoding = "utf-8"
 
 -- Performance optimizations
-opt.updatetime = 200 -- Balanced CursorHold events and diagnostics (default 4000ms)
+opt.updatetime = 500 -- Increased for large projects (default 4000ms, was 200ms)
 opt.redrawtime = 1500 -- Prevent slow redraws from hanging editor
 opt.synmaxcol = 180 -- Limit syntax highlighting on long lines
+
+-- Large project optimizations
+opt.maxmempattern = 5000 -- Limit regex memory usage (default: 1000)
+opt.regexpengine = 2 -- NFA engine for predictable performance
+
+-- Disable slow UI features
+opt.cursorcolumn = false
+opt.showcmd = false
+opt.ruler = false -- Lualine shows this anyway
+
+-- File finding optimization - ignore common large/irrelevant directories
+opt.wildignore:append({
+	"**/node_modules/**",
+	"**/.git/**",
+	"**/target/**",
+	"**/build/**",
+	"**/dist/**",
+	"**/__pycache__/**",
+	"**/.venv/**",
+	"**/venv/**",
+	"**/.next/**",
+	"**/.cache/**",
+	"**/media/**",
+	"**/static/media/**",
+	"**/public/media/**",
+})
 
 -- opt.lazyredraw = true
 -- Note: ttyfast is deprecated in Neovim and has no effect

@@ -219,8 +219,8 @@ return {
 				git_icons = true,
 				file_icons = true,
 				color_icons = true,
-				find_opts = [[-type f -not -path '*/\.git/*' -not -path '*/node_modules/*' -not -path '*/.next/*' -not -path '*/target/*' -not -path '*/build/*' -not -path '*/dist/*' -not -path '*/.venv/*' -not -path '*/venv/*' -not -path '*/.cache/*' -printf '%P\n']],
-				rg_opts = "--color=never --files --hidden --follow -g '!.git' -g '!node_modules' -g '!.next' -g '!target' -g '!build' -g '!dist' -g '!.venv' -g '!venv' -g '!.cache' -g '!*.pyc' -g '!__pycache__'",
+				find_opts = [[-type f -not -path '*/\.git/*' -not -path '*/node_modules/*' -not -path '*/.next/*' -not -path '*/target/*' -not -path '*/build/*' -not -path '*/dist/*' -not -path '*/.venv/*' -not -path '*/venv/*' -not -path '*/.cache/*' -size -512k -printf '%P\n']],
+				rg_opts = "--color=never --files --hidden --follow --max-filesize 512K -g '!.git' -g '!node_modules' -g '!.next' -g '!target' -g '!build' -g '!dist' -g '!.venv' -g '!venv' -g '!.cache' -g '!*.pyc' -g '!__pycache__'",
 				fd_opts = "--color=never --type f --hidden --follow --exclude .git --exclude node_modules --exclude .next --exclude target --exclude build --exclude dist --exclude .venv --exclude venv --exclude .cache --exclude __pycache__ --exclude '*.pyc'",
 			},
 			git = {
@@ -256,7 +256,7 @@ return {
 				file_icons = true,
 				color_icons = true,
 				grep_opts = "--binary-files=without-match --line-number --recursive --color=auto --perl-regexp -e",
-				rg_opts = "--column --line-number --no-heading --color=always --smart-case --max-columns=512 -e",
+				rg_opts = "--column --line-number --no-heading --color=always --smart-case --max-columns=512 --max-count=100 -e",
 			},
 			buffers = {
 				prompt = "Buffers❯ ",
