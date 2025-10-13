@@ -1,13 +1,16 @@
 return {
 	{
-		"neovim/nvim-lspconfig",
+		-- Native Neovim 0.11+ LSP configuration (no plugin needed)
+		-- See :help lspconfig-nvim-0.11
+		name = "lsp-config",
+		dir = vim.fn.stdpath("config"),
 		event = { "BufReadPost", "BufNewFile" },
 		dependencies = {
 			"williamboman/mason.nvim",
 		},
 		config = function()
-			-- Direct LSP configuration without mason-lspconfig
-			-- Mason only provides the LSP binaries, we configure them manually
+			-- Native LSP configuration using vim.lsp.config (Neovim 0.11+)
+			-- Mason only provides the LSP binaries, we configure them using native API
 
 			-- Helper function to use fzf-lua with fallback
 			local function fzf_or_fallback(fzf_fn, fallback_fn)
@@ -299,13 +302,43 @@ return {
 					require("lspconfig")[server_name].setup(server_config)
 				end)
 
-				if not ok then
-					vim.notify(
-						string.format("Failed to setup LSP server '%s': %s", server_name, err),
-						vim.log.levels.ERROR
-					)
+			-- Auto-enable LSP when opening relevant filetypes
+			vim.api.nvim_create_autocmd("FileType", {
+				pattern = vim.tbl_keys(lsp_filetypes),
+				callback = function(args)
+					local lsp_name = lsp_filetypes[args.match]
+					if lsp_name then
+						vim.lsp.enable(lsp_name)
+					end
+				end,
+			})
+
+			-- Custom LspInfo command
+			vim.api.nvim_create_user_command("LspInfo", function()
+				-- Get all clients globally
+				local all_clients = vim.lsp.get_clients()
+				-- Get clients attached to current buffer
+				local buf_clients = vim.lsp.get_clients({ bufnr = 0 })
+
+				print("=== LSP Clients (Current Buffer) ===")
+				if #buf_clients == 0 then
+					print("No LSP clients attached to this buffer")
+				else
+					for _, client in ipairs(buf_clients) do
+						print(string.format("• %s (id: %d, root: %s)", client.name, client.id, client.root_dir or "N/A"))
+					end
 				end
-			end
+
+				print("\n=== All Active LSP Clients ===")
+				if #all_clients == 0 then
+					print("No LSP clients running")
+				else
+					for _, client in ipairs(all_clients) do
+						local attached_bufs = vim.lsp.get_buffers_by_client_id(client.id)
+						print(string.format("• %s (id: %d, buffers: %d)", client.name, client.id, #attached_bufs))
+					end
+				end
+			end, {})
 		end,
 	},
 }
