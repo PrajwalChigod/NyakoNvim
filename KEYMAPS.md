@@ -5,11 +5,58 @@
 | Key | Mode | Description |
 |-----|------|-------------|
 | `jj` | Insert | Exit insert mode |
+| `<Esc>` | Normal/Insert/Visual | Clear search highlights (also exit mode if in insert/visual) |
 | `<C-h/j/k/l>` | Normal | Navigate between splits |
 | `<C-d>` | Normal | Page down (centered) |
 | `<C-u>` | Normal | Page up (centered) |
 | `n` / `N` | Normal | Next/Previous search (centered) |
 | `J` | Normal | Join lines (keep cursor position) |
+
+## Insert Mode Navigation
+
+### Word & Line Movement
+| Key | Mode | Description |
+|-----|------|-------------|
+| `<A-.>` | Insert | End of line |
+| `<A-,>` | Insert | First non-blank character |
+| `<A-0>` | Insert | Beginning of line |
+| `<A-b>` | Insert | Previous word |
+| `<A-w>` | Insert | Next word start |
+| `<A-e>` | Insert | Next word end |
+
+### Directional Movement
+| Key | Mode | Description |
+|-----|------|-------------|
+| `<A-h>` | Insert | Move left |
+| `<A-j>` | Insert | Move down |
+| `<A-k>` | Insert | Move up |
+| `<A-l>` | Insert | Move right |
+
+### Function & Class Navigation
+| Key | Mode | Description |
+|-----|------|-------------|
+| `<A-J>` | Insert | Next function |
+| `<A-K>` | Insert | Previous function |
+| `<A-L>` | Insert | Next class |
+| `<A-H>` | Insert | Previous class |
+
+### Quick Edits
+| Key | Mode | Description |
+|-----|------|-------------|
+| `<A-d>` | Insert | Delete word forward |
+| `<A-u>` | Insert | Delete to line start |
+| `<A-o>` | Insert | Insert line below |
+| `<A-O>` | Insert | Insert line above |
+| `<A-x>` | Insert | Delete character under cursor |
+| `<A-z>` | Insert | Undo |
+
+## Save Operations
+
+| Key | Mode | Description |
+|-----|------|-------------|
+| `<C-s>` | Normal | Save all buffers |
+| `<C-s>` | Insert | Exit insert mode and save all buffers |
+| `<C-s>` | Visual | Exit visual mode and save all buffers |
 
 ## Buffer & Tab Navigation
 
@@ -58,6 +105,11 @@
 | `<C-g>s` | Insert | Signature help |
 | `<C-g>f` | Insert | Format file |
 | `<C-g>l` | Insert | Run linter |
+
+### LSP Performance
+| Key | Mode | Description |
+|-----|------|-------------|
+| `<leader>lw` | Normal | Toggle LSP workspace scanning (for large projects) |
 
 ## Diagnostics (ge*)
 
@@ -146,6 +198,7 @@
 | Key | Mode | Description |
 |-----|------|-------------|
 | `-` | Normal | Open file explorer |
+| `~` | Normal | Open parent directory |
 | `g?` | Oil Buffer | Show help |
 | `<CR>` | Oil Buffer | Select/Open file or directory |
 | `<C-t>` | Oil Buffer | Open in new tab |
@@ -154,7 +207,6 @@
 | `r` | Oil Buffer | Refresh |
 | `_` | Oil Buffer | Go to parent directory |
 | `` ` `` | Oil Buffer | Change directory (cd) |
-| `~` | Oil Buffer | Change directory for tab (tcd) |
 | `gs` | Oil Buffer | Change sort order |
 | `gx` | Oil Buffer | Open with external program |
 | `g.` | Oil Buffer | Toggle hidden files |
@@ -252,10 +304,13 @@
 
 | Key | Mode | Description |
 |-----|------|-------------|
-| `s` | Normal/Visual/Operator | Flash jump |
+| `s` | Normal/Visual/Operator | Flash jump (multi-character search) |
 | `S` | Normal/Visual/Operator | Flash treesitter |
 | `r` | Operator | Remote flash |
 | `R` | Operator/Visual | Treesitter search |
+| `f/F/t/T` | Normal | Find character forward/backward, till character forward/backward |
+| `;` | Normal | Repeat last f/F/t/T motion forward |
+| `,` | Normal | Repeat last f/F/t/T motion backward |
 
 ## Treesitter
 

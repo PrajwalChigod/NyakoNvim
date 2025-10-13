@@ -7,6 +7,43 @@ local keymap = vim.keymap.set
 -- Exit insert mode with jj
 keymap("i", "jj", "<Esc>", { desc = "Exit insert mode" })
 
+-- Insert mode navigation
+keymap("i", "<A-.>", "<C-o>$", { desc = "End of line" })
+keymap("i", "<A-,>", "<C-o>^", { desc = "First non-blank character" })
+keymap("i", "<A-0>", "<C-o>0", { desc = "Beginning of line" })
+keymap("i", "<A-b>", "<C-o>b", { desc = "Previous word" })
+keymap("i", "<A-w>", "<C-o>w", { desc = "Next word start" })
+keymap("i", "<A-e>", "<C-o>e", { desc = "Next word end" })
+
+-- Insert mode directional movement
+keymap("i", "<A-h>", "<Left>", { desc = "Move left" })
+keymap("i", "<A-j>", "<Down>", { desc = "Move down" })
+keymap("i", "<A-k>", "<Up>", { desc = "Move up" })
+keymap("i", "<A-l>", "<Right>", { desc = "Move right" })
+
+-- Insert mode quick edits
+keymap("i", "<A-d>", "<C-o>dw", { desc = "Delete word forward" })
+keymap("i", "<A-u>", "<C-u>", { desc = "Delete to line start" })
+keymap("i", "<A-o>", "<C-o>o", { desc = "Insert line below" })
+keymap("i", "<A-O>", "<C-o>O", { desc = "Insert line above" })
+
+-- Insert mode character deletion
+keymap("i", "<A-x>", "<Del>", { desc = "Delete character under cursor" })
+
+-- Insert mode undo/redo
+keymap("i", "<A-z>", "<C-o>u", { desc = "Undo" })
+keymap("i", "<A-y>", "<C-o><C-r>", { desc = "Redo" })
+
+-- Clear highlights and return to normal mode with Esc
+keymap("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search highlights" })
+keymap("i", "<Esc>", "<Esc><cmd>nohlsearch<CR>", { desc = "Exit insert mode and clear highlights" })
+keymap("v", "<Esc>", "<Esc><cmd>nohlsearch<CR>", { desc = "Exit visual mode and clear highlights" })
+
+-- Save all buffers with Ctrl+s (works in all modes, like VS Code)
+keymap("n", "<C-s>", "<cmd>wa<CR>", { desc = "Save all buffers" })
+keymap("i", "<C-s>", "<Esc><cmd>wa<CR>", { desc = "Exit insert mode and save all buffers" })
+keymap("v", "<C-s>", "<Esc><cmd>wa<CR>", { desc = "Exit visual mode and save all buffers" })
+
 -- File explorer (Oil)
 keymap("n", "-", "<CMD>Oil<CR>", { desc = "Open file explorer" })
 keymap("n", "~", "<CMD>Oil .<CR>", { desc = "Oil open parent dir" })
@@ -94,6 +131,47 @@ keymap("t", "<Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
 -- Disable Q key (ex mode)
 keymap("n", "Q", "<nop>")
+
+-- ===============================================
+-- LSP PERFORMANCE TOGGLE
+-- ===============================================
+
+-- Toggle LSP workspace scanning (for large projects)
+-- Use this when you need project-wide rename/references but experience slowness
+keymap("n", "<leader>lw", function()
+	local clients = vim.lsp.get_clients()
+	if #clients == 0 then
+		vim.notify("No LSP clients attached", vim.log.levels.WARN)
+		return
+	end
+
+	for _, client in ipairs(clients) do
+		if client.server_capabilities and client.server_capabilities.workspace then
+			local current = client.server_capabilities.workspace.workspaceFolders
+			if current and current.supported == false then
+				-- Enable workspace scanning
+				client.server_capabilities.workspace.workspaceFolders = {
+					supported = true,
+					changeNotifications = true,
+				}
+				vim.notify("LSP Workspace scanning ENABLED for " .. client.name, vim.log.levels.INFO)
+			else
+				-- Disable workspace scanning
+				client.server_capabilities.workspace.workspaceFolders = {
+					supported = false,
+					changeNotifications = false,
+				}
+				vim.notify("LSP Workspace scanning DISABLED for " .. client.name, vim.log.levels.INFO)
+			end
+		end
+	end
+
+	-- Restart LSP to apply changes
+	vim.defer_fn(function()
+		vim.cmd("LspRestart")
+		vim.notify("LSP restarted to apply workspace settings", vim.log.levels.INFO)
+	end, 100)
+end, { desc = "Toggle LSP Workspace Scanning" })
 
 -- ===============================================
 -- FOLD OPERATIONS (Restrict to essential only)

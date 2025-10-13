@@ -13,8 +13,8 @@ return {
 		require("nvim-surround").setup({
 			-- Configuration here, or leave empty to use defaults
 			keymaps = {
-				insert = "<C-s>s",
-				insert_line = "<C-s>S",
+				insert = false, -- Disabled to allow <C-s> for save
+				insert_line = false, -- Disabled to allow <C-s> for save
 				normal = "ys",
 				normal_cur = "yss",
 				normal_line = "yS",
