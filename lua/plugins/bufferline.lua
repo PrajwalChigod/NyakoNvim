@@ -2,7 +2,7 @@ return {
 	"akinsho/bufferline.nvim",
 	version = "*",
 	dependencies = { "nvim-tree/nvim-web-devicons" },
-	event = "BufReadPost",
+	event = "VeryLazy",
 	keys = {
 		{ "<leader>bi", "<Cmd>BufferLineTogglePin<CR>", desc = "Toggle pin buffer" },
 		{ "<Tab>", "<Cmd>BufferLineCycleNext<CR>", desc = "Next buffer", mode = "n" },

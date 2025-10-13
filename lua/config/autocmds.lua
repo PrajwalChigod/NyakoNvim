@@ -12,11 +12,19 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 	end,
 })
 
--- Helper: Check if buffer is too large (>1MB)
+-- Helper: Check if buffer is too large (>512KB or >3000 lines)
 local function is_large_buffer(bufnr)
 	bufnr = bufnr or vim.api.nvim_get_current_buf()
 	local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(bufnr))
-	return ok and stats and stats.size > 1024 * 1024
+	if ok and stats and stats.size > 512 * 1024 then
+		return true
+	end
+	-- Also check line count
+	local line_count = vim.api.nvim_buf_line_count(bufnr)
+	if line_count > 3000 then
+		return true
+	end
+	return false
 end
 
 -- Defer non-critical autocommands for faster startup
@@ -79,44 +87,17 @@ vim.api.nvim_create_autocmd("VimResized", {
 	end,
 })
 
--- Warn before opening large files (>1MB)
+-- Warn before opening large files (>512KB)
 vim.api.nvim_create_autocmd("BufReadPre", {
 	group = general_group,
 	callback = function(event)
 		local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(event.buf))
-		if ok and stats and stats.size > 1024 * 1024 then
+		if ok and stats and stats.size > 512 * 1024 then -- 512KB (was 1MB)
 			local size_mb = string.format("%.2f", stats.size / (1024 * 1024))
 			vim.notify(
 				string.format("Large file detected (%s MB). Performance may be affected.", size_mb),
 				vim.log.levels.WARN
 			)
-		end
-	end,
-})
-
--- Auto-detect and change to project root directory
-vim.api.nvim_create_autocmd("BufEnter", {
-	group = general_group,
-	callback = function()
-		-- Root markers to look for (ordered by priority)
-		local root_patterns = { ".git", "package.json", "Cargo.toml", "pyproject.toml", "go.mod", ".root" }
-		local path = vim.fn.expand("%:p:h")
-
-		-- Only change root for actual files, not special buffers
-		if vim.bo.buftype ~= "" then
-			return
-		end
-
-		-- Find root by walking up directory tree
-		local root = vim.fs.find(root_patterns, { path = path, upward = true })[1]
-		if root then
-			local root_dir = vim.fs.dirname(root)
-			local current_dir = vim.fn.getcwd()
-
-			-- Only change if we're not already at the root
-			if root_dir ~= current_dir then
-				vim.cmd("cd " .. root_dir)
-			end
 		end
 	end,
 })

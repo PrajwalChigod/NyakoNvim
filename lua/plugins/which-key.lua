@@ -46,6 +46,8 @@ return {
 			{ "S", desc = "Flash treesitter", mode = { "n", "x", "o" } },
 			{ "r", desc = "Remote flash", mode = "o" },
 			{ "R", desc = "Treesitter search", mode = { "o", "x" } },
+			{ ";", desc = "Repeat f/t motion forward", mode = "n" },
+			{ ",", desc = "Repeat f/t motion backward", mode = "n" },
 
 			-- Treesitter Selection
 			{ "<C-space>", desc = "Init/Increment selection" },

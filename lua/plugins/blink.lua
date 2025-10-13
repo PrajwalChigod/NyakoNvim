@@ -17,7 +17,11 @@ return {
 				default = { "lsp", "path", "buffer" },
 				providers = {
 					buffer = {
-						min_keyword_length = 3,
+						min_keyword_length = 4,
+						max_items = 5,
+					},
+					lsp = {
+						max_items = 15,
 					},
 				},
 			},
@@ -34,8 +38,8 @@ return {
 				},
 				list = {
 					selection = {
-						preselect = true, -- auto-select first item
-						auto_insert = true, -- insert preview on selection
+						preselect = true,
+						auto_insert = true,
 					},
 				},
 				accept = {
