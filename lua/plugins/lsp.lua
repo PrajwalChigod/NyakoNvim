@@ -1,28 +1,13 @@
 return {
 	{
-		-- Native Neovim 0.11+ LSP configuration (no plugin needed)
-		-- See :help lspconfig-nvim-0.11
-		name = "lsp-config",
-		dir = vim.fn.stdpath("config"),
+		"neovim/nvim-lspconfig",
 		event = { "BufReadPost", "BufNewFile" },
 		dependencies = {
 			"williamboman/mason.nvim",
 		},
 		config = function()
-			-- Native LSP configuration using vim.lsp.config (Neovim 0.11+)
-			-- Mason only provides the LSP binaries, we configure them using native API
-
-			-- Helper function to use fzf-lua with fallback
-			local function fzf_or_fallback(fzf_fn, fallback_fn)
-				return function()
-					local ok, fzf = pcall(require, "fzf-lua")
-					if ok then
-						fzf[fzf_fn]()
-					else
-						fallback_fn()
-					end
-				end
-			end
+			-- Direct LSP configuration without mason-lspconfig
+			-- Mason only provides the LSP binaries, we configure them manually
 
 			-- LSP keymaps using LspAttach autocmd (modern Neovim 0.8+ pattern)
 			vim.api.nvim_create_autocmd("LspAttach", {
@@ -31,65 +16,41 @@ return {
 					local bufnr = event.buf
 					local opts = { buffer = bufnr, silent = true }
 
-					-- LSP keymaps with fzf-lua and fallback to built-in
-					vim.keymap.set(
-						"n",
-						"grr",
-						fzf_or_fallback("lsp_references", vim.lsp.buf.references),
-						vim.tbl_extend("force", opts, { desc = "LSP References" })
-					)
+					-- Override default LSP keymaps to use fzf-lua
+					vim.keymap.set("n", "grr", function()
+						require("fzf-lua").lsp_references({ jump1 = false })
+					end, vim.tbl_extend("force", opts, { desc = "LSP References (fzf)" }))
 
-					vim.keymap.set(
-						"n",
-						"gra",
-						fzf_or_fallback("lsp_code_actions", vim.lsp.buf.code_action),
-						vim.tbl_extend("force", opts, { desc = "LSP Code Actions" })
-					)
+					vim.keymap.set("n", "gra", function()
+						require("fzf-lua").lsp_code_actions()
+					end, vim.tbl_extend("force", opts, { desc = "LSP Code Actions (fzf)" }))
 
 					vim.keymap.set("n", "grn", vim.lsp.buf.rename, vim.tbl_extend("force", opts, { desc = "LSP Rename" }))
 
-					vim.keymap.set(
-						"n",
-						"gri",
-						fzf_or_fallback("lsp_implementations", vim.lsp.buf.implementation),
-						vim.tbl_extend("force", opts, { desc = "LSP Implementations" })
-					)
+					vim.keymap.set("n", "gri", function()
+						require("fzf-lua").lsp_implementations({ jump1 = false })
+					end, vim.tbl_extend("force", opts, { desc = "LSP Implementations (fzf)" }))
 
-					vim.keymap.set(
-						"n",
-						"grt",
-						fzf_or_fallback("lsp_typedefs", vim.lsp.buf.type_definition),
-						vim.tbl_extend("force", opts, { desc = "LSP Type Definitions" })
-					)
+					vim.keymap.set("n", "grt", function()
+						require("fzf-lua").lsp_typedefs({ jump1 = false })
+					end, vim.tbl_extend("force", opts, { desc = "LSP Type Definitions (fzf)" }))
 
 					-- Additional useful LSP keymaps
-					vim.keymap.set(
-						"n",
-						"gd",
-						fzf_or_fallback("lsp_definitions", vim.lsp.buf.definition),
-						vim.tbl_extend("force", opts, { desc = "LSP Definitions" })
-					)
+					vim.keymap.set("n", "gd", function()
+						require("fzf-lua").lsp_definitions()
+					end, vim.tbl_extend("force", opts, { desc = "LSP Definitions (fzf)" }))
 
-					vim.keymap.set(
-						"n",
-						"gD",
-						fzf_or_fallback("lsp_declarations", vim.lsp.buf.declaration),
-						vim.tbl_extend("force", opts, { desc = "LSP Declarations" })
-					)
+					vim.keymap.set("n", "gD", function()
+						require("fzf-lua").lsp_declarations({ jump1 = false })
+					end, vim.tbl_extend("force", opts, { desc = "LSP Declarations (fzf)" }))
 
-					vim.keymap.set(
-						"n",
-						"gS",
-						fzf_or_fallback("lsp_document_symbols", vim.lsp.buf.document_symbol),
-						vim.tbl_extend("force", opts, { desc = "LSP Document Symbols" })
-					)
+					vim.keymap.set("n", "gS", function()
+						require("fzf-lua").lsp_document_symbols()
+					end, vim.tbl_extend("force", opts, { desc = "LSP Document Symbols (fzf)" }))
 
-					vim.keymap.set(
-						"n",
-						"gW",
-						fzf_or_fallback("lsp_workspace_symbols", vim.lsp.buf.workspace_symbol),
-						vim.tbl_extend("force", opts, { desc = "LSP Workspace Symbols" })
-					)
+					vim.keymap.set("n", "gW", function()
+						require("fzf-lua").lsp_workspace_symbols()
+					end, vim.tbl_extend("force", opts, { desc = "LSP Workspace Symbols (fzf)" }))
 
 					-- Built-in LSP functions
 					vim.keymap.set("n", "K", vim.lsp.buf.hover, vim.tbl_extend("force", opts, { desc = "LSP Hover" }))
@@ -109,28 +70,11 @@ return {
 				end,
 			})
 
-			-- LSP Performance: Reduce logging (configurable via environment variable)
-			local valid_levels = { "TRACE", "DEBUG", "INFO", "WARN", "ERROR" }
-			local log_level = vim.env.NVIM_LSP_LOG_LEVEL or "ERROR"
-			if not vim.tbl_contains(valid_levels, log_level) then
-				vim.notify(
-					string.format("Invalid NVIM_LSP_LOG_LEVEL '%s', using ERROR", log_level),
-					vim.log.levels.WARN
-				)
-				log_level = "ERROR"
-			end
-			vim.lsp.set_log_level(log_level)
-
-			-- Standard capabilities with error handling
+			-- Enhanced capabilities with completion (cached globally for all servers)
 			local capabilities = vim.lsp.protocol.make_client_capabilities()
-			local ok, blink = pcall(require, "blink.cmp")
-			if ok then
-				capabilities = blink.get_lsp_capabilities(capabilities)
-			else
-				vim.notify("blink.cmp not available, using default LSP capabilities", vim.log.levels.INFO)
-			end
+			capabilities = require("blink.cmp").get_lsp_capabilities(capabilities)
 
-			-- Per-server configurations
+			-- LSP server configurations for all your languages
 			local servers = {
 				-- Lua (Neovim configuration)
 				lua_ls = {
@@ -140,7 +84,7 @@ return {
 							diagnostics = { globals = { "vim" } },
 							workspace = {
 								library = vim.api.nvim_get_runtime_file("", true),
-								checkThirdParty = false, -- Greatly improves performance
+								checkThirdParty = false,
 							},
 							telemetry = { enable = false },
 						},
@@ -152,11 +96,20 @@ return {
 					settings = {
 						basedpyright = {
 							analysis = {
-								typeCheckingMode = "strict", -- Use "off" for performance
+								typeCheckingMode = "strict",
 								autoSearchPaths = true,
 								useLibraryCodeForTypes = true,
 								autoImportCompletions = true,
-								diagnosticMode = "openFilesOnly",
+								diagnosticMode = "workspace",
+								reportMissingImports = true,
+								reportUnusedImport = true,
+								reportUnusedVariable = { "all" },
+								reportUndefinedVariable = true,
+								reportOptionalMemberAccess = true,
+								reportOptionalSubscript = true,
+								reportOptionalIterable = true,
+								reportPrivateImportUsage = true,
+								reportIncompatibleMethodOverride = true,
 							},
 						},
 					},
@@ -164,53 +117,28 @@ return {
 
 				-- JavaScript/TypeScript
 				ts_ls = {
-					-- IMPORTANT: For large projects, create a `tsconfig.json` or `jsconfig.json` at your project root.
-					-- This allows the server to understand your project structure and avoid excessive file scanning.
-					-- Example `jsconfig.json`:
-					-- {
-					--   "compilerOptions": {
-					--     "module": "commonjs",
-					--     "target": "es2020"
-					--   },
-					--   "exclude": ["node_modules"]
-					-- }
-					init_options = {
-						maxTsServerMemory = 4096, -- Limit memory usage for performance
-						preferences = {
-							includeCompletionsForModuleExports = true,
-							includeCompletionsWithInsertText = true,
-							importModuleSpecifierPreference = "relative",
-							quotePreference = "double",
-						},
-					},
 					settings = {
 						typescript = {
 							inlayHints = {
-								includeInlayParameterNameHints = "none",
-								includeInlayFunctionParameterTypeHints = false,
-								includeInlayVariableTypeHints = false,
-								includeInlayPropertyDeclarationTypeHints = false,
-								includeInlayFunctionLikeReturnTypeHints = false,
-								includeInlayEnumMemberValueHints = false,
+								includeInlayParameterNameHints = "literals", -- Only for literals, not all arguments
+								includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+								includeInlayFunctionParameterTypeHints = true,
+								includeInlayVariableTypeHints = false, -- Often obvious from context
+								includeInlayPropertyDeclarationTypeHints = true,
+								includeInlayFunctionLikeReturnTypeHints = true,
+								includeInlayEnumMemberValueHints = false, -- Rarely needed
 							},
-							suggest = {
-								includeCompletionsForModuleExports = true,
-							},
-							updateImportsOnFileMove = { enabled = "always" },
 						},
 						javascript = {
 							inlayHints = {
-								includeInlayParameterNameHints = "none",
-								includeInlayFunctionParameterTypeHints = false,
-								includeInlayVariableTypeHints = false,
-								includeInlayPropertyDeclarationTypeHints = false,
-								includeInlayFunctionLikeReturnTypeHints = false,
-								includeInlayEnumMemberValueHints = false,
+								includeInlayParameterNameHints = "literals", -- Only for literals, not all arguments
+								includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+								includeInlayFunctionParameterTypeHints = true,
+								includeInlayVariableTypeHints = false, -- Often obvious from context
+								includeInlayPropertyDeclarationTypeHints = true,
+								includeInlayFunctionLikeReturnTypeHints = true,
+								includeInlayEnumMemberValueHints = false, -- Rarely needed
 							},
-							suggest = {
-								includeCompletionsForModuleExports = true,
-							},
-							updateImportsOnFileMove = { enabled = "always" },
 						},
 					},
 				},
@@ -225,7 +153,17 @@ return {
 								runBuildScripts = false,
 							},
 							checkOnSave = {
-								enable = false, -- Disabled for performance, run manually
+								allFeatures = false,
+								command = "clippy",
+								extraArgs = { "--no-deps" },
+							},
+							procMacro = {
+								enable = true,
+								ignored = {
+									["async-trait"] = { "async_trait" },
+									["napi-derive"] = { "napi" },
+									["async-recursion"] = { "async_recursion" },
+								},
 							},
 						},
 					},
@@ -241,35 +179,25 @@ return {
 						"--completion-style=detailed",
 						"--function-arg-placeholders",
 						"--fallback-style=llvm",
-						"--offset-encoding=utf-16", -- Important for compatibility with some plugins
-						"--pch-storage=memory", -- Faster but uses more RAM
 					},
 					init_options = {
-						clangdFileStatus = true,
 						usePlaceholders = true,
 						completeUnimported = true,
-						semanticHighlighting = true,
+						clangdFileStatus = true,
 					},
 				},
 
 				-- Zig
 				zls = {
-					settings = {
-						zls = {
-							enable_autofix = false, -- Disable for performance
-							enable_snippets = true,
-							enable_ast_check_diagnostics = true,
-							enable_build_on_save = false, -- Better performance, build manually
-						},
-					},
+					-- Basic Zig LSP configuration
 				},
 
-				-- Bash
+				-- Bash/Shell
 				bashls = {
-					filetypes = { "sh", "bash", "zsh" },
 					settings = {
 						bashIde = {
-							globPattern = "*@(.sh|.inc|.bash|.command|.zsh)",
+							globPattern = "**/*@(.sh|.inc|.bash|.command)",
+							includeAllWorkspaceSymbols = true,
 						},
 					},
 				},
@@ -277,30 +205,114 @@ return {
 				-- TOML
 				taplo = {
 					settings = {
-						evenBetterToml = {
-							schema = {
+						taplo = {
+							configFile = {
 								enabled = true,
-								catalogs = {
-									"https://www.schemastore.org/api/json/catalog.json",
-								},
 							},
 						},
 					},
 				},
 			}
 
-			-- Setup servers in a loop with error handling
-			for server_name, config in pairs(servers) do
-				local server_config = vim.tbl_deep_extend("force", {
-					capabilities = capabilities,
-					flags = {
-						debounce_text_changes = 300, -- Debounce for performance
-					},
-				}, config)
+			-- Lua Language Server
+			vim.lsp.config.lua_ls = {
+				cmd = { "lua-language-server" },
+				filetypes = { "lua" },
+				root_markers = { { ".luarc.json", ".luarc.jsonc" }, ".git" },
+				capabilities = capabilities,
+				settings = servers.lua_ls.settings,
+			}
 
-				local ok, err = pcall(function()
-					require("lspconfig")[server_name].setup(server_config)
-				end)
+			-- Python (basedpyright)
+			vim.lsp.config.basedpyright = {
+				cmd = { "basedpyright-langserver", "--stdio" },
+				filetypes = { "python" },
+				root_markers = { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", "Pipfile", ".git" },
+				capabilities = capabilities,
+				settings = servers.basedpyright.settings,
+			}
+
+			-- TypeScript/JavaScript
+			vim.lsp.config.ts_ls = {
+				cmd = { "typescript-language-server", "--stdio" },
+				filetypes = { "javascript", "typescript", "javascriptreact", "typescriptreact" },
+				root_markers = { "tsconfig.json", "package.json", ".git" },
+				capabilities = capabilities,
+				settings = servers.ts_ls.settings,
+			}
+
+			-- Rust
+			vim.lsp.config.rust_analyzer = {
+				cmd = { "rust-analyzer" },
+				filetypes = { "rust" },
+				root_markers = { "Cargo.toml", ".git" },
+				capabilities = capabilities,
+				settings = servers.rust_analyzer.settings,
+			}
+
+			-- C/C++
+			vim.lsp.config.clangd = {
+				cmd = servers.clangd.cmd,
+				filetypes = { "c", "cpp", "objc", "objcpp", "cuda", "proto" },
+				root_markers = {
+					".clangd",
+					".clang-tidy",
+					".clang-format",
+					"compile_commands.json",
+					"compile_flags.txt",
+					"configure.ac",
+					".git",
+				},
+				capabilities = capabilities,
+				init_options = servers.clangd.init_options,
+			}
+
+			-- Zig
+			vim.lsp.config.zls = {
+				cmd = { "zls" },
+				filetypes = { "zig" },
+				root_markers = { "build.zig", ".git" },
+				capabilities = capabilities,
+			}
+
+			-- Bash
+			vim.lsp.config.bashls = {
+				cmd = { "bash-language-server", "start" },
+				filetypes = { "sh", "bash" },
+				root_markers = { ".git" },
+				capabilities = capabilities,
+				settings = servers.bashls.settings,
+			}
+
+			-- TOML
+			vim.lsp.config.taplo = {
+				cmd = { "taplo", "lsp", "stdio" },
+				filetypes = { "toml" },
+				root_markers = { ".git" },
+				capabilities = capabilities,
+				settings = servers.taplo.settings,
+			}
+
+			-- Enable LSP servers on-demand per filetype for faster startup
+			local lsp_filetypes = {
+				lua = "lua_ls",
+				python = "basedpyright",
+				javascript = "ts_ls",
+				typescript = "ts_ls",
+				javascriptreact = "ts_ls",
+				typescriptreact = "ts_ls",
+				rust = "rust_analyzer",
+				c = "clangd",
+				cpp = "clangd",
+				objc = "clangd",
+				objcpp = "clangd",
+				cuda = "clangd",
+				proto = "clangd",
+				zig = "zls",
+				sh = "bashls",
+				bash = "bashls",
+				toml = "taplo",
+			}
 
 			-- Auto-enable LSP when opening relevant filetypes
 			vim.api.nvim_create_autocmd("FileType", {
@@ -312,33 +324,6 @@ return {
 					end
 				end,
 			})
-
-			-- Custom LspInfo command
-			vim.api.nvim_create_user_command("LspInfo", function()
-				-- Get all clients globally
-				local all_clients = vim.lsp.get_clients()
-				-- Get clients attached to current buffer
-				local buf_clients = vim.lsp.get_clients({ bufnr = 0 })
-
-				print("=== LSP Clients (Current Buffer) ===")
-				if #buf_clients == 0 then
-					print("No LSP clients attached to this buffer")
-				else
-					for _, client in ipairs(buf_clients) do
-						print(string.format("• %s (id: %d, root: %s)", client.name, client.id, client.root_dir or "N/A"))
-					end
-				end
-
-				print("\n=== All Active LSP Clients ===")
-				if #all_clients == 0 then
-					print("No LSP clients running")
-				else
-					for _, client in ipairs(all_clients) do
-						local attached_bufs = vim.lsp.get_buffers_by_client_id(client.id)
-						print(string.format("• %s (id: %d, buffers: %d)", client.name, client.id, #attached_bufs))
-					end
-				end
-			end, {})
 		end,
 	},
 }
