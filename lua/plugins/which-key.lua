@@ -25,7 +25,7 @@ return {
 
 
 			-- LSP Information
-			{ "K", desc = "Hover Documentation" },
+			{ "gh", desc = "Hover Documentation" },
 			{ "gs", desc = "Signature Help" },
 
 			-- Enhanced Movement
@@ -68,6 +68,10 @@ return {
 			{ "]s", desc = "Next symbol (Aerial)" },
 			{ "[s", desc = "Previous symbol (Aerial)" },
 
+			-- Ergonomic Line Navigation
+			{ "H", desc = "First non-blank character", mode = { "n", "v" } },
+			{ "L", desc = "End of line", mode = { "n", "v" } },
+
 			-- ===============================================
 			-- LSP & DEVELOPMENT (g* prefix)
 			-- ===============================================
@@ -75,7 +79,7 @@ return {
 			-- Navigation
 			{ "gd", desc = "Definition" },
 			{ "gD", desc = "Declaration" },
-			{ "gS", desc = "Document Symbols" },
+			{ "gO", desc = "Document Symbols" },
 			{ "gW", desc = "Workspace Symbols" },
 
 			-- References & Actions (gr*)
@@ -93,11 +97,15 @@ return {
 			-- Diagnostics (ge*)
 			{ "ge", group = "Diagnostics" },
 			{ "get", desc = "Toggle" },
-			{ "gen", desc = "Next" },
-			{ "gep", desc = "Previous" },
-			{ "gef", desc = "Float" },
 			{ "gel", desc = "Loclist" },
 			{ "geq", desc = "Quickfix" },
+
+			-- Built-in diagnostic navigation
+			{ "]d", desc = "Next diagnostic" },
+			{ "[d", desc = "Previous diagnostic" },
+			{ "]D", desc = "Last diagnostic" },
+			{ "[D", desc = "First diagnostic" },
+			{ "<C-w>d", desc = "Diagnostic float" },
 
 			-- Comments (gc*)
 			{ "gc", group = "Comment" },
@@ -128,11 +136,10 @@ return {
 
 			{ "jj", desc = "Exit insert", mode = "i" },
 
-			-- LSP Actions (<C-g>*)
-			{ "<C-g>K", desc = "Hover", mode = "i" },
-			{ "<C-g>s", desc = "Signature", mode = "i" },
-			{ "<C-g>f", desc = "Format", mode = "i" },
-			{ "<C-g>l", desc = "Lint", mode = "i" },
+			-- Editor Alt Keys
+			{ "<A-D>", desc = "Delete to end of line", mode = "i" },
+			{ "<A-c>", desc = "Yank/copy current line", mode = "i" },
+			{ "<A-p>", desc = "Paste after cursor", mode = "i" },
 
 			-- Surround (<C-s>*)
 			{ "<C-s>s", desc = "Surround selection", mode = "i" },
@@ -168,10 +175,11 @@ return {
 			{ "<leader>a", "<cmd>AerialToggle<cr>", desc = "Aerial (toggle outline)" },
 			{ "<leader>aA", desc = "Toggle nav window" },
 
-			-- Editor (<leader>e)
-			{ "<leader>e", group = "Editor" },
-			{ "<leader>ec", desc = "Edit config" },
-			{ "<leader>er", desc = "Reload config & sync plugins" },
+			-- Config (<leader>c)
+			{ "<leader>c", group = "Config" },
+			{ "<leader>ce", desc = "Edit config" },
+			{ "<leader>cr", desc = "Reload config & sync plugins" },
+
 
 			-- Find (<leader>f)
 			{ "<leader>f", group = "Find" },
@@ -181,21 +189,17 @@ return {
 
 			-- Tabs (<leader>t)
 			{ "<leader>t", group = "Tabs" },
-			{ "<leader>tt", desc = "New tab" },
+			{ "<leader>tn", desc = "New tab" },
 			{ "<leader>tf", desc = "New tab with picker" },
-			{ "<leader>tx", desc = "Close tab" },
+			{ "<leader>tc", desc = "Close tab" },
 			{ "<leader>tb", desc = "Buffer in new tab" },
 
 			-- Buffer (<leader>b)
 			{ "<leader>b", group = "Buffer" },
-			{ "<leader>bi", desc = "Pin/Unpin" },
-			{ "<leader>bd", group = "Delete" },
-			{ "<leader>bdd", desc = "Current" },
-			{ "<leader>bdi", desc = "Non-pinned" },
-			{ "<leader>bds", desc = "Non-active" },
-			{ "<leader>bs", group = "Split" },
-			{ "<leader>bsv", desc = "Vertical" },
-			{ "<leader>bsh", desc = "Horizontal" },
+			{ "<leader>bp", desc = "Pin/unpin" },
+			{ "<leader>bd", desc = "Delete current" },
+			{ "<leader>bx", desc = "Delete non-pinned" },
+			{ "<leader>bo", desc = "Delete others" },
 
 			-- Debug (<leader>d)
 			{ "<leader>d", group = "Debug" },

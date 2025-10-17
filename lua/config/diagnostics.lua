@@ -92,10 +92,8 @@ local function toggle_diagnostics()
 end
 
 -- Diagnostics keymaps with ge* pattern (diagnostic errors/issues)
+-- Note: ]d, [d, and <C-w>d are built-in Neovim defaults for diagnostic navigation
 vim.keymap.set("n", "get", toggle_diagnostics, { desc = "Toggle diagnostics (enable/disable)" })
-vim.keymap.set("n", "gen", vim.diagnostic.goto_next, { desc = "Next diagnostic" })
-vim.keymap.set("n", "gep", vim.diagnostic.goto_prev, { desc = "Previous diagnostic" })
-vim.keymap.set("n", "gef", vim.diagnostic.open_float, { desc = "Open diagnostic float" })
 vim.keymap.set("n", "gel", vim.diagnostic.setloclist, { desc = "Set loclist with diagnostics" })
 vim.keymap.set("n", "geq", vim.diagnostic.setqflist, { desc = "Set quickfix with diagnostics" })
 

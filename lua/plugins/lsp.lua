@@ -44,7 +44,8 @@ return {
 						require("fzf-lua").lsp_declarations({ jump1 = false })
 					end, vim.tbl_extend("force", opts, { desc = "LSP Declarations (fzf)" }))
 
-					vim.keymap.set("n", "gS", function()
+					-- Override built-in gO to use fzf-lua
+					vim.keymap.set("n", "gO", function()
 						require("fzf-lua").lsp_document_symbols()
 					end, vim.tbl_extend("force", opts, { desc = "LSP Document Symbols (fzf)" }))
 
@@ -53,17 +54,13 @@ return {
 					end, vim.tbl_extend("force", opts, { desc = "LSP Workspace Symbols (fzf)" }))
 
 					-- Built-in LSP functions
-					vim.keymap.set("n", "K", vim.lsp.buf.hover, vim.tbl_extend("force", opts, { desc = "LSP Hover" }))
+					vim.keymap.set("n", "gh", vim.lsp.buf.hover, vim.tbl_extend("force", opts, { desc = "LSP Hover" }))
 					vim.keymap.set(
 						"n",
 						"gs",
 						vim.lsp.buf.signature_help,
 						vim.tbl_extend("force", opts, { desc = "LSP Signature Help" })
 					)
-
-					-- Insert mode LSP keymaps with <C-g>* pattern
-					vim.keymap.set("i", "<C-g>K", vim.lsp.buf.hover, vim.tbl_extend("force", opts, { desc = "LSP Hover (insert mode)" }))
-					vim.keymap.set("i", "<C-g>s", vim.lsp.buf.signature_help, vim.tbl_extend("force", opts, { desc = "LSP Signature Help (insert mode)" }))
 
 					-- Set omnifunc for buffer
 					vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
