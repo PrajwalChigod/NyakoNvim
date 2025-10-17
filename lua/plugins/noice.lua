@@ -56,15 +56,8 @@ return {
 				history = {
 					view = "split",
 					opts = { enter = true, format = "details" },
-					filter = {
-						any = {
-							{ event = "notify" },
-							{ error = true },
-							{ warning = true },
-							{ event = "msg_show", kind = { "" } },
-							{ event = "lsp", kind = "message" },
-						},
-					},
+					-- Remove filter to show ALL messages
+					filter = {},
 				},
 			},
 			notify = {

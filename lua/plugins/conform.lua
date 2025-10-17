@@ -100,9 +100,6 @@ return {
 		-- Formatting keymaps with g* pattern
 		vim.keymap.set("n", "gf", format_file, { desc = "Format file" })
 		vim.keymap.set("v", "gf", format_range, { desc = "Format range" })
-
-		-- Insert mode formatting
-		vim.keymap.set("i", "<C-g>f", format_file, { desc = "Format file (insert mode)" })
 	end,
 }
 

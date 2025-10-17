@@ -48,13 +48,18 @@ keymap("v", "<C-s>", "<Esc><cmd>wa<CR>", { desc = "Exit visual mode and save all
 keymap("n", "-", "<CMD>Oil<CR>", { desc = "Open file explorer" })
 keymap("n", "~", "<CMD>Oil .<CR>", { desc = "Oil open parent dir" })
 
--- Quick access to config
-keymap("n", "<leader>ec", function()
+-- ===============================================
+-- CONFIG OPERATIONS
+-- ===============================================
+
+-- Edit Neovim config
+keymap("n", "<leader>ce", function()
 	vim.cmd("cd ~/.config/nvim")
 	require("fzf-lua").files({ cwd = "~/.config/nvim" })
 end, { desc = "Edit Neovim config" })
 
-keymap("n", "<leader>er", function()
+-- Reload config and sync plugins
+keymap("n", "<leader>cr", function()
 	-- Save current file if modified
 	if vim.bo.modified then
 		vim.cmd("write")
@@ -66,6 +71,21 @@ keymap("n", "<leader>er", function()
 	vim.notify("Config reloaded and plugins synced!", vim.log.levels.INFO)
 end, { desc = "Reload config and sync plugins" })
 
+-- ===============================================
+-- EDITOR OPERATIONS
+-- ===============================================
+
+-- Ergonomic line navigation (H/L override default viewport jumps)
+keymap("n", "H", "^", { desc = "Go to first non-blank character" })
+keymap("v", "H", "^", { desc = "Go to first non-blank character" })
+
+keymap("n", "L", "$", { desc = "Go to end of line" })
+keymap("v", "L", "$", { desc = "Go to end of line" })
+
+-- Alt key operations (insert mode only)
+keymap("i", "<A-D>", "<C-o>d$", { desc = "Delete to end of line" })
+keymap("i", "<A-c>", "<C-o>yy", { desc = "Yank/copy current line" })
+keymap("i", "<A-p>", "<C-o>p", { desc = "Paste after cursor" })
 
 
 -- ===============================================
@@ -111,8 +131,8 @@ keymap("n", "J", "mzJ`z", { desc = "Join lines" })
 -- TAB MANAGEMENT
 -- ===============================================
 
-keymap("n", "<leader>tt", "<cmd>tabnew<CR>", { desc = "Open new tab" })
-keymap("n", "<leader>tx", "<cmd>tabclose<CR>", { desc = "Close current tab" })
+keymap("n", "<leader>tn", "<cmd>tabnew<CR>", { desc = "Open new tab" })
+keymap("n", "<leader>tc", "<cmd>tabclose<CR>", { desc = "Close current tab" })
 keymap("n", "<leader>tb", "<cmd>tab sb<CR>", { desc = "Open buffer in new tab" })
 
 -- Enhanced tab workflow with scope.nvim

@@ -147,7 +147,7 @@ return {
 				},
 				grep = {
 					prompt = "Rg❯ ",
-					cmd = "rg --hidden -g \"!.git\" -g \"!node_modules\" -g \"!.next\" -g \"!target\" -g \"!build\" -g \"!dist\" -g \"!.venv\" -g \"!venv\" -g \"!.cache\"",
+					cmd = "rg --column --line-number --no-heading --color=always --smart-case --max-columns=4096 --hidden -g \"!.git\" -g \"!node_modules\" -g \"!.next\" -g \"!target\" -g \"!build\" -g \"!dist\" -g \"!.venv\" -g \"!venv\" -g \"!.cache\"",
 				},
 				oldfiles = {
 					prompt = "History❯ ",

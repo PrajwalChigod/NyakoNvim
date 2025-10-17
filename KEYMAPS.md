@@ -44,11 +44,14 @@
 | Key | Mode | Description |
 |-----|------|-------------|
 | `<A-d>` | Insert | Delete word forward |
+| `<A-D>` | Insert | Delete to end of line |
 | `<A-u>` | Insert | Delete to line start |
 | `<A-o>` | Insert | Insert line below |
 | `<A-O>` | Insert | Insert line above |
 | `<A-x>` | Insert | Delete character under cursor |
 | `<A-z>` | Insert | Undo |
+| `<A-c>` | Insert | Yank/copy current line |
+| `<A-p>` | Insert | Paste after cursor |
 
 ## Save Operations
 
@@ -66,14 +69,12 @@
 | `<S-Tab>` | Normal | Previous buffer |
 | `]s` | Normal | Next symbol (Aerial) |
 | `[s` | Normal | Previous symbol (Aerial) |
-| `<leader>bi` | Normal | Toggle pin buffer |
-| `<leader>bdd` | Normal | Delete current buffer |
-| `<leader>bdi` | Normal | Delete non-pinned buffers |
-| `<leader>bds` | Normal | Delete all non-active buffers |
-| `<leader>bsv` | Normal | Split buffer vertically |
-| `<leader>bsh` | Normal | Split buffer horizontally |
-| `<leader>tt` | Normal | New tab |
-| `<leader>tx` | Normal | Close current tab |
+| `<leader>bp` | Normal | Pin/unpin buffer |
+| `<leader>bd` | Normal | Delete current buffer |
+| `<leader>bx` | Normal | Delete non-pinned buffers |
+| `<leader>bo` | Normal | Delete other buffers |
+| `<leader>tn` | Normal | New tab |
+| `<leader>tc` | Normal | Close current tab |
 | `<leader>tb` | Normal | Open buffer in new tab |
 | `<leader>tf` | Normal | New tab with file picker |
 
@@ -84,9 +85,9 @@
 |-----|------|-------------|
 | `gd` | Normal | Go to definition |
 | `gD` | Normal | Go to declaration |
-| `gS` | Normal | Document symbols |
+| `gO` | Normal | Document symbols |
 | `gW` | Normal | Workspace symbols |
-| `K` | Normal | Hover documentation |
+| `gh` | Normal | Hover documentation |
 | `gs` | Normal | Signature help |
 
 ### References & Actions (gr*)
@@ -98,27 +99,26 @@
 | `gri` | Normal | Implementations |
 | `grt` | Normal | Type definitions |
 
-### Insert Mode LSP
-| Key | Mode | Description |
-|-----|------|-------------|
-| `<C-g>K` | Insert | Hover documentation |
-| `<C-g>s` | Insert | Signature help |
-| `<C-g>f` | Insert | Format file |
-| `<C-g>l` | Insert | Run linter |
-
 ### LSP Performance
 | Key | Mode | Description |
 |-----|------|-------------|
 | `<leader>lw` | Normal | Toggle LSP workspace scanning (for large projects) |
 
-## Diagnostics (ge*)
+## Diagnostics
 
+### Built-in Navigation
+| Key | Mode | Description |
+|-----|------|-------------|
+| `]d` | Normal | Next diagnostic |
+| `[d` | Normal | Previous diagnostic |
+| `]D` | Normal | Last diagnostic in buffer |
+| `[D` | Normal | First diagnostic in buffer |
+| `<C-w>d` | Normal | Open diagnostic float |
+
+### Custom Actions (ge*)
 | Key | Mode | Description |
 |-----|------|-------------|
 | `get` | Normal | Toggle diagnostics |
-| `gen` | Normal | Next diagnostic |
-| `gep` | Normal | Previous diagnostic |
-| `gef` | Normal | Open diagnostic float |
 | `gel` | Normal | Set loclist with diagnostics |
 | `geq` | Normal | Set quickfix with diagnostics |
 
@@ -205,8 +205,8 @@
 | `p` | Oil Buffer | Preview file |
 | `x` | Oil Buffer | Close oil buffer |
 | `r` | Oil Buffer | Refresh |
-| `_` | Oil Buffer | Go to parent directory |
 | `` ` `` | Oil Buffer | Change directory (cd) |
+| `~` | Oil Buffer | Go to parent directory |
 | `gs` | Oil Buffer | Change sort order |
 | `gx` | Oil Buffer | Open with external program |
 | `g.` | Oil Buffer | Toggle hidden files |
@@ -394,12 +394,20 @@
 | `<localleader>tv` | Normal | Toggle vertical terminal |
 | `<localleader>tt` | Normal | Toggle tab terminal |
 
-## Editor Config
+## Config Operations
 
 | Key | Mode | Description |
 |-----|------|-------------|
-| `<leader>ec` | Normal | Edit Neovim config |
-| `<leader>er` | Normal | Reload config & sync plugins |
+| `<leader>ce` | Normal | Edit Neovim config |
+| `<leader>cr` | Normal | Reload config & sync plugins |
+
+## Editor Operations
+
+### Ergonomic Line Navigation
+| Key | Mode | Description |
+|-----|------|-------------|
+| `H` | Normal/Visual | Go to first non-blank character (ergonomic alternative to `^`) |
+| `L` | Normal/Visual | Go to end of line (ergonomic alternative to `$`) |
 
 ## Session Management
 
