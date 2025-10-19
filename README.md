@@ -28,7 +28,8 @@ A sleek, purr-fectly crafted Neovim configuration that's fast, lightweight, and 
 - **Session persistence**: Pick up exactly where you left off
 
 ### 🎨 Beautiful & Modern UI
-- **Catppuccin Mocha theme**: Easy on the eyes with custom color tweaks
+- **Catppuccin Macchiato theme**: Easy on the eyes with custom color tweaks (default theme)
+- **6 colorscheme options**: Switch between catppuccin, tokyonight, gruvbox, rose-pine, kanagawa, and onedark with `<leader>cp`
 - **Clean status line**: Essential info without clutter via [lualine](https://github.com/nvim-lualine/lualine.nvim)
 - **Smooth animations**: Enhanced UI with [noice.nvim](https://github.com/folke/noice.nvim)
 - **Smart buffer tabs**: Visual buffer management with [bufferline](https://github.com/akinsho/bufferline.nvim)
@@ -314,6 +315,13 @@ Here's what powers NyakoNvim:
 | **which-key** | Keybind helper | Never forget a keybinding again |
 | **toggleterm** | Terminal | Integrated terminals - floating, split, tabbed |
 
+### Colorscheme System
+NyakoNvim includes a flexible colorscheme system:
+- **6 pre-configured themes**: catppuccin, tokyonight, gruvbox, rose-pine, kanagawa, onedark
+- **Live preview picker**: Press `<leader>cp` to browse and preview themes with fzf-lua
+- **Persistent selections**: Theme changes are automatically saved and restored on next startup
+- **Smart lazy-loading**: Only the active theme loads at startup for optimal performance
+
 ## 9. Tooling Matrix
 
 Complete reference matrix for all configured languages and their tooling:
@@ -379,8 +387,9 @@ Complete reference matrix for all configured languages and their tooling:
 - **LSP actions**: `gd` (go to definition), `grr` (find references), `gra` (code actions)
 - **Git**: `<Space>g` prefix for all git operations
 - **Fuzzy find**: `<Space>f` prefix for all search operations
+- **Colorscheme picker**: `<Space>cp` to browse and apply themes with live preview
 
-📖 **Full keymap reference**: See [KEYMAPS.md](./KEYMAPS.md) for the complete cheatsheet
+📖 **Full keymap reference**: See [KEYMAPS.md](./docs/KEYMAPS.md) for the complete cheatsheet
 
 ### Pro Tips
 - **Session restore**: `<Space>qs` restores your last session with all buffers and splits
