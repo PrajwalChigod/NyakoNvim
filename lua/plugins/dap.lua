@@ -1,13 +1,8 @@
 return {
 	{
 		"mfussenegger/nvim-dap",
-		cmd = { "DapToggleBreakpoint", "DapContinue", "DapStepOver", "DapStepInto", "DapStepOut" },
-		keys = {
-			{ "<leader>db", desc = "Toggle breakpoint" },
-			{ "<leader>dc", desc = "Continue" },
-			{ "<leader>di", desc = "Step into" },
-			{ "<leader>do", desc = "Step over" },
-		},
+		lazy = true,
+		keys = { "<leader>d" },
 		dependencies = {
 			"rcarriga/nvim-dap-ui",
 			"nvim-neotest/nvim-nio",
@@ -237,6 +232,7 @@ return {
 	},
 	{
 		"rcarriga/nvim-dap-ui",
+		lazy = true,
 		dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },
 		config = function()
 			local dap = require("dap")

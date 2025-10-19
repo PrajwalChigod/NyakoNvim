@@ -71,6 +71,10 @@ keymap("n", "<leader>cr", function()
 	vim.notify("Config reloaded and plugins synced!", vim.log.levels.INFO)
 end, { desc = "Reload config and sync plugins" })
 
+keymap("n", "<leader>cp", function()
+	require("fzf-lua").colorschemes()
+end, { desc = "Colorscheme Picker" })
+
 -- ===============================================
 -- EDITOR OPERATIONS
 -- ===============================================

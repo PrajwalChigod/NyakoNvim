@@ -3,9 +3,11 @@ return {
 	event = "VeryLazy",
 	dependencies = { "nvim-tree/nvim-web-devicons" },
 	config = function()
+		-- Delay in milliseconds to wait for colorscheme to fully load before refreshing UI
+		local COLORSCHEME_REFRESH_DELAY = 100
 		require("lualine").setup({
 			options = {
-				theme = "catppuccin",
+				theme = "auto",
 				icons_enabled = true,
 				component_separators = { left = "", right = "" },
 				section_separators = { left = "", right = "" },
@@ -51,6 +53,16 @@ return {
 			winbar = {},
 			inactive_winbar = {},
 			extensions = {},
+		})
+
+		vim.api.nvim_create_autocmd("ColorScheme", {
+			group = vim.api.nvim_create_augroup("LualineColorschemeRefresh", { clear = true }),
+			pattern = "*",
+			callback = function()
+				vim.defer_fn(function()
+					pcall(vim.cmd, "redrawstatus")
+				end, COLORSCHEME_REFRESH_DELAY)
+			end,
 		})
 	end,
 }

@@ -12,6 +12,8 @@ return {
 		{ "<leader>bo", "<Cmd>BufferLineCloseOthers<CR>", desc = "Delete other buffers" },
 	},
 	config = function()
+		-- Delay in milliseconds to wait for colorscheme to fully load before refreshing UI
+		local COLORSCHEME_REFRESH_DELAY = 100
 		require("bufferline").setup({
 			options = {
 				mode = "buffers",
@@ -81,6 +83,16 @@ return {
 				},
 				sort_by = "insert_after_current",
 			},
+		})
+
+		vim.api.nvim_create_autocmd("ColorScheme", {
+			group = vim.api.nvim_create_augroup("BufferlineColorschemeRefresh", { clear = true }),
+			pattern = "*",
+			callback = function()
+				vim.defer_fn(function()
+					pcall(vim.cmd, "redrawtabline")
+				end, COLORSCHEME_REFRESH_DELAY)
+			end,
 		})
 	end,
 }

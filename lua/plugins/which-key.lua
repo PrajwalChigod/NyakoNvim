@@ -179,6 +179,7 @@ return {
 			{ "<leader>c", group = "Config" },
 			{ "<leader>ce", desc = "Edit config" },
 			{ "<leader>cr", desc = "Reload config & sync plugins" },
+			{ "<leader>cp", desc = "Colorscheme Picker" },
 
 
 			-- Find (<leader>f)
