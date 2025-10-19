@@ -179,3 +179,15 @@ vim.api.nvim_create_autocmd("QuickFixCmdPost", {
 		vim.cmd("cwindow")
 	end,
 })
+
+local colorscheme_group = vim.api.nvim_create_augroup("ColorschemeSettings", { clear = true })
+
+vim.api.nvim_create_autocmd("ColorScheme", {
+	group = colorscheme_group,
+	callback = function(args)
+		local ok, response = require("utils").save_colorscheme(args.match)
+		if not ok then
+			vim.notify("Failed to save colorscheme preference: " .. tostring(response), vim.log.levels.WARN)
+		end
+	end,
+})

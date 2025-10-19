@@ -1,3 +1,5 @@
+local BAT_PREVIEW_MAX_LINES = 500
+
 return {
 	"ibhagwan/fzf-lua",
 	dependencies = { "nvim-tree/nvim-web-devicons" },
@@ -116,44 +118,49 @@ return {
 		},
 	},
 	config = function()
-		-- Defer heavy setup until first actual use
-		vim.defer_fn(function()
-			require("fzf-lua").setup({
-				winopts = {
-					height = 0.85,
-					width = 0.80,
-					row = 0.35,
-					col = 0.50,
-					border = "rounded",
+		require("fzf-lua").setup({
+			winopts = {
+				height = 0.85,
+				width = 0.80,
+				row = 0.35,
+				col = 0.50,
+				border = "rounded",
+			},
+			previewers = {
+				bat = {
+					cmd = "bat",
+					args = string.format("--style=numbers,changes --color always --line-range :%d", BAT_PREVIEW_MAX_LINES),
 				},
-				previewers = {
-					bat = {
-						cmd = "bat",
-						args = "--style=numbers,changes --color always --line-range :500", -- Limit preview to 500 lines
-					},
-				},
+			},
+			files = {
+				cmd = "fd --type f --hidden --follow --exclude .git --exclude node_modules --exclude .next --exclude target --exclude build --exclude dist --exclude .venv --exclude venv --exclude .cache",
+				prompt = "Files❯ ",
+				multiprocess = true,
+				git_icons = true,
+				file_icons = true,
+			},
+			git = {
 				files = {
-					cmd = "fd --type f --hidden --follow --exclude .git --exclude node_modules --exclude .next --exclude target --exclude build --exclude dist --exclude .venv --exclude venv --exclude .cache",
-					prompt = "Files❯ ",
-					multiprocess = true,
-					git_icons = true,
-					file_icons = true,
+					prompt = "GitFiles❯ ",
+					cmd = "git ls-files --exclude-standard",
 				},
-				git = {
-					files = {
-						prompt = "GitFiles❯ ",
-						cmd = "git ls-files --exclude-standard",
-					},
+			},
+			grep = {
+				prompt = "Rg❯ ",
+				cmd = "rg --column --line-number --no-heading --color=always --smart-case --max-columns=4096 --hidden -g \"!.git\" -g \"!node_modules\" -g \"!.next\" -g \"!target\" -g \"!build\" -g \"!dist\" -g \"!.venv\" -g \"!venv\" -g \"!.cache\"",
+			},
+			oldfiles = {
+				prompt = "History❯ ",
+				cwd_only = true,
+			},
+			colorschemes = {
+				prompt = "Colorschemes❯ ",
+				winopts = {
+					height = 0.60,
+					width = 0.50,
 				},
-				grep = {
-					prompt = "Rg❯ ",
-					cmd = "rg --column --line-number --no-heading --color=always --smart-case --max-columns=4096 --hidden -g \"!.git\" -g \"!node_modules\" -g \"!.next\" -g \"!target\" -g \"!build\" -g \"!dist\" -g \"!.venv\" -g \"!venv\" -g \"!.cache\"",
-				},
-				oldfiles = {
-					prompt = "History❯ ",
-					cwd_only = true,
-				},
-			})
-		end, 0)
+				live_preview = true,
+			},
+		})
 	end,
 }
