@@ -107,6 +107,9 @@ keymap("n", "<C-l>", "<C-w>l", { desc = "Go to right split" })
 -- MOVEMENT & SEARCH
 -- ===============================================
 
+-- Quick jump to end of file (mirrors gg for top)
+keymap("n", "gG", "G", { desc = "Go to end of file" })
+
 -- Better page up/down (keep cursor centered)
 keymap("n", "<C-d>", "<C-d>zz", { desc = "Page down and center" })
 keymap("n", "<C-u>", "<C-u>zz", { desc = "Page up and center" })

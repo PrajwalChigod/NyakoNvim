@@ -15,6 +15,9 @@ require("lazy").setup("plugins", {
 	change_detection = {
 		notify = false,
 	},
+	checker = {
+		enabled = false, -- Disable automatic update checking for better performance
+	},
 	performance = {
 		cache = {
 			enabled = true,
@@ -50,4 +53,5 @@ require("lazy").setup("plugins", {
 	install = {
 		colorscheme = { "catppuccin" },
 	},
+	concurrency = 10, -- Faster parallel plugin loading (default is 5)
 })

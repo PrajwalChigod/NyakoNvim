@@ -6,6 +6,8 @@
 |-----|------|-------------|
 | `jj` | Insert | Exit insert mode |
 | `<Esc>` | Normal/Insert/Visual | Clear search highlights (also exit mode if in insert/visual) |
+| `gg` | Normal | Go to top of file |
+| `gG` | Normal | Go to end of file |
 | `<C-h/j/k/l>` | Normal | Navigate between splits |
 | `<C-d>` | Normal | Page down (centered) |
 | `<C-u>` | Normal | Page up (centered) |
