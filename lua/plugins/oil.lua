@@ -3,7 +3,6 @@ return {
 	dependencies = { "nvim-tree/nvim-web-devicons" },
 	config = function()
 		require("oil").setup({
-			default_file_explorer = false,
 			columns = {
 				"icon",
 			},
@@ -46,19 +45,6 @@ return {
 				["g\\"] = "actions.toggle_trash",
 			},
 			use_default_keymaps = true,
-			view_options = {
-				show_hidden = true,
-				is_hidden_file = function(name, bufnr)
-					return vim.startswith(name, ".")
-				end,
-				is_always_hidden = function(name, bufnr)
-					return false
-				end,
-				sort = {
-					{ "type", "asc" },
-					{ "name", "asc" },
-				},
-			},
 		})
 	end,
 }
