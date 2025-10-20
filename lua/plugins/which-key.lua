@@ -29,6 +29,7 @@ return {
 			{ "gs", desc = "Signature Help" },
 
 			-- Enhanced Movement
+			{ "gG", desc = "Go to end of file" },
 			{ "J", desc = "Join lines (keep cursor)" },
 			{ "n", desc = "Next search (centered)" },
 			{ "N", desc = "Previous search (centered)" },
