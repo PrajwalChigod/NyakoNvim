@@ -27,6 +27,9 @@ return {
 					},
 				},
 			},
+			cmdline = {
+				enabled = false,
+			},
 			completion = {
 				menu = {
 					border = "rounded",
