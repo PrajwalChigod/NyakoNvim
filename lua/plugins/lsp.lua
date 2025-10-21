@@ -93,11 +93,11 @@ return {
 					settings = {
 						basedpyright = {
 							analysis = {
-								typeCheckingMode = "strict",
+								typeCheckingMode = "off", -- change it to "basic" or "strict" depending on your use case NOTE: Expect LSP performance degradation depending on the option you choose.
 								autoSearchPaths = true,
 								useLibraryCodeForTypes = true,
 								autoImportCompletions = true,
-								diagnosticMode = "workspace",
+								diagnosticMode = "openFilesOnly", -- change it to "workspace" if you want to scan entire project. NOTE: Expect LSP performance degradation on the option you choose.
 								reportMissingImports = true,
 								reportUnusedImport = true,
 								reportUnusedVariable = { "all" },
@@ -107,6 +107,16 @@ return {
 								reportOptionalIterable = true,
 								reportPrivateImportUsage = true,
 								reportIncompatibleMethodOverride = true,
+								-- Performance optimizations
+								logLevel = "Error", -- Reduce logging overhead
+								exclude = {
+									"**/node_modules",
+									"**/__pycache__",
+									"**/.*",
+									"**/.venv",
+									"**/venv",
+								},
+								ignore = { "**/node_modules", "**/__pycache__" },
 							},
 						},
 					},
