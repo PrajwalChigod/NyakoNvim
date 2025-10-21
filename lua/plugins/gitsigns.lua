@@ -35,8 +35,9 @@ return {
 			word_diff = false,
 			watch_gitdir = {
 				follow_files = true,
+				interval = 2000, -- For better performance
 			},
-			attach_to_untracked = true,
+			attach_to_untracked = false, -- Disable for performance
 			current_line_blame = false,
 			current_line_blame_opts = {
 				virt_text = true,
@@ -46,9 +47,9 @@ return {
 			},
 			current_line_blame_formatter = "<author>, <author_time:%Y-%m-%d> - <summary>",
 			sign_priority = 6,
-			update_debounce = 500,
+			update_debounce = 1000, -- For better performance
 			status_formatter = nil,
-			max_file_length = 5000,
+			max_file_length = 3000, -- For better performance
 			preview_config = {
 				border = "single",
 				style = "minimal",
