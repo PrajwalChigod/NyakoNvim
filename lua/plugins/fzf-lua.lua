@@ -1,4 +1,5 @@
-local BAT_PREVIEW_MAX_LINES = 500
+local BAT_PREVIEW_MAX_LINES = 300
+local MAX_FILE_SIZE = 1024 * 1024
 
 return {
 	"ibhagwan/fzf-lua",
@@ -125,6 +126,10 @@ return {
 				row = 0.35,
 				col = 0.50,
 				border = "rounded",
+				preview = {
+					delay = 100,
+					scrollbar = false,
+				},
 			},
 			previewers = {
 				bat = {
@@ -147,7 +152,7 @@ return {
 			},
 			grep = {
 				prompt = "Rg❯ ",
-				cmd = "rg --column --line-number --no-heading --color=always --smart-case --max-columns=4096 --hidden -g \"!.git\" -g \"!node_modules\" -g \"!.next\" -g \"!target\" -g \"!build\" -g \"!dist\" -g \"!.venv\" -g \"!venv\" -g \"!.cache\"",
+				cmd = "rg --column --line-number --no-heading --color=always --smart-case --max-columns=512 --hidden -g \"!.git\" -g \"!node_modules\" -g \"!.next\" -g \"!target\" -g \"!build\" -g \"!dist\" -g \"!.venv\" -g \"!venv\" -g \"!.cache\"",
 			},
 			oldfiles = {
 				prompt = "History❯ ",
