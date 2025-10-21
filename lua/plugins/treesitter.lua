@@ -8,30 +8,10 @@ return {
 		},
 		config = function()
 			require("nvim-treesitter.configs").setup({
-				-- Languages you primarily work with
+				-- Only install essential parsers upfront for faster startup
+				-- Other parsers will be auto-installed on-demand
 				ensure_installed = {
-					-- Core languages
-					"python",
-					"javascript",
-					"typescript",
-					"tsx",
-					"c",
-					"cpp",
-					"rust",
-					"zig",
-
-					-- Supporting languages
-					"lua", -- For Neovim config
-					"bash", -- Shell scripts
-					"json", -- Config files
-					"yaml", -- Config files
-					"toml", -- Rust/Python configs
-					"html", -- Web development
-					"css", -- Web development
-					"markdown", -- Documentation
-					"dockerfile", -- Container configs
-					"sql", -- Database queries
-					"regex", -- Regex patterns
+					"lua", -- Neovim config
 					"vim", -- Vim commands
 					"vimdoc", -- Vim help files
 				},
@@ -69,6 +49,11 @@ return {
 				-- Incremental selection based on the named nodes from the grammar
 				incremental_selection = {
 					enable = true,
+					-- Disable for large files to prevent lag
+					disable = function(lang, buf)
+						local max_lines = 5000
+						return vim.api.nvim_buf_line_count(buf) > max_lines
+					end,
 					keymaps = {
 						init_selection = "<C-space>",
 						node_incremental = "<C-space>",
@@ -114,6 +99,11 @@ return {
 					select = {
 						enable = true,
 						lookahead = true, -- Automatically jump forward to textobj
+						-- Disable for large files to prevent lag
+						disable = function(lang, buf)
+							local max_lines = 5000
+							return vim.api.nvim_buf_line_count(buf) > max_lines
+						end,
 						keymaps = {
 							-- You can use the capture groups defined in textobjects.scm
 							["af"] = "@function.outer",

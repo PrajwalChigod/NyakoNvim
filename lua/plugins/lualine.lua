@@ -17,17 +17,17 @@ return {
 				},
 				ignore_focus = {},
 				always_divide_middle = true,
-				globalstatus = false,
+				globalstatus = true, -- Single statusline = better performance
 				refresh = {
-					statusline = 1000,
-					tabline = 1000,
-					winbar = 1000,
+					statusline = 2000, -- Reduce refresh frequency for better performance
+					tabline = 2000,
+					winbar = 2000,
 				},
 			},
 			sections = {
 				lualine_a = { "mode" },
-				lualine_b = { "branch", "diff", "diagnostics" },
-				lualine_c = { "filename" },
+				lualine_b = { "branch", "diff" }, -- Removed diagnostics (shown in signs)
+				lualine_c = { { "filename", path = 0 } }, -- Shorter path
 				lualine_x = {
 					{
 						require("noice").api.statusline.mode.get,
@@ -35,8 +35,7 @@ return {
 						color = { fg = "#ff9e64" },
 					},
 					"encoding",
-					"fileformat",
-					"filetype"
+					"filetype" -- Removed fileformat (rarely needed)
 				},
 				lualine_y = { "progress" },
 				lualine_z = { "location" },
