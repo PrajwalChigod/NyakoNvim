@@ -4,204 +4,136 @@ return {
 		name = "catppuccin",
 		lazy = false,
 		priority = 1000,
-		opts = {
-			flavour = "macchiato",
-			background = {
-				light = "latte",
-				dark = "macchiato",
-			},
-			transparent_background = false,
-			show_end_of_buffer = false,
-			term_colors = false,
-			dim_inactive = {
-				enabled = false,
-				shade = "dark",
-				percentage = 0.15,
-			},
-			no_italic = false,
-			no_bold = false,
-			no_underline = false,
-			styles = {
-				comments = { "italic" },
-				conditionals = { "italic" },
-				loops = {},
-				functions = {},
-				keywords = {},
-				strings = {},
-				variables = {},
-				numbers = {},
-				booleans = {},
-				properties = {},
-				types = {},
-				operators = {},
-			},
-			color_overrides = {
-				macchiato = {
-					base = "#000000", -- This sets the background to black
-					mantle = "#181825",
-					crust = "#11111b",
-				},
-			},
-			custom_highlights = function(colors)
-				return {
-					-- String literals (text within quotes)
-					String = { fg = colors.teal }, -- Change this to any color you like
-					["@string"] = { fg = colors.teal }, -- Treesitter version
-					-- Comments
-					Comment = { fg = colors.overlay0, style = { "italic" } }, -- Change color here
-					["@comment"] = { fg = colors.overlay0, style = { "italic" } }, -- Treesitter version
-				}
-			end,
-			integrations = {
-				cmp = true,
-				gitsigns = true,
-				nvimtree = true,
-				treesitter = true,
-				notify = false,
-				mini = {
+		config = function()
+			require("catppuccin").setup({
+				flavour = "macchiato",
+				compile = {
 					enabled = true,
-					indentscope_color = "",
+					path = vim.fn.stdpath("cache") .. "/catppuccin",
+					suffix = "_compiled",
 				},
-				bufferline = true,
-				-- For more integrations: https://github.com/catppuccin/nvim#integrations
-			},
-		},
+				background = {
+					light = "latte",
+					dark = "macchiato",
+				},
+				dim_inactive = {
+					enabled = false,
+				},
+				styles = {
+					comments = { "italic" },
+					conditionals = { "italic" },
+				},
+				color_overrides = {
+					macchiato = {
+						base = "#000000",
+						mantle = "#181825",
+						crust = "#11111b",
+					},
+				},
+				custom_highlights = function(colors)
+					return {
+						String = { fg = colors.teal },
+						["@string"] = { fg = colors.teal },
+						Comment = { fg = colors.overlay0, style = { "italic" } },
+						["@comment"] = { fg = colors.overlay0, style = { "italic" } },
+					}
+				end,
+				integrations = {
+					cmp = false,
+					mini = {
+						indentscope_color = "",
+					},
+				},
+			})
+		end,
 	},
 
 	{
 		"folke/tokyonight.nvim",
-		lazy = true,
-		priority = 999,
+		lazy = false,
 		opts = {
-			style = "storm", -- storm, moon, night, day
+			style = "storm",
 			light_style = "day",
 			transparent = false,
-			terminal_colors = true,
 			styles = {
 				comments = { italic = true },
 				keywords = { italic = true },
-				functions = {},
-				variables = {},
 				sidebars = "dark",
 				floats = "dark",
 			},
 			sidebars = { "qf", "help" },
 			day_brightness = 0.3,
-			hide_inactive_statusline = false,
-			dim_inactive = false,
-			lualine_bold = false,
 		},
 	},
 
 	{
 		"ellisonleao/gruvbox.nvim",
-		lazy = true,
-		priority = 999,
+		lazy = false,
 		opts = {
-			terminal_colors = true,
-			undercurl = true,
-			underline = true,
-			bold = true,
 			italic = {
 				strings = false,
-				emphasis = true,
-				comments = true,
-				operators = false,
-				folds = true,
 			},
-			strikethrough = true,
-			invert_selection = false,
-			invert_signs = false,
-			invert_tabline = false,
-			invert_intend_guides = false,
-			inverse = true,
-			contrast = "", -- can be "hard", "soft" or empty string
-			palette_overrides = {},
-			overrides = {},
-			dim_inactive = false,
-			transparent_mode = false,
 		},
 	},
 
 	{
 		"rose-pine/neovim",
 		name = "rose-pine",
-		lazy = true,
-		priority = 999,
+		lazy = false,
 		opts = {
-			variant = "main", -- auto, main, moon, or dawn
-			dark_variant = "main",
-			dim_inactive_windows = false,
+			variant = "main",
 			extend_background_behind_borders = true,
-			enable = {
-				terminal = true,
-				legacy_highlights = true,
-				migrations = true,
-			},
-			styles = {
-				bold = true,
-				italic = true,
-				transparency = false,
-			},
 		},
 	},
 
 	{
 		"rebelot/kanagawa.nvim",
-		lazy = true,
-		priority = 999,
+		lazy = false,
+		opts = {},
+	},
+
+	{
+		"EdenEast/nightfox.nvim",
+		lazy = false,
+		opts = {},
+	},
+
+	{
+		"sainnhe/everforest",
+		lazy = false,
+		opts = {},
+	},
+
+	{
+		"shaunsingh/nord.nvim",
+		lazy = false,
+		config = function()
+			vim.g.nord_contrast = true
+			vim.g.nord_borders = false
+			vim.g.nord_disable_background = false
+			vim.g.nord_italic = false
+			vim.g.nord_uniform_diff_background = true
+			vim.g.nord_bold = false
+		end,
+	},
+
+	{
+		"loctvl842/monokai-pro.nvim",
+		lazy = false,
 		opts = {
-			compile = false,
-			undercurl = true,
-			commentStyle = { italic = true },
-			functionStyle = {},
-			keywordStyle = { italic = true },
-			statementStyle = { bold = true },
-			typeStyle = {},
-			transparent = false,
-			dimInactive = false,
-			terminalColors = true,
-			colors = {
-				palette = {},
-				theme = { wave = {}, lotus = {}, dragon = {}, all = {} },
-			},
-			theme = "wave", -- wave, dragon, lotus
-			background = {
-				dark = "wave",
-				light = "lotus",
-			},
+			filter = "pro",
 		},
 	},
 
 	{
-		"navarasu/onedark.nvim",
-		lazy = true, -- Load on-demand
-		priority = 999,
-		opts = {
-			style = "dark", -- dark, darker, cool, deep, warm, warmer, light
-			transparent = false,
-			term_colors = true,
-			ending_tildes = false,
-			cmp_itemkind_reverse = false,
-			toggle_style_key = nil,
-			toggle_style_list = { "dark", "darker", "cool", "deep", "warm", "warmer", "light" },
-			code_style = {
-				comments = "italic",
-				keywords = "none",
-				functions = "none",
-				strings = "none",
-				variables = "none",
-			},
-			lualine = {
-				transparent = false,
-			},
-			colors = {},
-			highlights = {},
-			diagnostics = {
-				darker = true,
-				undercurl = true,
-				background = true,
-			},
-		},
+		"vague2k/vague.nvim",
+		lazy = false,
+		opts = {},
+	},
+
+	{
+		"zenbones-theme/zenbones.nvim",
+		lazy = false,
+		dependencies = { "rktjmp/lush.nvim" },
 	},
 }

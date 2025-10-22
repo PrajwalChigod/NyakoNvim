@@ -11,7 +11,11 @@ return {
 				override = {
 					["vim.lsp.util.convert_input_to_markdown_lines"] = true,
 					["vim.lsp.util.stylize_markdown"] = true,
-					["cmp.entry.get_documentation"] = true,
+					-- Removed cmp override (using blink.cmp)
+				},
+				progress = {
+					enabled = true,
+					throttle = 1000 / 30, -- 30fps max for progress updates
 				},
 			},
 			presets = {
@@ -66,10 +70,12 @@ return {
 			},
 			views = {
 				notify = {
-					timeout = 1500, -- 1.5 seconds for regular notifications
+					timeout = 2000, -- Increase from 1500ms for better performance
+					fps = 30, -- Limit animation framerate
 				},
 				mini = {
-					timeout = 1500, -- 1.5 seconds for mini view
+					timeout = 2000,
+					fps = 30,
 				},
 			},
 			routes = {
@@ -78,7 +84,7 @@ return {
 						event = "msg_show",
 						kind = "echo",
 					},
-					opts = { timeout = 1500 },
+					opts = { timeout = 2000 },
 					view = "notify",
 				},
 				{
@@ -86,17 +92,17 @@ return {
 						event = "msg_show",
 						kind = "echomsg",
 					},
-					opts = { timeout = 1500 },
+					opts = { timeout = 2000 },
 					view = "notify",
 				},
 				{
 					filter = { error = true },
-					opts = { timeout = 1500 }, -- 1.5 seconds for errors
+					opts = { timeout = 2000 }, -- Increase timeout for better performance
 					view = "notify",
 				},
 				{
 					filter = { warning = true },
-					opts = { timeout = 1500 }, -- 1.5 seconds for warnings
+					opts = { timeout = 2000 }, -- Increase timeout for better performance
 					view = "notify",
 				},
 			},
