@@ -1,3 +1,4 @@
+local quickfix = require("config.quickfix")
 local keymap = vim.keymap.set
 
 -- ===============================================
@@ -132,6 +133,14 @@ keymap("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move line up" })
 
 -- Keep cursor in place when joining lines
 keymap("n", "J", "mzJ`z", { desc = "Join lines" })
+
+-- ===============================================
+-- QUICKFIX OPERATIONS
+-- ===============================================
+
+keymap("n", "<localleader>q", quickfix.toggle, { desc = "Toggle quickfix list" })
+keymap("n", "<localleader>qa", quickfix.add_line, { desc = "Add line to quickfix list" })
+keymap("n", "<leader>qc", quickfix.clear, { desc = "Clear quickfix list" })
 
 
 -- ===============================================
