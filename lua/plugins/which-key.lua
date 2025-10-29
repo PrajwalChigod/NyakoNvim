@@ -43,8 +43,8 @@ return {
 			{ "<C-l>", desc = "Right split" },
 
 			-- Flash Navigation
-			{ "s", desc = "Flash jump", mode = { "n", "x", "o" } },
-			{ "S", desc = "Flash treesitter", mode = { "n", "x", "o" } },
+			{ "s", desc = "Flash jump", mode = { "n", "x" } },
+			{ "S", desc = "Flash treesitter", mode = "n" },
 			{ "r", desc = "Remote flash", mode = "o" },
 			{ "R", desc = "Treesitter search", mode = { "o", "x" } },
 			{ ";", desc = "Repeat f/t motion forward", mode = "n" },
@@ -127,6 +127,8 @@ return {
 			{ ">", desc = "Indent right", mode = "v" },
 			{ "gc", desc = "Comment", mode = "v" },
 			{ "gb", desc = "Block comment", mode = "v" },
+			{ "S", desc = "Surround selection", mode = "v" },
+			{ "gS", desc = "Surround selection (linewise)", mode = "v" },
 			{ "<C-space>", desc = "Increment selection", mode = "v" },
 			{ "<C-S-space>", desc = "Scope incremental", mode = "v" },
 			{ "<M-space>", desc = "Node decremental", mode = "v" },
@@ -142,9 +144,9 @@ return {
 			{ "<A-c>", desc = "Yank/copy current line", mode = "i" },
 			{ "<A-p>", desc = "Paste after cursor", mode = "i" },
 
-			-- Surround (<C-s>*)
-			{ "<C-s>s", desc = "Surround selection", mode = "i" },
-			{ "<C-s>S", desc = "Surround line", mode = "i" },
+			-- Surround
+			{ "<C-g>s", desc = "Surround selection", mode = "i" },
+			{ "<C-g>S", desc = "Surround line (linewise)", mode = "i" },
 
 			-- Completion
 			{ "<C-n>", desc = "Next completion", mode = "i" },
@@ -237,12 +239,12 @@ return {
 			{ "<leader>ql", desc = "Restore last session" },
 			{ "<leader>qd", desc = "Stop session recording" },
 
-			-- Surround (<leader>s)
-			{ "<leader>s", desc = "Surround (word)" },
-			{ "<leader>S", desc = "Surround WORD" },
-			{ "<leader>sl", desc = "Surround line" },
-			{ "<leader>sc", desc = "Change surround" },
-			{ "<leader>sd", desc = "Delete surround" },
+			-- Surround (native nvim-surround keymaps)
+			-- Normal mode: ys{motion}{char}, yss, yS, ySS
+			-- Visual mode: S, gS
+			-- Change: cs{old}{new}, cS{old}{new}
+			-- Delete: ds{char}
+			-- See KEYMAPS.md for full documentation
 
 			-- Zen Mode
 			{ "<leader>z", desc = "Toggle Zen Mode" },

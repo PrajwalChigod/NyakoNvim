@@ -50,7 +50,7 @@ return {
 
 	{
 		"folke/tokyonight.nvim",
-		lazy = false,
+		lazy = true,
 		opts = {
 			style = "storm",
 			light_style = "day",
@@ -68,7 +68,7 @@ return {
 
 	{
 		"ellisonleao/gruvbox.nvim",
-		lazy = false,
+		lazy = true,
 		opts = {
 			italic = {
 				strings = false,
@@ -79,7 +79,7 @@ return {
 	{
 		"rose-pine/neovim",
 		name = "rose-pine",
-		lazy = false,
+		lazy = true,
 		opts = {
 			variant = "main",
 			extend_background_behind_borders = true,
@@ -88,25 +88,25 @@ return {
 
 	{
 		"rebelot/kanagawa.nvim",
-		lazy = false,
+		lazy = true,
 		opts = {},
 	},
 
 	{
 		"EdenEast/nightfox.nvim",
-		lazy = false,
+		lazy = true,
 		opts = {},
 	},
 
 	{
 		"sainnhe/everforest",
-		lazy = false,
+		lazy = true,
 		opts = {},
 	},
 
 	{
 		"shaunsingh/nord.nvim",
-		lazy = false,
+		lazy = true,
 		config = function()
 			vim.g.nord_contrast = true
 			vim.g.nord_borders = false
@@ -119,7 +119,7 @@ return {
 
 	{
 		"loctvl842/monokai-pro.nvim",
-		lazy = false,
+		lazy = true,
 		opts = {
 			filter = "pro",
 		},
@@ -127,13 +127,13 @@ return {
 
 	{
 		"vague2k/vague.nvim",
-		lazy = false,
+		lazy = true,
 		opts = {},
 	},
 
 	{
 		"zenbones-theme/zenbones.nvim",
-		lazy = false,
+		lazy = true,
 		dependencies = { "rktjmp/lush.nvim" },
 	},
 }

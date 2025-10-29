@@ -16,6 +16,8 @@
 
 ## Insert Mode Navigation
 
+> `<localleader>` defaults to `\` (override via `maplocalleader`).
+
 ### Word & Line Movement
 | Key | Mode | Description |
 |-----|------|-------------|
@@ -123,6 +125,14 @@
 | `get` | Normal | Toggle diagnostics |
 | `gel` | Normal | Set loclist with diagnostics |
 | `geq` | Normal | Set quickfix with diagnostics |
+
+## Quickfix
+
+| Key | Mode | Description |
+|-----|------|-------------|
+| `<localleader>q` | Normal | Toggle quickfix list |
+| `<localleader>qa` | Normal | Add current line to quickfix |
+| `<leader>qc` | Normal | Clear quickfix list |
 
 ## Code Tools
 
@@ -291,23 +301,52 @@
 
 ## Surround (nvim-surround)
 
+### Add Surround
 | Key | Mode | Description |
 |-----|------|-------------|
-| `<leader>s` | Normal | Surround word (then type delimiter like `"`, `'`, `)`, `]`, `}`) |
-| `<leader>S` | Normal | Surround WORD |
-| `<leader>sl` | Normal | Surround entire line |
-| `<leader>sc` | Normal | Change surround (e.g., `<leader>sc"'` changes `"` to `'`) |
-| `<leader>sd` | Normal | Delete surround (e.g., `<leader>sd"` removes quotes) |
-| `gS` | Visual | Surround selection (line-wise) |
-| `<C-s>s` | Insert | Surround selection |
-| `<C-s>S` | Insert | Surround line |
+| `ys{motion}{char}` | Normal | Surround motion with character (e.g., `ysiw"` = surround word with quotes) |
+| `yss{char}` | Normal | Surround entire line (e.g., `yss)` = surround line with parentheses) |
+| `yS{motion}{char}` | Normal | Surround motion (linewise with newlines) |
+| `ySS{char}` | Normal | Surround line (linewise with newlines) |
+| `S{char}` | Visual | Surround selection |
+| `gS{char}` | Visual | Surround selection (linewise with newlines) |
+| `<C-g>s{char}` | Insert | Surround selection |
+| `<C-g>S{char}` | Insert | Surround line (linewise with newlines) |
+
+### Change Surround
+| Key | Mode | Description |
+|-----|------|-------------|
+| `cs{old}{new}` | Normal | Change surround (e.g., `cs"'` = change `"` to `'`) |
+| `cS{old}{new}` | Normal | Change surround (linewise with newlines) |
+
+### Delete Surround
+| Key | Mode | Description |
+|-----|------|-------------|
+| `ds{char}` | Normal | Delete surround (e.g., `ds"` = remove quotes) |
+
+### Aliases (shortcuts for common pairs)
+- `a` = `>` (angle brackets)
+- `b` = `)` (round brackets/parentheses)
+- `B` = `}` (curly Brackets)
+- `r` = `]` (square bRackets)
+- `q` = any quote (`"`, `'`, `` ` ``)
+- `s` = any surround (`}`, `]`, `)`, `>`, quotes)
+- `t` = HTML/XML tag
+
+**Examples:**
+- `ysiw"` = surround inner word with quotes
+- `yss)` = surround line with parentheses
+- `cs"'` = change double quotes to single quotes
+- `ds{` = delete surrounding braces
+- `dsb` = delete surrounding parentheses (using alias)
+- `ySiwB` = surround word with braces on new lines
 
 ## Flash Navigation
 
 | Key | Mode | Description |
 |-----|------|-------------|
-| `s` | Normal/Visual/Operator | Flash jump (multi-character search) |
-| `S` | Normal/Visual/Operator | Flash treesitter |
+| `s` | Normal/Visual | Flash jump (multi-character search) |
+| `S` | Normal | Flash treesitter (Visual mode reserved for surround) |
 | `r` | Operator | Remote flash |
 | `R` | Operator/Visual | Treesitter search |
 | `f/F/t/T` | Normal | Find character forward/backward, till character forward/backward |
@@ -357,6 +396,7 @@
 
 | Key | Mode | Description |
 |-----|------|-------------|
+| `<leader>gg` | Normal | Open LazyGit |
 | `<leader>gs` | Normal/Visual | Stage hunk |
 | `<leader>gr` | Normal/Visual | Reset hunk |
 | `<leader>gp` | Normal | Preview hunk |

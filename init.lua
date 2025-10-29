@@ -1,24 +1,29 @@
 require("config.options")
 require("config.lazy")
 require("config.diagnostics")
+require("config.quickfix")
 
 require("config.keymaps")
 require("config.autocmds")
 
 local utils = require("utils")
-local colorscheme = utils.load_colorscheme()
 
-local available_colorschemes = vim.fn.getcompletion("", "color")
-if not vim.tbl_contains(available_colorschemes, colorscheme) then
-	vim.notify(
-		string.format("Colorscheme '%s' not available. Using default 'catppuccin'.", colorscheme),
-		vim.log.levels.WARN
-	)
-	colorscheme = "catppuccin"
-end
+local preferred = utils.load_colorscheme()
+local fallback = "catppuccin"
 
-local ok, err = pcall(vim.cmd.colorscheme, colorscheme)
+local ok, err = pcall(vim.cmd.colorscheme, preferred)
 if not ok then
-	vim.notify("Failed to load colorscheme: " .. tostring(err), vim.log.levels.ERROR)
-	pcall(vim.cmd.colorscheme, "catppuccin") -- fallback colorscheme
+	local message = string.format("Colorscheme '%s' failed: %s", preferred, err)
+	vim.schedule(function()
+		vim.notify(message, vim.log.levels.WARN)
+	end)
+
+	if preferred ~= fallback then
+		local fallback_ok, fallback_err = pcall(vim.cmd.colorscheme, fallback)
+		if not fallback_ok then
+			vim.schedule(function()
+				vim.notify("Failed to load fallback colorscheme: " .. tostring(fallback_err), vim.log.levels.ERROR)
+			end)
+		end
+	end
 end
