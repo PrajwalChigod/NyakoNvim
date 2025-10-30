@@ -8,8 +8,8 @@ return {
 	keys = {
 		{ "<leader>a", "<cmd>AerialToggle<cr>", desc = "Toggle Aerial outline" },
 		{ "<leader>aA", "<cmd>AerialNavToggle<cr>", desc = "Toggle Aerial nav window" },
-		{ "[s", "<cmd>AerialPrev<cr>", desc = "Previous symbol" },
-		{ "]s", "<cmd>AerialNext<cr>", desc = "Next symbol" },
+		{ "<leader>ap", "<cmd>AerialPrev<cr>", desc = "Previous symbol" },
+		{ "<leader>an", "<cmd>AerialNext<cr>", desc = "Next symbol" },
 	},
 	opts = {
 		backends = { "treesitter", "lsp", "markdown" },
