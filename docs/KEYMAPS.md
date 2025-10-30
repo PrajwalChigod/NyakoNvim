@@ -71,8 +71,6 @@
 |-----|------|-------------|
 | `<Tab>` | Normal | Next buffer |
 | `<S-Tab>` | Normal | Previous buffer |
-| `]s` | Normal | Next symbol (Aerial) |
-| `[s` | Normal | Previous symbol (Aerial) |
 | `<leader>bp` | Normal | Pin/unpin buffer |
 | `<leader>bd` | Normal | Delete current buffer |
 | `<leader>bx` | Normal | Delete non-pinned buffers |
@@ -253,8 +251,8 @@
 |-----|------|-------------|
 | `<leader>a` | Normal | Toggle Aerial outline sidebar |
 | `<leader>aA` | Normal | Toggle Aerial floating nav window |
-| `]s` | Normal | Next symbol (Aerial) |
-| `[s` | Normal | Previous symbol (Aerial) |
+| `<leader>an` | Normal | Next symbol (Aerial) |
+| `<leader>ap` | Normal | Previous symbol (Aerial) |
 
 ### Inside Aerial Window
 | Key | Description |
@@ -384,13 +382,13 @@
 | `]k/[k` | Normal | Next/Previous block start |
 | `]K/[K` | Normal | Next/Previous block end |
 
-### Swap (localleader)
+### Swap
 | Key | Mode | Description |
 |-----|------|-------------|
-| `<localleader>sp` | Normal | Swap with next parameter |
-| `<localleader>sP` | Normal | Swap with previous parameter |
-| `<localleader>sf` | Normal | Swap with next function |
-| `<localleader>sF` | Normal | Swap with previous function |
+| `]S` | Normal | Swap with next parameter |
+| `[S` | Normal | Swap with previous parameter |
+| `]s` | Normal | Swap with next function |
+| `[s` | Normal | Swap with previous function |
 
 ## Git (Gitsigns)
 

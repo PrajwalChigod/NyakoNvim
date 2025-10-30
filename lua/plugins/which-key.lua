@@ -65,9 +65,6 @@ return {
 			{ "<Tab>", desc = "Next buffer" },
 			{ "<S-Tab>", desc = "Previous buffer" },
 
-			-- Aerial Navigation
-			{ "]s", desc = "Next symbol (Aerial)" },
-			{ "[s", desc = "Previous symbol (Aerial)" },
 
 			-- Ergonomic Line Navigation
 			{ "H", desc = "First non-blank character", mode = { "n", "v" } },
@@ -177,6 +174,8 @@ return {
 			-- Aerial (<leader>a)
 			{ "<leader>a", "<cmd>AerialToggle<cr>", desc = "Aerial (toggle outline)" },
 			{ "<leader>aA", desc = "Toggle nav window" },
+			{ "<leader>ap", desc = "Previous symbol" },
+			{ "<leader>an", desc = "Next symbol" },
 
 			-- Config (<leader>c)
 			{ "<leader>c", group = "Config" },
@@ -253,12 +252,11 @@ return {
 			-- LOCALLEADER (<localleader>)
 			-- ===============================================
 
-			-- Swap (<localleader>s)
-			{ "<localleader>s", group = "Swap" },
-			{ "<localleader>sp", desc = "Next parameter" },
-			{ "<localleader>sP", desc = "Previous parameter" },
-			{ "<localleader>sf", desc = "Next function" },
-			{ "<localleader>sF", desc = "Previous function" },
+			-- Swap
+			{ "]S", desc = "Swap with next parameter" },
+			{ "[S", desc = "Swap with previous parameter" },
+			{ "]s", desc = "Swap with next function" },
+			{ "[s", desc = "Swap with previous function" },
 
 			-- Terminal (<localleader>t)
 			{ "<localleader>t", group = "Terminal" },

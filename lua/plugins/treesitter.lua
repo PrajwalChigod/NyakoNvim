@@ -90,8 +90,8 @@ return {
 			{ "]p" }, { "[p" }, { "]P" }, { "[P" },
 			{ "]k" }, { "[k" }, { "]K" }, { "[K" },
 			-- Swap
-			{ "<localleader>sp" }, { "<localleader>sP" },
-			{ "<localleader>sf" }, { "<localleader>sF" },
+			{ "]S" }, { "[S" },
+			{ "]s" }, { "[s" },
 		},
 		config = function()
 			require("nvim-treesitter.configs").setup({
@@ -151,12 +151,12 @@ return {
 					swap = {
 						enable = true,
 						swap_next = {
-							["<localleader>sp"] = "@parameter.inner",
-							["<localleader>sf"] = "@function.outer",
+							["]S"] = "@parameter.inner",
+							["]s"] = "@function.outer",
 						},
 						swap_previous = {
-							["<localleader>sP"] = "@parameter.inner",
-							["<localleader>sF"] = "@function.outer",
+							["[S"] = "@parameter.inner",
+							["[s"] = "@function.outer",
 						},
 					},
 				},
