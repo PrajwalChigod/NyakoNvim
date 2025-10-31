@@ -100,6 +100,29 @@ return {
 		end,
 	},
 	{
+		"akinsho/git-conflict.nvim",
+		version = "*",
+		event = { "BufReadPost", "BufNewFile" },
+		keys = {
+			{ "<leader>gco", "<cmd>GitConflictChooseOurs<CR>", desc = "Conflict choose ours" },
+			{ "<leader>gct", "<cmd>GitConflictChooseTheirs<CR>", desc = "Conflict choose theirs" },
+			{ "<leader>gcb", "<cmd>GitConflictChooseBoth<CR>", desc = "Conflict choose both" },
+			{ "<leader>gcn", "<cmd>GitConflictChooseNone<CR>", desc = "Conflict choose none" },
+			{ "]x", "<cmd>GitConflictNextConflict<CR>", desc = "Next conflict" },
+			{ "[x", "<cmd>GitConflictPrevConflict<CR>", desc = "Previous conflict" },
+		},
+		config = function()
+			require("git-conflict").setup({
+				default_mappings = false,
+				disable_diagnostics = true,
+				highlights = {
+					incoming = "DiffAdd",
+					current = "DiffText",
+				},
+			})
+		end,
+	},
+	{
 		"kdheepak/lazygit.nvim",
 		cmd = {
 			"LazyGit",

@@ -121,6 +121,16 @@ return {
 						},
 					},
 				},
+				pyrefly = {
+					settings = {
+						python = {
+							pyrefly = {
+								displayTypeErrors = "force-on",
+								disableLanguageServices = true,
+							},
+						},
+					},
+				},
 
 				-- JavaScript/TypeScript
 				ts_ls = {
@@ -239,6 +249,23 @@ return {
 				settings = servers.basedpyright.settings,
 			}
 
+			-- Python (Pyrefly) - keep completions/renames in basedpyright, only type checking here
+			vim.lsp.config.pyrefly = {
+				cmd = { "pyrefly", "lsp" },
+				filetypes = { "python" },
+				root_markers = {
+					"pyrefly.toml",
+					"pyproject.toml",
+					"setup.py",
+					"setup.cfg",
+					"requirements.txt",
+					"Pipfile",
+					".git",
+				},
+				capabilities = capabilities,
+				settings = servers.pyrefly.settings,
+			}
+
 			-- TypeScript/JavaScript
 			vim.lsp.config.ts_ls = {
 				cmd = { "typescript-language-server", "--stdio" },
@@ -302,32 +329,38 @@ return {
 
 			-- Enable LSP servers on-demand per filetype for faster startup
 			local lsp_filetypes = {
-				lua = "lua_ls",
-				python = "basedpyright",
-				javascript = "ts_ls",
-				typescript = "ts_ls",
-				javascriptreact = "ts_ls",
-				typescriptreact = "ts_ls",
-				rust = "rust_analyzer",
-				c = "clangd",
-				cpp = "clangd",
-				objc = "clangd",
-				objcpp = "clangd",
-				cuda = "clangd",
-				proto = "clangd",
-				zig = "zls",
-				sh = "bashls",
-				bash = "bashls",
-				toml = "taplo",
+				lua = { "lua_ls" },
+				python = { "basedpyright", "pyrefly" },
+				javascript = { "ts_ls" },
+				typescript = { "ts_ls" },
+				javascriptreact = { "ts_ls" },
+				typescriptreact = { "ts_ls" },
+				rust = { "rust_analyzer" },
+				c = { "clangd" },
+				cpp = { "clangd" },
+				objc = { "clangd" },
+				objcpp = { "clangd" },
+				cuda = { "clangd" },
+				proto = { "clangd" },
+				zig = { "zls" },
+				sh = { "bashls" },
+				bash = { "bashls" },
+				toml = { "taplo" },
 			}
 
 			-- Auto-enable LSP when opening relevant filetypes
 			vim.api.nvim_create_autocmd("FileType", {
 				pattern = vim.tbl_keys(lsp_filetypes),
 				callback = function(args)
-					local lsp_name = lsp_filetypes[args.match]
-					if lsp_name then
-						vim.lsp.enable(lsp_name)
+					local servers_for_ft = lsp_filetypes[args.match]
+					if not servers_for_ft then
+						return
+					end
+					if type(servers_for_ft) == "string" then
+						servers_for_ft = { servers_for_ft }
+					end
+					for _, server_name in ipairs(servers_for_ft) do
+						vim.lsp.enable(server_name)
 					end
 				end,
 			})

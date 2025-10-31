@@ -390,7 +390,7 @@
 | `]s` | Normal | Swap with next function |
 | `[s` | Normal | Swap with previous function |
 
-## Git (Gitsigns)
+## Git
 
 | Key | Mode | Description |
 |-----|------|-------------|
@@ -407,6 +407,12 @@
 | `<leader>gt` | Normal | Toggle signs |
 | `<leader>glb` | Normal | Toggle line blame |
 | `<leader>gld` | Normal | Toggle deleted |
+| `<leader>gco` | Normal | Pick ours in conflict |
+| `<leader>gct` | Normal | Pick theirs in conflict |
+| `<leader>gcb` | Normal | Keep both sides in conflict |
+| `<leader>gcn` | Normal | Keep none in conflict |
+| `]x` | Normal | Next conflict marker |
+| `[x` | Normal | Previous conflict marker |
 | `ih` | Visual/Operator | Git hunk text object |
 
 ## Debug (DAP)
