@@ -5,6 +5,7 @@ require("config.quickfix")
 
 require("config.keymaps")
 require("config.autocmds")
+require("config.session")
 
 local utils = require("utils")
 
