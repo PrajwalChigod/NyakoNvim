@@ -51,6 +51,7 @@ require("lazy").setup("plugins", {
 		border = "rounded",
 	},
 	install = {
+    missing = false,
 		colorscheme = { "catppuccin" },
 	},
 	concurrency = 10, -- Faster parallel plugin loading (default is 5)
