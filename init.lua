@@ -1,3 +1,6 @@
+local custom = require("utils.custom")
+custom.bootstrap()
+
 require("config.options")
 require("config.lazy")
 require("config.diagnostics")
