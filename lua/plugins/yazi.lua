@@ -1,14 +1,15 @@
 return {
 	"mikavilpas/yazi.nvim",
+	cmd = "Yazi",
 	event = "VeryLazy",
 	keys = {
 		{
-			"<leader>e",
+			"-",
 			"<cmd>Yazi<cr>",
 			desc = "Open yazi at the current file",
 		},
 		{
-			"<leader>E",
+			"~",
 			"<cmd>Yazi cwd<cr>",
 			desc = "Open yazi in current working directory",
 		},
