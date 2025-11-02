@@ -31,15 +31,13 @@ return {
 					end
 					return count > 0 and " " .. count or ""
 				end,
-				custom_filter = function(buf_number, buf_numbers)
-					if vim.bo[buf_number].filetype ~= "oil" then
-						return true
-					end
+				custom_filter = function(buf_number)
+					return vim.bo[buf_number].filetype ~= "yazi"
 				end,
 				offsets = {
 					{
-						filetype = "oil",
-						text = "File Manager",
+						filetype = "yazi",
+						text = "Yazi",
 						text_align = "left",
 						separator = true,
 					},

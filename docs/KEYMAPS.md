@@ -203,24 +203,14 @@
 | `<C-w>}` | Normal | Preview tag under cursor |
 | `<C-w>z` | Normal | Close preview window |
 
-## File Explorer (Oil)
+## File Explorer (Yazi)
 
 | Key | Mode | Description |
 |-----|------|-------------|
-| `-` | Normal | Open file explorer |
-| `~` | Normal | Open parent directory |
-| `g?` | Oil Buffer | Show help |
-| `<CR>` | Oil Buffer | Select/Open file or directory |
-| `<C-t>` | Oil Buffer | Open in new tab |
-| `p` | Oil Buffer | Preview file |
-| `x` | Oil Buffer | Close oil buffer |
-| `r` | Oil Buffer | Refresh |
-| `` ` `` | Oil Buffer | Change directory (cd) |
-| `~` | Oil Buffer | Go to parent directory |
-| `gs` | Oil Buffer | Change sort order |
-| `gx` | Oil Buffer | Open with external program |
-| `g.` | Oil Buffer | Toggle hidden files |
-| `g\` | Oil Buffer | Toggle trash view |
+| `-` | Normal | Open Yazi at the current file |
+| `~` | Normal | Open Yazi in the current working directory |
+
+> For detailed Yazi keymaps (navigation, file operations, search, tabs, etc.), see [yazi.md](yazi.md)
 
 ## Fuzzy Finding (FZF)
 
