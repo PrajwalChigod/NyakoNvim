@@ -39,7 +39,7 @@ A sleek, purr-fectly crafted Neovim configuration that's fast, lightweight, and 
 - **Advanced fuzzy finding**: Lightning-fast file/text search with [fzf-lua](https://github.com/ibhagwan/fzf-lua)
 - **Git integration**: Stage hunks, blame, and diff without leaving your editor
 - **Treesitter magic**: Syntax-aware selections, smart text objects, and code navigation
-- **File explorer**: Modern file management with [oil.nvim](https://github.com/stevearc/oil.nvim)
+- **File explorer**: Terminal-native browsing with [yazi.nvim](https://github.com/mikavilpas/yazi.nvim)
 
 ### 🧠 Smart Features
 - **Flash navigation**: Jump anywhere on screen with [flash.nvim](https://github.com/folke/flash.nvim)
@@ -310,7 +310,7 @@ Here's what powers NyakoNvim:
 | **nvim-treesitter** | Parser | Smart syntax highlighting, code navigation, text objects |
 | **gitsigns.nvim** | Git integration | See changes inline, stage hunks, blame, diff |
 | **flash.nvim** | Motion | Jump anywhere with 2 keystrokes |
-| **oil.nvim** | File explorer | Edit your filesystem like a buffer |
+| **yazi.nvim** | File explorer | Launch the Yazi TUI directly from Neovim |
 | **catppuccin** | Theme | Beautiful, carefully crafted color scheme |
 | **which-key** | Keybind helper | Never forget a keybinding again |
 | **toggleterm** | Terminal | Integrated terminals - floating, split, tabbed |
