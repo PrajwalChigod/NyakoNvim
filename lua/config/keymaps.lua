@@ -1,6 +1,19 @@
 local quickfix = require("config.quickfix")
 local keymap = vim.keymap.set
 
+local function open_yazi(args)
+  local lazy_ok, lazy = pcall(require, "lazy")
+  if lazy_ok then
+    lazy.load({ plugins = { "yazi.nvim" } })
+  end
+
+  if vim.fn.exists(":Yazi") == 2 then
+    vim.api.nvim_cmd({ cmd = "Yazi", args = args or {} }, {})
+  else
+    vim.notify("Yazi command not available", vim.log.levels.WARN)
+  end
+end
+
 -- ===============================================
 -- ESSENTIAL
 -- ===============================================
@@ -45,9 +58,6 @@ keymap("n", "<C-s>", "<cmd>wa<CR>", { desc = "Save all buffers" })
 keymap("i", "<C-s>", "<Esc><cmd>wa<CR>", { desc = "Exit insert mode and save all buffers" })
 keymap("v", "<C-s>", "<Esc><cmd>wa<CR>", { desc = "Exit visual mode and save all buffers" })
 
--- File explorer (Oil)
-keymap("n", "-", "<CMD>Oil<CR>", { desc = "Open file explorer" })
-keymap("n", "~", "<CMD>Oil .<CR>", { desc = "Oil open parent dir" })
 
 -- ===============================================
 -- CONFIG OPERATIONS
