@@ -1,8 +1,42 @@
 local M = {}
 
+local default_session_dir = vim.fn.stdpath("state") .. "/sessions/"
+
 -- Check if opened with a directory argument
 local function is_directory_launch()
 	return vim.fn.argc() == 1 and vim.fn.isdirectory(vim.fn.argv(0)) == 1
+end
+
+local function with_trailing_sep(dir)
+	if dir:sub(-1) ~= "/" and dir:sub(-1) ~= "\\" then
+		return dir .. "/"
+	end
+	return dir
+end
+
+local function session_dir()
+	local config = package.loaded["persistence.config"]
+	if config and config.options and config.options.dir then
+		return with_trailing_sep(config.options.dir)
+	end
+	return with_trailing_sep(default_session_dir)
+end
+
+local function session_candidates()
+	local cwd = vim.fn.getcwd()
+	if cwd == "" then
+		return {}
+	end
+
+	local sanitized = cwd:gsub("[\\/:]+", "%%")
+	local pattern = session_dir() .. sanitized .. "*.vim"
+	local matches = vim.fn.glob(pattern, false, true)
+
+	if type(matches) == "table" then
+		return matches
+	end
+
+	return {}
 end
 
 -- Get persistence plugin (assume it's installed)
@@ -37,28 +71,21 @@ end
 
 -- Remove directory buffer and trigger filetype detection
 local function cleanup_after_session()
-	-- Remove directory buffers
 	for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-		if vim.fn.isdirectory(vim.api.nvim_buf_get_name(buf)) == 1 then
-			vim.api.nvim_buf_delete(buf, { force = true })
+		local name = vim.api.nvim_buf_get_name(buf)
+		if name ~= "" and vim.fn.isdirectory(name) == 1 then
+			pcall(vim.api.nvim_buf_delete, buf, { force = true })
 		end
 	end
 
-	-- Ensure filetype and LSP attach for current buffer
-	vim.cmd("filetype detect")
-	vim.cmd("doautocmd BufRead")
+	pcall(vim.cmd, "filetype detect")
+	pcall(vim.cmd, "doautocmd BufRead")
 
-	-- Refresh GitSigns for all loaded buffers to detect changes after session restore
-	local gitsigns_ok, gitsigns = pcall(require, "gitsigns")
-	if gitsigns_ok then
-		for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-			if vim.api.nvim_buf_is_loaded(buf) and vim.bo[buf].buftype == "" then
-				-- Schedule refresh to ensure it happens after all autocmds
-				vim.schedule(function()
-					pcall(gitsigns.refresh)
-				end)
-			end
-		end
+	local gitsigns = package.loaded["gitsigns"]
+	if gitsigns and type(gitsigns.refresh) == "function" then
+		vim.schedule(function()
+			pcall(gitsigns.refresh)
+		end)
 	end
 end
 
@@ -70,7 +97,6 @@ end
 
 -- Replace directory buffer with scratch buffer and open yazi
 local function open_file_explorer()
-	-- Find directory buffer
 	local dir_buf = nil
 	for _, buf in ipairs(vim.api.nvim_list_bufs()) do
 		if vim.fn.isdirectory(vim.api.nvim_buf_get_name(buf)) == 1 then
@@ -79,14 +105,12 @@ local function open_file_explorer()
 		end
 	end
 
-	-- Replace with scratch buffer
 	if dir_buf then
 		local scratch_buf = vim.api.nvim_create_buf(false, true)
 		vim.api.nvim_win_set_buf(0, scratch_buf)
 		vim.api.nvim_buf_delete(dir_buf, { force = true })
 	end
 
-	-- Load and open yazi
 	local lazy_ok, lazy = pcall(require, "lazy")
 	if lazy_ok then
 		lazy.load({ plugins = { "yazi.nvim" } })
@@ -107,13 +131,19 @@ function M.setup()
 	vim.api.nvim_create_autocmd("VimEnter", {
 		once = true,
 		callback = function()
-			local persistence = get_persistence()
-
-			if has_session(persistence) then
-				load_session(persistence)
-			else
+			local sessions = session_candidates()
+			if sessions[1] == nil then
 				open_file_explorer()
+				return
 			end
+
+			local persistence = get_persistence()
+			if not persistence or not has_session(persistence) then
+				open_file_explorer()
+				return
+			end
+
+			load_session(persistence)
 		end,
 	})
 end
