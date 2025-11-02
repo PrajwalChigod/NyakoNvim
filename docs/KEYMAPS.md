@@ -210,6 +210,8 @@
 | `-` | Normal | Open Yazi at the current file |
 | `~` | Normal | Open Yazi in the current working directory |
 
+> For detailed Yazi keymaps (navigation, file operations, search, tabs, etc.), see [yazi.md](yazi.md)
+
 ## Fuzzy Finding (FZF)
 
 | Key | Mode | Description |
