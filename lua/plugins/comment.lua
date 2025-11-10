@@ -12,26 +12,10 @@ return {
 			sticky = true,
 			-- Lines to be ignored while (un)comment (empty lines, whitespace-only)
 			ignore = "^(%s*)$",
-			-- LHS of toggle mappings in NORMAL mode
-			toggler = {
-				line = "gcc", -- Line-comment toggle keymap
-				block = "gbc", -- Block-comment toggle keymap
-			},
-			-- LHS of operator-pending mappings in NORMAL and VISUAL mode
-			opleader = {
-				line = "gc", -- Line-comment keymap
-				block = "gb", -- Block-comment keymap
-			},
-			-- LHS of extra mappings
-			extra = {
-				above = "gcO", -- Add comment on the line above
-				below = "gco", -- Add comment on the line below
-				eol = "gcA", -- Add comment at the end of line
-			},
 			-- Enable keybindings
 			mappings = {
-				basic = true, -- Operator-pending mapping; `gcc` `gbc` `gc[count]{motion}` `gb[count]{motion}`
-				extra = true, -- Extra mapping; `gco`, `gcO`, `gcA`
+				basic = false, -- Disabled to replace defaults with custom gc-only mappings
+				extra = true, -- Keep insert helpers; gco/gcO/gcA
 			},
 			-- Function to call before (un)comment (treesitter context awareness)
 			pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook(),
@@ -39,9 +23,22 @@ return {
 			post_hook = nil,
 		})
 
-		-- Visual mode commenting
-		vim.keymap.set("v", "gc", "<Plug>(comment_toggle_linewise_visual)", { desc = "Comment selection" })
-		vim.keymap.set("v", "gb", "<Plug>(comment_toggle_blockwise_visual)", { desc = "Block comment selection" })
+		-- gc-only workflow: recreate linewise toggles and let <Plug> handlers keep context
+		vim.keymap.set("n", "gc", "<Plug>(comment_toggle_linewise)", { desc = "Comment toggle linewise" })
+		vim.keymap.set("n", "gcc", function()
+			return vim.v.count == 0 and "<Plug>(comment_toggle_linewise_current)"
+				or "<Plug>(comment_toggle_linewise_count)"
+		end, { expr = true, desc = "Comment toggle current line" })
+
+		-- Visual & Select mode commenting - auto-detect linewise vs blockwise
+		vim.keymap.set("x", "gc", function()
+			local mode = vim.fn.visualmode()
+			if mode == "\22" or mode == "^V" then
+				-- Blockwise visual mode (Ctrl-V)
+				return "<Plug>(comment_toggle_blockwise_visual)"
+			end
+			-- Linewise or characterwise visual mode
+			return "<Plug>(comment_toggle_linewise_visual)"
+		end, { expr = true, desc = "Comment selection" })
 	end,
 }
-
