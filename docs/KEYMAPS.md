@@ -262,12 +262,10 @@
 |-----|------|-------------|
 | `gcc` | Normal | Toggle line comment |
 | `gcf` | Normal | Comment function |
-| `gbc` | Normal | Toggle block comment |
 | `gcO` | Normal | Add comment above |
 | `gco` | Normal | Add comment below |
 | `gcA` | Normal | Add comment at end of line |
 | `gc` | Visual | Comment selection |
-| `gb` | Visual | Block comment selection |
 
 ## Folding
 
