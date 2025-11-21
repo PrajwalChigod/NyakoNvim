@@ -235,27 +235,6 @@
 | `<leader>fj` | Normal | Jumps |
 | `<leader>fl` | Normal | Resume last search |
 
-## Aerial (Code Outline)
-
-| Key | Mode | Description |
-|-----|------|-------------|
-| `<leader>a` | Normal | Toggle Aerial outline sidebar |
-| `<leader>aA` | Normal | Toggle Aerial floating nav window |
-| `<leader>an` | Normal | Next symbol (Aerial) |
-| `<leader>ap` | Normal | Previous symbol (Aerial) |
-
-### Inside Aerial Window
-| Key | Description |
-|-----|-------------|
-| `<CR>` | Jump to symbol |
-| `p` | Preview (scroll without jumping) |
-| `o` / `za` | Toggle fold (expand/collapse) |
-| `q` | Close aerial |
-| `{` / `}` | Previous/next symbol |
-| `<C-v>` | Jump in vertical split |
-| `<C-s>` | Jump in horizontal split |
-| `?` / `g?` | Show help |
-
 ## Comments (gc*)
 
 | Key | Mode | Description |

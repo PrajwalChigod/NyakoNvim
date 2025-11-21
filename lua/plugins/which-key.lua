@@ -169,12 +169,6 @@ return {
 			-- LEADER (<leader>)
 			-- ===============================================
 
-			-- Aerial (<leader>a)
-			{ "<leader>a", "<cmd>AerialToggle<cr>", desc = "Aerial (toggle outline)" },
-			{ "<leader>aA", desc = "Toggle nav window" },
-			{ "<leader>ap", desc = "Previous symbol" },
-			{ "<leader>an", desc = "Next symbol" },
-
 			-- Config (<leader>c)
 			{ "<leader>c", group = "Config" },
 			{ "<leader>ce", desc = "Edit config" },
