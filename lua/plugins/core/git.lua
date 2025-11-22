@@ -1,15 +1,8 @@
 return {
 	{
 		"lewis6991/gitsigns.nvim",
-		event = { "BufReadPost", "BufNewFile" },
-		cond = function()
-			-- Only load in git repositories
-			local function is_git_repo()
-				local git_dir = vim.fn.finddir(".git", vim.fn.expand("%:p:h") .. ";")
-				return git_dir ~= ""
-			end
-			return is_git_repo()
-		end,
+		event = "BufReadPost", -- Load after buffer is ready
+		-- Note: gitsigns has built-in git detection per-buffer
 		config = function()
 			local gitsigns = require("gitsigns")
 
@@ -58,6 +51,10 @@ return {
 					row = 0,
 					col = 1,
 				},
+				-- Don't block buffer render
+				_on_attach_pre = function(_, callback)
+					vim.schedule(callback)
+				end,
 				on_attach = function(bufnr)
 					local function map(mode, l, r, opts)
 						opts = opts or {}
@@ -102,7 +99,18 @@ return {
 	{
 		"akinsho/git-conflict.nvim",
 		version = "*",
-		event = { "BufReadPost", "BufNewFile" },
+
+		-- Commands for manual loading
+		cmd = {
+			"GitConflictChooseOurs",
+			"GitConflictChooseTheirs",
+			"GitConflictChooseBoth",
+			"GitConflictChooseNone",
+			"GitConflictNextConflict",
+			"GitConflictPrevConflict",
+			"GitConflictListQf",
+		},
+
 		keys = {
 			{ "<leader>gco", "<cmd>GitConflictChooseOurs<CR>", desc = "Conflict choose ours" },
 			{ "<leader>gct", "<cmd>GitConflictChooseTheirs<CR>", desc = "Conflict choose theirs" },
@@ -111,6 +119,22 @@ return {
 			{ "]x", "<cmd>GitConflictNextConflict<CR>", desc = "Next conflict" },
 			{ "[x", "<cmd>GitConflictPrevConflict<CR>", desc = "Previous conflict" },
 		},
+
+		-- Auto-detect conflicts and load plugin
+		init = function()
+			vim.api.nvim_create_autocmd("BufReadPost", {
+				callback = function()
+					-- Async check for conflict markers (100ms delay to not block)
+					vim.defer_fn(function()
+						local has_conflict = vim.fn.search("^<<<<<<< ", "nw") > 0
+						if has_conflict then
+							require("lazy").load({ plugins = { "git-conflict.nvim" } })
+						end
+					end, 100)
+				end,
+			})
+		end,
+
 		config = function()
 			require("git-conflict").setup({
 				default_mappings = false,
