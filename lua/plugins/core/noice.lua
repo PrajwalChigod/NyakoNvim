@@ -1,12 +1,14 @@
 return {
 	"folke/noice.nvim",
-	event = "VeryLazy",
+	event = "UIEnter",
 	dependencies = {
 		"MunifTanjim/nui.nvim",
 		"rcarriga/nvim-notify",
 	},
 	config = function()
-		require("noice").setup({
+		-- Defer setup to not block UI rendering
+		vim.defer_fn(function()
+			require("noice").setup({
 			lsp = {
 				override = {
 					["vim.lsp.util.convert_input_to_markdown_lines"] = true,
@@ -110,5 +112,6 @@ return {
 				checker = false,
 			},
 		})
+		end, 100) -- Defer noice setup by 100ms
 	end,
 }
