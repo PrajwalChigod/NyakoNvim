@@ -1,11 +1,13 @@
 return {
 	"nvim-lualine/lualine.nvim",
-	event = "VeryLazy",
+	event = "UIEnter",
 	dependencies = { "nvim-tree/nvim-web-devicons" },
 	config = function()
-		-- Delay in milliseconds to wait for colorscheme to fully load before refreshing UI
-		local COLORSCHEME_REFRESH_DELAY = 100
-		require("lualine").setup({
+		-- Defer setup to not block UI rendering
+		vim.defer_fn(function()
+			-- Delay in milliseconds to wait for colorscheme to fully load before refreshing UI
+			local COLORSCHEME_REFRESH_DELAY = 100
+			require("lualine").setup({
 			options = {
 				theme = "auto",
 				icons_enabled = true,
@@ -63,6 +65,7 @@ return {
 				end, COLORSCHEME_REFRESH_DELAY)
 			end,
 		})
+		end, 100) -- Defer lualine setup by 100ms
 	end,
 }
 
