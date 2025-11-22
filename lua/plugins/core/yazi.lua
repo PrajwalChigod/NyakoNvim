@@ -1,7 +1,6 @@
 return {
 	"mikavilpas/yazi.nvim",
 	cmd = "Yazi",
-	event = "VeryLazy",
 	keys = {
 		{
 			"-",
