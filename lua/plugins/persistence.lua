@@ -24,5 +24,12 @@ return {
 			end,
 			desc = "Stop session recording (don't save on exit)",
 		},
+		{
+			"<leader>qx",
+			function()
+				require("persistence").delete()
+			end,
+			desc = "Delete current session",
+		},
 	},
 }
