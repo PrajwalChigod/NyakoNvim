@@ -1,7 +1,25 @@
 return {
 	{
 		"neovim/nvim-lspconfig",
-		event = { "BufReadPost", "BufNewFile" },
+		ft = {
+			"lua",
+			"python",
+			"javascript",
+			"typescript",
+			"javascriptreact",
+			"typescriptreact",
+			"rust",
+			"c",
+			"cpp",
+			"objc",
+			"objcpp",
+			"cuda",
+			"proto",
+			"zig",
+			"sh",
+			"bash",
+			"toml",
+		},
 		dependencies = {
 			"williamboman/mason.nvim",
 		},
