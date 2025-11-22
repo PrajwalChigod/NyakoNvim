@@ -1,7 +1,9 @@
 return {
 	"tiagovla/scope.nvim",
-	event = "VeryLazy",
+	event = "UIEnter",
 	config = function()
-		require("scope").setup()
+		vim.defer_fn(function()
+			require("scope").setup()
+		end, 100)
 	end,
 }
