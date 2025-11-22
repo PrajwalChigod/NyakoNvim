@@ -11,8 +11,45 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-local custom = require("utils.custom")
-local spec = custom.build_lazy_spec()
+-- Check if directory has .lua files (recursively)
+local function has_lua_files(dir_path)
+	local ok, iter = pcall(vim.fs.dir, dir_path)
+	if not ok then
+		return false
+	end
+
+	for name, type in iter do
+		-- Skip hidden files and README
+		if type == "file" and name:match("%.lua$") and name ~= "README.lua" then
+			return true
+		elseif type == "directory" and not name:match("^%.") then
+			-- Recursively check subdirectories
+			if has_lua_files(dir_path .. "/" .. name) then
+				return true
+			end
+		end
+	end
+	return false
+end
+
+-- Build plugin spec
+local spec = {
+	{ import = "plugins.core" },
+}
+
+-- Add extras import if directory has .lua files
+local config_root = vim.fn.stdpath("config")
+local extras_path = config_root .. "/lua/plugins/extras"
+if has_lua_files(extras_path) then
+	table.insert(spec, { import = "plugins.extras" })
+end
+
+-- Load disabled plugins
+local loader = require("utils.loader")
+local disabled = loader.collect_disabled_specs()
+if #disabled > 0 then
+	vim.list_extend(spec, disabled)
+end
 
 require("lazy").setup(spec, {
 	change_detection = {
