@@ -1,5 +1,16 @@
-local custom = require("utils.custom")
-custom.bootstrap()
+-- Check Neovim version requirement
+if vim.fn.has("nvim-0.11") == 0 then
+	vim.api.nvim_err_writeln("This configuration requires Neovim 0.11 or later")
+	vim.cmd("cquit") -- Exit with error code
+end
+
+-- Bootstrap loader with error handling
+local ok, loader = pcall(require, "utils.loader")
+if not ok then
+	vim.api.nvim_err_writeln("Failed to load utils.loader: " .. tostring(loader))
+	vim.cmd("cquit")
+end
+loader.bootstrap()
 
 require("config.options")
 require("config.lazy")
