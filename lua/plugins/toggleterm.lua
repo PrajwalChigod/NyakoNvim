@@ -34,18 +34,14 @@ return {
 		{
 			"<localleader>tv",
 			function()
-				local Terminal = require("toggleterm.terminal").Terminal
-				terminals.vertical = terminals.vertical or Terminal:new({ direction = "vertical", size = 60 })
-				terminals.vertical:toggle()
+				vim.cmd("ToggleTerm size=80 direction=vertical")
 			end,
 			desc = "Toggle vertical terminal",
 		},
 		{
 			"<localleader>tt",
 			function()
-				local Terminal = require("toggleterm.terminal").Terminal
-				terminals.tab = terminals.tab or Terminal:new({ direction = "tab" })
-				terminals.tab:toggle()
+        vim.cmd("ToggleTerm size=40 direction=horizontal")
 			end,
 			desc = "Toggle tab terminal",
 		},
@@ -58,7 +54,7 @@ return {
 		start_in_insert = true,
 		insert_mappings = false,
 		terminal_mappings = true,
-		persist_size = true,
+		persist_size = false,
 		direction = "horizontal",
 		close_on_exit = true,
 		shell = vim.o.shell,
