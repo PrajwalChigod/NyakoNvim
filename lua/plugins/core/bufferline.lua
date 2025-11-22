@@ -2,7 +2,7 @@ return {
 	"akinsho/bufferline.nvim",
 	version = "*",
 	dependencies = { "nvim-tree/nvim-web-devicons" },
-	event = "VeryLazy",
+	event = "UIEnter",
 	keys = {
 		{ "<leader>bp", "<Cmd>BufferLineTogglePin<CR>", desc = "Pin/unpin buffer" },
 		{ "<Tab>", "<Cmd>BufferLineCycleNext<CR>", desc = "Next buffer", mode = "n" },
@@ -12,8 +12,10 @@ return {
 		{ "<leader>bo", "<Cmd>BufferLineCloseOthers<CR>", desc = "Delete other buffers" },
 	},
 	config = function()
-		local COLORSCHEME_REFRESH_DELAY = 100 -- Wait for colorscheme to fully reload
-		require("bufferline").setup({
+		-- Defer setup to not block UI rendering
+		vim.defer_fn(function()
+			local COLORSCHEME_REFRESH_DELAY = 100 -- Wait for colorscheme to fully reload
+			require("bufferline").setup({
 			options = {
 				themable = true,
 				indicator = {
@@ -62,5 +64,6 @@ return {
 				end, COLORSCHEME_REFRESH_DELAY)
 			end,
 		})
+		end, 100) -- Defer bufferline setup by 100ms
 	end,
 }
