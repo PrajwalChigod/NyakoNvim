@@ -39,7 +39,7 @@ A sleek, purr-fectly crafted Neovim configuration that's fast, lightweight, and 
 - **Advanced fuzzy finding**: Lightning-fast file/text search with [fzf-lua](https://github.com/ibhagwan/fzf-lua)
 - **Git integration**: Stage hunks, blame, and diff without leaving your editor
 - **Treesitter magic**: Syntax-aware selections, smart text objects, and code navigation
-- **File explorer**: Terminal-native browsing with [yazi.nvim](https://github.com/mikavilpas/yazi.nvim)
+- **File explorer**: Tree-based file manager with [fyler.nvim](https://github.com/A7Lavinraj/fyler.nvim)
 
 ### 🧠 Smart Features
 - **Flash navigation**: Jump anywhere on screen with [flash.nvim](https://github.com/folke/flash.nvim)
@@ -159,7 +159,105 @@ sudo pacman -S bat ripgrep fzf fd base-devel
    ```bash
    nvim
    ```
-   Lazy.nvim will automatically install all plugins on first launch.
+    As soon as you start nvim, you might see some errors, Don't worry, its just that plugins are not installed.
+    Install all the plugins with command ```:Lazy install```
+
+## Customization
+
+### 1. Initial Setup
+
+Run the setup command to create customization directories:
+
+```vim
+:SetupCustom
+```
+
+This creates:
+- `lua/plugins/extras/` - Directory for your custom plugins
+- `lua/config/disabled.lua` - File to disable unwanted plugins
+
+### 2. Adding New Plugins
+
+Create a new file in `lua/plugins/extras/`:
+
+```lua
+-- lua/plugins/extras/my-plugin.lua
+return {
+  "author/plugin-name",
+  event = "VeryLazy",
+  config = function()
+    require("plugin-name").setup({
+      -- your config
+    })
+  end,
+}
+```
+
+Supports nested organization:
+```
+lua/plugins/extras/
+├── lang/
+│   ├── python.lua
+│   └── typescript.lua
+└── ui/
+    └── noice.lua
+```
+
+### 3. Overriding Core Plugins
+
+To customize a core plugin, create a file in `extras/` with the **same name** as the core plugin:
+
+```lua
+-- lua/plugins/extras/flash.lua (overrides core/flash.lua)
+return {
+  "folke/flash.nvim",
+  keys = {
+    { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" }
+  }
+}
+```
+
+Lazy.nvim will automatically merge your configuration with the core plugin.
+
+### 4. Disabling Plugins
+
+Edit `lua/config/disabled.lua`:
+
+```lua
+return {
+  -- Simple format
+  "folke/noice.nvim",
+  "nvim-treesitter/nvim-treesitter-textobjects",
+
+  -- Or with full spec (for conditional disabling)
+  { "folke/trouble.nvim", enabled = false },
+}
+```
+
+### 5. Custom Keymaps & Options
+
+Edit the core config files directly:
+- `lua/config/keymaps.lua` - Your custom keymaps
+- `lua/config/options.lua` - Neovim options
+- `lua/config/autocmds.lua` - Autocommands
+
+
+## Architecture
+
+```
+lua/
+├── plugins/
+│   ├── core/          # Default plugins (committed to repo)
+│   └── extras/        # Your custom plugins (git-ignored)
+├── config/
+│   ├── options.lua
+│   ├── keymaps.lua
+│   ├── autocmds.lua
+│   ├── disabled.lua   # Disable plugins (git-ignored)
+│   └── ...
+└── utils/
+    └── loader.lua     # Plugin loader
+```
 
 ## 3. Optional Language-Specific Dependencies
 
@@ -310,7 +408,7 @@ Here's what powers NyakoNvim:
 | **nvim-treesitter** | Parser | Smart syntax highlighting, code navigation, text objects |
 | **gitsigns.nvim** | Git integration | See changes inline, stage hunks, blame, diff |
 | **flash.nvim** | Motion | Jump anywhere with 2 keystrokes |
-| **yazi.nvim** | File explorer | Launch the Yazi TUI directly from Neovim |
+| **fyler.nvim** | File explorer | Tree-based file manager for editing filesystem like a buffer |
 | **catppuccin** | Theme | Beautiful, carefully crafted color scheme |
 | **which-key** | Keybind helper | Never forget a keybinding again |
 | **toggleterm** | Terminal | Integrated terminals - floating, split, tabbed |

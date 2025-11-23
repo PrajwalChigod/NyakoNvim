@@ -95,7 +95,7 @@ local function load_session(persistence)
 	vim.schedule(cleanup_after_session)
 end
 
--- Replace directory buffer with scratch buffer and open yazi
+-- Replace directory buffer with scratch buffer and open fyler
 local function open_file_explorer()
 	local dir_buf = nil
 	for _, buf in ipairs(vim.api.nvim_list_bufs()) do
@@ -113,12 +113,12 @@ local function open_file_explorer()
 
 	local lazy_ok, lazy = pcall(require, "lazy")
 	if lazy_ok then
-		lazy.load({ plugins = { "yazi.nvim" } })
+		lazy.load({ plugins = { "fyler.nvim" } })
 	end
 
 	vim.schedule(function()
-		if vim.fn.exists(":Yazi") == 2 then
-			vim.cmd("Yazi cwd")
+		if vim.fn.exists(":Fyler") == 2 then
+			vim.cmd("Fyler")
 		end
 	end)
 end

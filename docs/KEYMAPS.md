@@ -203,14 +203,12 @@
 | `<C-w>}` | Normal | Preview tag under cursor |
 | `<C-w>z` | Normal | Close preview window |
 
-## File Explorer (Yazi)
+## File Explorer (Fyler)
 
 | Key | Mode | Description |
 |-----|------|-------------|
-| `-` | Normal | Open Yazi at the current file |
-| `~` | Normal | Open Yazi in the current working directory |
-
-> For detailed Yazi keymaps (navigation, file operations, search, tabs, etc.), see [yazi.md](yazi.md)
+| `-` | Normal | Open Fyler at the current file |
+| `_` | Normal | Open Fyler in floating window |
 
 ## Fuzzy Finding (FZF)
 
