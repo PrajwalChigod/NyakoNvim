@@ -32,12 +32,12 @@ return {
 					return count > 0 and " " .. count or ""
 				end,
 				custom_filter = function(buf_number)
-					return vim.bo[buf_number].filetype ~= "yazi"
+					return vim.bo[buf_number].filetype ~= "fyler"
 				end,
 				offsets = {
 					{
-						filetype = "yazi",
-						text = "Yazi",
+						filetype = "fyler",
+						text = "Fyler",
 						text_align = "left",
 						separator = true,
 					},

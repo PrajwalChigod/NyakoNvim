@@ -60,6 +60,7 @@ return {
 
 			-- File Explorer
 			{ "-", desc = "Open file explorer" },
+			{ "_", desc = "Open file explorer (float)" },
 
 			-- Buffer Navigation
 			{ "<Tab>", desc = "Next buffer" },

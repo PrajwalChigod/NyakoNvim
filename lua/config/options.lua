@@ -34,7 +34,7 @@ vim.g.mapleader = " "
 vim.g.loaded_python3_provider = 0
 vim.g.loaded_python_provider = 0
 
--- Disable netrw (use Yazi instead)
+-- Disable netrw (use Fyler instead)
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 

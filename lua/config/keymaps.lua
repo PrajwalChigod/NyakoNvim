@@ -1,19 +1,6 @@
 local quickfix = require("config.quickfix")
 local keymap = vim.keymap.set
 
-local function open_yazi(args)
-  local lazy_ok, lazy = pcall(require, "lazy")
-  if lazy_ok then
-    lazy.load({ plugins = { "yazi.nvim" } })
-  end
-
-  if vim.fn.exists(":Yazi") == 2 then
-    vim.api.nvim_cmd({ cmd = "Yazi", args = args or {} }, {})
-  else
-    vim.notify("Yazi command not available", vim.log.levels.WARN)
-  end
-end
-
 -- ===============================================
 -- ESSENTIAL
 -- ===============================================
