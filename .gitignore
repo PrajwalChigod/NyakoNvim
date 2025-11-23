@@ -1,3 +1,4 @@
 # User customizations
 lua/plugins/extras/*
 lua/config/disabled.lua
+lua/config/extras/*

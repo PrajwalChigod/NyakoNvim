@@ -215,3 +215,16 @@ local fold_cmds = { "zc", "zC", "zo", "zO", "zm", "zM", "zr", "zR", "zv", "zx", 
 for _, cmd in ipairs(fold_cmds) do
 	keymap("n", cmd, "<nop>", { desc = "Disabled fold command" })
 end
+
+-- ===============================================
+-- LOAD CUSTOM KEYMAPS
+-- ===============================================
+-- Load user-defined keymaps from lua/config/extras/keymaps.lua (gitignored)
+-- Run :SetupCustom to create the template file
+local custom_keymaps_path = vim.fn.stdpath("config") .. "/lua/config/extras/keymaps.lua"
+if vim.fn.filereadable(custom_keymaps_path) == 1 then
+	local ok, err = pcall(dofile, custom_keymaps_path)
+	if not ok then
+		vim.notify("Error loading custom keymaps: " .. tostring(err), vim.log.levels.ERROR)
+	end
+end

@@ -208,3 +208,16 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		end
 	end,
 })
+
+-- ===============================================
+-- LOAD CUSTOM AUTOCMDS
+-- ===============================================
+-- Load user-defined autocmds from lua/config/extras/autocmds.lua (gitignored)
+-- Run :SetupCustom to create the template file
+local custom_autocmds_path = vim.fn.stdpath("config") .. "/lua/config/extras/autocmds.lua"
+if vim.fn.filereadable(custom_autocmds_path) == 1 then
+	local ok, err = pcall(dofile, custom_autocmds_path)
+	if not ok then
+		vim.notify("Error loading custom autocmds: " .. tostring(err), vim.log.levels.ERROR)
+	end
+end
