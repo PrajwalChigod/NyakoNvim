@@ -154,3 +154,16 @@ vim.opt.diffopt:append("linematch:60")
 if vim.fn.executable("rg") == 1 then
 	vim.opt.grepprg = "rg --vimgrep --smart-case --follow"
 end
+
+-- ===============================================
+-- LOAD CUSTOM OPTIONS
+-- ===============================================
+-- Load user-defined options from lua/config/extras/options.lua (gitignored)
+-- Run :SetupCustom to create the template file
+local custom_options_path = vim.fn.stdpath("config") .. "/lua/config/extras/options.lua"
+if vim.fn.filereadable(custom_options_path) == 1 then
+	local ok, err = pcall(dofile, custom_options_path)
+	if not ok then
+		vim.notify("Error loading custom options: " .. tostring(err), vim.log.levels.ERROR)
+	end
+end

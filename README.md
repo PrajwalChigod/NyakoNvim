@@ -174,7 +174,11 @@ Run the setup command to create customization directories:
 
 This creates:
 - `lua/plugins/extras/` - Directory for your custom plugins
+- `lua/config/extras/` - Directory for custom keymaps, autocmds, and options
 - `lua/config/disabled.lua` - File to disable unwanted plugins
+- `lua/config/extras/keymaps.lua` - Your custom keymaps (gitignored)
+- `lua/config/extras/autocmds.lua` - Your custom autocommands (gitignored)
+- `lua/config/extras/options.lua` - Your custom options (gitignored)
 
 ### 2. Adding New Plugins
 
@@ -234,12 +238,76 @@ return {
 }
 ```
 
-### 5. Custom Keymaps & Options
+### 5. Custom Keymaps, Options & Autocommands
 
-Edit the core config files directly:
-- `lua/config/keymaps.lua` - Your custom keymaps
-- `lua/config/options.lua` - Neovim options
-- `lua/config/autocmds.lua` - Autocommands
+Use the gitignored files in `lua/config/extras/` to add your customizations without modifying core files:
+
+**Add custom keymaps** in `lua/config/extras/keymaps.lua`:
+```lua
+-- lua/config/extras/keymaps.lua
+vim.keymap.set("n", "<leader>x", "<cmd>echo 'Hello'<cr>", { desc = "Custom command" })
+vim.keymap.set("n", "<leader>X", function()
+  print("Custom function")
+end, { desc = "Custom function" })
+```
+
+**Add custom options** in `lua/config/extras/options.lua`:
+```lua
+-- lua/config/extras/options.lua
+vim.opt.wrap = true
+vim.opt.linebreak = true
+vim.g.my_custom_variable = "value"
+```
+
+**Add custom autocommands** in `lua/config/extras/autocmds.lua`:
+```lua
+-- lua/config/extras/autocmds.lua
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'python',
+  callback = function()
+    vim.opt_local.colorcolumn = "80"
+  end,
+})
+```
+
+These files are automatically loaded and are gitignored, so your customizations won't conflict with updates.
+
+#### Overriding Core Configuration
+
+Since custom files load **after** core files, you can override default behavior:
+
+**Keymaps** - ✅ Override by redefining:
+```lua
+-- Override core keymap
+vim.keymap.set("n", "<leader>ce", "<cmd>edit ~/.config/nvim/init.lua<cr>", { desc = "Edit init.lua" })
+-- Disable a keymap
+vim.keymap.set("n", "Q", "<nop>", { desc = "Disabled" })
+```
+
+**Options** - ✅ Override by reassigning:
+```lua
+-- Override core options
+vim.opt.number = false      -- Override core setting
+vim.opt.relativenumber = false
+```
+
+**Autocommands** - ⚠️ Additive (both run) unless you clear the augroup:
+```lua
+-- To override, clear the augroup first
+local my_group = vim.api.nvim_create_augroup("FileTypeSettings", { clear = true })
+vim.api.nvim_create_autocmd('FileType', {
+  group = my_group,
+  pattern = 'python',
+  callback = function()
+    vim.opt_local.tabstop = 2  -- Replaces core autocmd in this group
+  end,
+})
+```
+
+**Note:** To modify core keymaps/options/autocmds directly, edit:
+- `lua/config/keymaps.lua` - Core keymaps
+- `lua/config/options.lua` - Core options
+- `lua/config/autocmds.lua` - Core autocommands
 
 
 ## Architecture
@@ -254,9 +322,13 @@ lua/
 │   ├── keymaps.lua
 │   ├── autocmds.lua
 │   ├── disabled.lua   # Disable plugins (git-ignored)
+│   ├── extras/        # Custom config files (git-ignored)
+│   │   ├── keymaps.lua    # Your custom keymaps
+│   │   ├── autocmds.lua   # Your custom autocmds
+│   │   └── options.lua    # Your custom options
 │   └── ...
 └── utils/
-    └── loader.lua     # Plugin loader
+    └── loader.lua     # Plugin & config loader
 ```
 
 ## 3. Optional Language-Specific Dependencies

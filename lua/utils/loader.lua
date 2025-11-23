@@ -8,6 +8,10 @@ local config_root = vim.fn.stdpath("config")
 M.paths = {
 	extras = config_root .. "/lua/plugins/extras",
 	disabled = config_root .. "/lua/config/disabled.lua",
+	config_extras = config_root .. "/lua/config/extras",
+	custom_keymaps = config_root .. "/lua/config/extras/keymaps.lua",
+	custom_autocmds = config_root .. "/lua/config/extras/autocmds.lua",
+	custom_options = config_root .. "/lua/config/extras/options.lua",
 }
 
 local function path_exists(path)
@@ -111,6 +115,10 @@ function M.setup_custom_dir()
 		table.insert(created, "lua/plugins/extras/")
 	end
 
+	if ensure_dir(M.paths.config_extras) then
+		table.insert(created, "lua/config/extras/")
+	end
+
 	if write_file_if_missing(M.paths.disabled, {
 		"-- Disable plugins by adding them to this list",
 		"-- Examples:",
@@ -119,6 +127,45 @@ function M.setup_custom_dir()
 		"return {}",
 	}) then
 		table.insert(created, "lua/config/disabled.lua")
+	end
+
+	if write_file_if_missing(M.paths.custom_keymaps, {
+		"-- Add your custom keymaps here",
+		"-- This file is gitignored and won't be tracked",
+		"--",
+		"-- Example:",
+		'-- vim.keymap.set("n", "<localleader>x", "<cmd>lua print(\'Running custom command\')<cr>", { desc = "Custom command" })',
+		"",
+	}) then
+		table.insert(created, "lua/config/extras/keymaps.lua")
+	end
+
+	if write_file_if_missing(M.paths.custom_autocmds, {
+		"-- Add your custom autocommands here",
+		"-- This file is gitignored and won't be tracked",
+		"--",
+		"-- Example:",
+		"-- vim.api.nvim_create_autocmd('FileType', {",
+		"--   pattern = 'python',",
+		'--   callback = function()',
+		"--     vim.opt_local.tabstop = 4",
+		"--   end,",
+		"-- })",
+		"",
+	}) then
+		table.insert(created, "lua/config/extras/autocmds.lua")
+	end
+
+	if write_file_if_missing(M.paths.custom_options, {
+		"-- Add your custom options here",
+		"-- This file is gitignored and won't be tracked",
+		"--",
+		"-- Example:",
+		"-- vim.opt.number = false",
+		"-- vim.g.my_custom_variable = true",
+		"",
+	}) then
+		table.insert(created, "lua/config/extras/options.lua")
 	end
 
 	if #created == 0 then
