@@ -183,6 +183,16 @@ return {
 			{ "<leader>fa", desc = "Symbols (current file)" },
 			{ "<leader>fA", desc = "Symbols (workspace)" },
 
+			-- Projects (<leader>p)
+			{ "<leader>p", group = "Projects" },
+			{ "<leader>p", desc = "Open project in new tab" },
+			{ "<leader>ph", desc = "Open in left split" },
+			{ "<leader>pj", desc = "Open in bottom split" },
+			{ "<leader>pk", desc = "Open in top split" },
+			{ "<leader>pl", desc = "Open in right split" },
+			{ "<leader>pa", desc = "Add project" },
+			{ "<leader>pr", desc = "Remove project" },
+
 			-- Tabs (<leader>t)
 			{ "<leader>t", group = "Tabs" },
 			{ "<leader>tn", desc = "New tab" },
