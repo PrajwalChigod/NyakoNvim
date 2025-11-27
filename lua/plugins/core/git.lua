@@ -2,14 +2,6 @@ return {
 	{
 		"lewis6991/gitsigns.nvim",
 		event = { "BufReadPost", "BufNewFile" },
-		cond = function()
-			-- Only load in git repositories
-			local function is_git_repo()
-				local git_dir = vim.fn.finddir(".git", vim.fn.expand("%:p:h") .. ";")
-				return git_dir ~= ""
-			end
-			return is_git_repo()
-		end,
 		config = function()
 			local gitsigns = require("gitsigns")
 
