@@ -3,17 +3,9 @@ return {
 	event = "VeryLazy",
 	opts = {
 		modes = {
+			-- Disable f/F/t/T integration (we're not using these motions)
 			char = {
-				config = function(opts)
-					opts.autohide = opts.autohide or (vim.fn.mode(true):find("o") and vim.v.operator == "y")
-					opts.jump_labels = opts.jump_labels
-						and vim.v.count == 0
-						and vim.fn.reg_executing() == ""
-						and vim.fn.reg_recording() == ""
-					opts.jump_labels = vim.fn.mode(true):find("o")
-				end,
-				label = { exclude = "hjkliardc" },
-				search = { wrap = false },
+				enabled = false,
 			},
 		},
 	},
