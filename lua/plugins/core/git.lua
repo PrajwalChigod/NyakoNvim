@@ -6,50 +6,12 @@ return {
 			local gitsigns = require("gitsigns")
 
 			gitsigns.setup({
-				signs = {
-					add = { text = "+" },
-					change = { text = "|" },
-					delete = { text = "_" },
-					topdelete = { text = "‾" },
-					changedelete = { text = "~" },
-					untracked = { text = "┆" },
-				},
-				signs_staged = {
-					add = { text = "+" },
-					change = { text = "|" },
-					delete = { text = "_" },
-					topdelete = { text = "‾" },
-					changedelete = { text = "~" },
-					untracked = { text = "┆" },
-				},
-				signcolumn = true,
-				numhl = false,
-				linehl = false,
-				word_diff = false,
 				watch_gitdir = {
-					follow_files = true,
-					interval = 2000, -- For better performance
+					interval = 2000,
 				},
-				attach_to_untracked = false, -- Disable for performance
-				current_line_blame = false,
-				current_line_blame_opts = {
-					virt_text = true,
-					virt_text_pos = "eol",
-					delay = 2000,
-					ignore_whitespace = false,
-				},
-				current_line_blame_formatter = "<author>, <author_time:%Y-%m-%d> - <summary>",
-				sign_priority = 6,
-				update_debounce = 1000, -- For better performance
-				status_formatter = nil,
-				max_file_length = 3000, -- For better performance
-				preview_config = {
-					border = "single",
-					style = "minimal",
-					relative = "cursor",
-					row = 0,
-					col = 1,
-				},
+				attach_to_untracked = false,
+				update_debounce = 1000,
+				max_file_length = 3000,
 				on_attach = function(bufnr)
 					local function map(mode, l, r, opts)
 						opts = opts or {}
@@ -126,7 +88,7 @@ return {
 		dependencies = { "nvim-lua/plenary.nvim" },
 		keys = {
 			{
-				"<leader>g",
+				"<leader>gg",
 				function()
 					vim.cmd("LazyGit")
 				end,
