@@ -134,7 +134,7 @@ return {
 		dependencies = { "nvim-lua/plenary.nvim" },
 		keys = {
 			{
-				"<leader>gg",
+				"<leader>g",
 				function()
 					vim.cmd("LazyGit")
 				end,

@@ -5,8 +5,9 @@ return {
 	"ibhagwan/fzf-lua",
 	dependencies = { "nvim-tree/nvim-web-devicons" },
 	keys = {
+		-- Find (by name/location)
 		{
-			"<leader>ff",
+			"<leader>f",
 			function()
 				require("fzf-lua").files()
 			end,
@@ -34,34 +35,6 @@ return {
 			desc = "Find buffers",
 		},
 		{
-			"<leader>fw",
-			function()
-				require("fzf-lua").grep_cword()
-			end,
-			desc = "Find word under cursor",
-		},
-		{
-			"<leader>fW",
-			function()
-				require("fzf-lua").grep_cWORD()
-			end,
-			desc = "Find WORD under cursor",
-		},
-		{
-			"<leader>fr",
-			function()
-				require("fzf-lua").live_grep()
-			end,
-			desc = "Live grep",
-		},
-		{
-			"<leader>fs",
-			function()
-				require("fzf-lua").grep_curbuf()
-			end,
-			desc = "Grep current buffer",
-		},
-		{
 			"<leader>fh",
 			function()
 				require("fzf-lua").help_tags()
@@ -83,20 +56,6 @@ return {
 			desc = "Commands",
 		},
 		{
-			"<leader>f:",
-			function()
-				require("fzf-lua").command_history()
-			end,
-			desc = "Command history",
-		},
-		{
-			"<leader>f/",
-			function()
-				require("fzf-lua").search_history()
-			end,
-			desc = "Search history",
-		},
-		{
 			"<leader>fm",
 			function()
 				require("fzf-lua").marks()
@@ -116,6 +75,49 @@ return {
 				require("fzf-lua").resume()
 			end,
 			desc = "Resume last search",
+		},
+		-- Search (by content)
+		{
+			"<leader>s",
+			function()
+				require("fzf-lua").grep_curbuf()
+			end,
+			desc = "Grep current buffer",
+		},
+		{
+			"<leader>sw",
+			function()
+				require("fzf-lua").grep_cword()
+			end,
+			desc = "Search word under cursor",
+		},
+		{
+			"<leader>sW",
+			function()
+				require("fzf-lua").grep_cWORD()
+			end,
+			desc = "Search WORD under cursor",
+		},
+		{
+			"<leader>sg",
+			function()
+				require("fzf-lua").live_grep()
+			end,
+			desc = "Live grep",
+		},
+		{
+			"<leader>sc",
+			function()
+				require("fzf-lua").command_history()
+			end,
+			desc = "Command history",
+		},
+		{
+			"<leader>sh",
+			function()
+				require("fzf-lua").search_history()
+			end,
+			desc = "Search history",
 		},
 	},
 	config = function()

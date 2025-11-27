@@ -47,8 +47,6 @@ return {
 			{ "S", desc = "Flash treesitter", mode = "n" },
 			{ "r", desc = "Remote flash", mode = "o" },
 			{ "R", desc = "Treesitter search", mode = { "o", "x" } },
-			{ ";", desc = "Repeat f/t motion forward", mode = "n" },
-			{ ",", desc = "Repeat f/t motion backward", mode = "n" },
 
 			-- Treesitter Selection
 			{ "<C-space>", desc = "Init/Increment selection" },
@@ -178,10 +176,26 @@ return {
 
 
 			-- Find (<leader>f)
-			{ "<leader>f", group = "Find" },
-			{ "<leader>ff", desc = "Find files" },
+			{ "<leader>f", desc = "Find files" },
+			{ "<leader>fg", desc = "Find git files" },
+			{ "<leader>fo", desc = "Find recent files" },
+			{ "<leader>fb", desc = "Find buffers" },
+			{ "<leader>fh", desc = "Help tags" },
+			{ "<leader>fk", desc = "Keymaps" },
+			{ "<leader>fc", desc = "Commands" },
+			{ "<leader>fm", desc = "Marks" },
+			{ "<leader>fj", desc = "Jumps" },
+			{ "<leader>fl", desc = "Resume last search" },
 			{ "<leader>fa", desc = "Symbols (current file)" },
 			{ "<leader>fA", desc = "Symbols (workspace)" },
+
+			-- Search (<leader>s)
+			{ "<leader>s", desc = "Grep current buffer" },
+			{ "<leader>sw", desc = "Search word under cursor" },
+			{ "<leader>sW", desc = "Search WORD under cursor" },
+			{ "<leader>sg", desc = "Live grep" },
+			{ "<leader>sc", desc = "Command history" },
+			{ "<leader>sh", desc = "Search history" },
 
 			-- Projects (<leader>p)
 			{ "<leader>p", group = "Projects" },
@@ -221,7 +235,7 @@ return {
 			{ "<leader>de", desc = "Evaluate" },
 
 			-- Git (<leader>g)
-			{ "<leader>g", group = "Git" },
+			{ "<leader>g", desc = "Open LazyGit" },
 			{ "<leader>gs", desc = "Stage hunk" },
 			{ "<leader>gr", desc = "Reset hunk" },
 			{ "<leader>gp", desc = "Preview hunk" },

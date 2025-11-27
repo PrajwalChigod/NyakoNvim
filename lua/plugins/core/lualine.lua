@@ -27,7 +27,7 @@ return {
 			sections = {
 				lualine_a = { "mode" },
 				lualine_b = { "branch", "diff" }, -- Removed diagnostics (shown in signs)
-				lualine_c = { { "filename", path = 2 } },
+				lualine_c = { { "filename", path = 1 } },
 				lualine_x = {
 					{
 						require("noice").api.statusline.mode.get,

@@ -116,6 +116,13 @@ keymap("n", "<C-u>", "<C-u>zz", { desc = "Page up and center" })
 keymap("n", "n", "nzzzv", { desc = "Next search result" })
 keymap("n", "N", "Nzzzv", { desc = "Previous search result" })
 
+-- Disable f/F/t/T motions (using Flash.nvim instead)
+keymap("n", "f", "<nop>", { desc = "Disabled (use Flash 's' instead)" })
+keymap("n", "F", "<nop>", { desc = "Disabled (use Flash 's' instead)" })
+keymap("n", "t", "<nop>", { desc = "Disabled (use Flash 's' instead)" })
+keymap("n", "T", "<nop>", { desc = "Disabled (use Flash 's' instead)" })
+keymap("n", ",", "<nop>", { desc = "Disabled (using ; as localleader)" })
+
 -- ===============================================
 -- TEXT EDITING & MANIPULATION (Medium Usage)
 -- ===============================================

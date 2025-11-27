@@ -41,7 +41,7 @@ return {
 		{
 			"<localleader>tt",
 			function()
-        vim.cmd("ToggleTerm size=40 direction=horizontal")
+			vim.cmd("ToggleTerm direction=tab")
 			end,
 			desc = "Toggle tab terminal",
 		},

@@ -27,8 +27,9 @@ vim.g.loaded_node_provider = 0
 
 opt.number = true
 opt.relativenumber = true
--- Set leader key
+-- Set leader keys
 vim.g.mapleader = " "
+vim.g.maplocalleader = ";"
 
 -- Disable Python providers
 vim.g.loaded_python3_provider = 0

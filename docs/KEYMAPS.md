@@ -16,7 +16,7 @@
 
 ## Insert Mode Navigation
 
-> `<localleader>` defaults to `\` (override via `maplocalleader`).
+> `<localleader>` is set to `;` (configured via `maplocalleader`).
 
 ### Word & Line Movement
 | Key | Mode | Description |
@@ -212,26 +212,33 @@
 
 ## Fuzzy Finding (FZF)
 
+### Find (by name/location)
 | Key | Mode | Description |
 |-----|------|-------------|
-| `<leader>ff` | Normal | Find files |
+| `<leader>f` | Normal | Find files |
 | `<leader>fg` | Normal | Find git files |
 | `<leader>fo` | Normal | Find recent files |
 | `<leader>fb` | Normal | Find buffers |
-| `<leader>fw` | Normal | Find word under cursor |
-| `<leader>fW` | Normal | Find WORD under cursor |
-| `<leader>fr` | Normal | Live grep |
-| `<leader>fs` | Normal | Grep current buffer |
-| `<leader>fa` | Normal | Symbols in current file (fzf) |
-| `<leader>fA` | Normal | Symbols in workspace (fzf) |
 | `<leader>fh` | Normal | Help tags |
 | `<leader>fk` | Normal | Keymaps |
 | `<leader>fc` | Normal | Commands |
-| `<leader>f:` | Normal | Command history |
-| `<leader>f/` | Normal | Search history |
 | `<leader>fm` | Normal | Marks |
 | `<leader>fj` | Normal | Jumps |
 | `<leader>fl` | Normal | Resume last search |
+| `<leader>fa` | Normal | Symbols in current file (fzf) |
+| `<leader>fA` | Normal | Symbols in workspace (fzf) |
+
+### Search (by content)
+| Key | Mode | Description |
+|-----|------|-------------|
+| `/` | Normal | Native search (forward) |
+| `?` | Normal | Native search (backward) |
+| `<leader>s` | Normal | Grep current buffer |
+| `<leader>sw` | Normal | Search word under cursor |
+| `<leader>sW` | Normal | Search WORD under cursor |
+| `<leader>sg` | Normal | Live grep |
+| `<leader>sc` | Normal | Command history |
+| `<leader>sh` | Normal | Search history |
 
 ## Comments (gc*)
 
@@ -312,9 +319,8 @@
 | `S` | Normal | Flash treesitter (Visual mode reserved for surround) |
 | `r` | Operator | Remote flash |
 | `R` | Operator/Visual | Treesitter search |
-| `f/F/t/T` | Normal | Find character forward/backward, till character forward/backward |
-| `;` | Normal | Repeat last f/F/t/T motion forward |
-| `,` | Normal | Repeat last f/F/t/T motion backward |
+
+**Note**: `f/F/t/T` motions are disabled in favor of Flash navigation (`s` key). `;` is used as localleader.
 
 ## Treesitter
 
@@ -359,7 +365,7 @@
 
 | Key | Mode | Description |
 |-----|------|-------------|
-| `<leader>gg` | Normal | Open LazyGit |
+| `<leader>g` | Normal | Open LazyGit |
 | `<leader>gs` | Normal/Visual | Stage hunk |
 | `<leader>gr` | Normal/Visual | Reset hunk |
 | `<leader>gp` | Normal | Preview hunk |
@@ -463,7 +469,8 @@
 ## Notes
 
 - **Leader key**: `<Space>`
-- **Local leader key**: `\`
+- **Local leader key**: `;`
 - Most commands work with counts (e.g., `3gcc` comments 3 lines)
 - Visual mode works with most text operations
 - LSP features require active language server
+- `f/F/t/T` motions are disabled - use Flash navigation (`s`) instead
