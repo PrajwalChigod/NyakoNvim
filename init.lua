@@ -20,6 +20,7 @@ require("config.quickfix")
 require("config.keymaps")
 require("config.autocmds")
 require("config.session")
+require("config.neovide")
 
 local utils = require("utils")
 
