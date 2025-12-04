@@ -39,12 +39,10 @@ return {
 					-- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
 					additional_vim_regex_highlighting = false,
 				},
-
-				indent = {
-					enable = true,
-					-- Disable for Python (conflicts with python-indent plugin)
-					disable = { "python" },
-				},
+			indent = {
+				enable = true,
+				disable = {},
+			},
 
 				-- Incremental selection based on the named nodes from the grammar
 				incremental_selection = {
