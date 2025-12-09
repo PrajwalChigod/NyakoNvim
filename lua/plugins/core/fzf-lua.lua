@@ -7,7 +7,7 @@ return {
 	keys = {
 		-- Find (by name/location)
 		{
-			"<leader>f",
+			"<leader>ff",
 			function()
 				require("fzf-lua").files()
 			end,
@@ -78,7 +78,7 @@ return {
 		},
 		-- Search (by content)
 		{
-			"<leader>s",
+			"<leader>sb",
 			function()
 				require("fzf-lua").grep_curbuf()
 			end,
