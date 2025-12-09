@@ -44,6 +44,7 @@
   "toggleterm.nvim": { "branch": "main", "commit": "50ea089fc548917cc3cc16b46a8211833b9e3c7c" },
   "tokyonight.nvim": { "branch": "main", "commit": "5da1b76e64daf4c5d410f06bcb6b9cb640da7dfd" },
   "vague.nvim": { "branch": "main", "commit": "dba28050887c2810b5ebf9e0143b4e919bd55757" },
+  "vim-tmux-navigator": { "branch": "master", "commit": "c45243dc1f32ac6bcf6068e5300f3b2b237e576a" },
   "which-key.nvim": { "branch": "main", "commit": "3aab2147e74890957785941f0c1ad87d0a44c15a" },
   "zen-mode.nvim": { "branch": "main", "commit": "8564ce6d29ec7554eb9df578efa882d33b3c23a7" },
   "zenbones.nvim": { "branch": "main", "commit": "4635a3f46d1066975d1074cd9f61f93cb1e32f64" }
