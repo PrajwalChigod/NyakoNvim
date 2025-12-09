@@ -176,7 +176,8 @@ return {
 
 
 			-- Find (<leader>f)
-			{ "<leader>f", desc = "Find files" },
+			{ "<leader>f", group = "Find" },
+			{ "<leader>ff", desc = "Find files" },
 			{ "<leader>fg", desc = "Find git files" },
 			{ "<leader>fo", desc = "Find recent files" },
 			{ "<leader>fb", desc = "Find buffers" },
@@ -190,7 +191,8 @@ return {
 			{ "<leader>fA", desc = "Symbols (workspace)" },
 
 			-- Search (<leader>s)
-			{ "<leader>s", desc = "Grep current buffer" },
+			{ "<leader>s", group = "Search" },
+			{ "<leader>sb", desc = "Grep current buffer" },
 			{ "<leader>sw", desc = "Search word under cursor" },
 			{ "<leader>sW", desc = "Search WORD under cursor" },
 			{ "<leader>sg", desc = "Live grep" },

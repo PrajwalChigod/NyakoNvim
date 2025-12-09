@@ -215,7 +215,7 @@
 ### Find (by name/location)
 | Key | Mode | Description |
 |-----|------|-------------|
-| `<leader>f` | Normal | Find files |
+| `<leader>ff` | Normal | Find files |
 | `<leader>fg` | Normal | Find git files |
 | `<leader>fo` | Normal | Find recent files |
 | `<leader>fb` | Normal | Find buffers |
@@ -233,7 +233,7 @@
 |-----|------|-------------|
 | `/` | Normal | Native search (forward) |
 | `?` | Normal | Native search (backward) |
-| `<leader>s` | Normal | Grep current buffer |
+| `<leader>sb` | Normal | Grep current buffer |
 | `<leader>sw` | Normal | Search word under cursor |
 | `<leader>sW` | Normal | Search WORD under cursor |
 | `<leader>sg` | Normal | Live grep |
