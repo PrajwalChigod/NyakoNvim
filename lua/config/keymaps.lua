@@ -89,18 +89,6 @@ keymap("i", "<A-D>", "<C-o>d$", { desc = "Delete to end of line" })
 keymap("i", "<A-c>", "<C-o>yy", { desc = "Yank/copy current line" })
 keymap("i", "<A-p>", "<C-o>p", { desc = "Paste after cursor" })
 
-
--- ===============================================
--- WINDOW & BUFFER NAVIGATION
--- ===============================================
-
--- Navigate between splits
-keymap("n", "<C-h>", "<C-w>h", { desc = "Go to left split" })
-keymap("n", "<C-j>", "<C-w>j", { desc = "Go to bottom split" })
-keymap("n", "<C-k>", "<C-w>k", { desc = "Go to top split" })
-keymap("n", "<C-l>", "<C-w>l", { desc = "Go to right split" })
-
-
 -- ===============================================
 -- MOVEMENT & SEARCH
 -- ===============================================
