@@ -193,23 +193,6 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 })
 
 -- ===============================================
--- LSP SETTINGS
--- ===============================================
-
-local lsp_group = vim.api.nvim_create_augroup("LspSettings", { clear = true })
-
--- Disable LSP semantic tokens to prioritize colorscheme/Treesitter highlights
-vim.api.nvim_create_autocmd("LspAttach", {
-	group = lsp_group,
-	callback = function(args)
-		local client = vim.lsp.get_client_by_id(args.data.client_id)
-		if client then
-			client.server_capabilities.semanticTokensProvider = nil
-		end
-	end,
-})
-
--- ===============================================
 -- LOAD CUSTOM AUTOCMDS
 -- ===============================================
 -- Load user-defined autocmds from lua/config/extras/autocmds.lua (gitignored)
