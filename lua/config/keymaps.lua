@@ -8,32 +8,7 @@ local keymap = vim.keymap.set
 -- Exit insert mode with jj
 keymap("i", "jj", "<Esc>", { desc = "Exit insert mode" })
 
--- Insert mode navigation
-keymap("i", "<A-.>", "<C-o>$", { desc = "End of line" })
-keymap("i", "<A-,>", "<C-o>^", { desc = "First non-blank character" })
-keymap("i", "<A-0>", "<C-o>0", { desc = "Beginning of line" })
-keymap("i", "<A-b>", "<C-o>b", { desc = "Previous word" })
-keymap("i", "<A-w>", "<C-o>w", { desc = "Next word start" })
-keymap("i", "<A-e>", "<C-o>e", { desc = "Next word end" })
 
--- Insert mode directional movement
-keymap("i", "<A-h>", "<Left>", { desc = "Move left" })
-keymap("i", "<A-j>", "<Down>", { desc = "Move down" })
-keymap("i", "<A-k>", "<Up>", { desc = "Move up" })
-keymap("i", "<A-l>", "<Right>", { desc = "Move right" })
-
--- Insert mode quick edits
-keymap("i", "<A-d>", "<C-o>dw", { desc = "Delete word forward" })
-keymap("i", "<A-u>", "<C-u>", { desc = "Delete to line start" })
-keymap("i", "<A-o>", "<C-o>o", { desc = "Insert line below" })
-keymap("i", "<A-O>", "<C-o>O", { desc = "Insert line above" })
-
--- Insert mode character deletion
-keymap("i", "<A-x>", "<Del>", { desc = "Delete character under cursor" })
-
--- Insert mode undo/redo
-keymap("i", "<A-z>", "<C-o>u", { desc = "Undo" })
-keymap("i", "<A-y>", "<C-o><C-r>", { desc = "Redo" })
 
 -- Clear highlights and return to normal mode with Esc
 keymap("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search highlights" })
