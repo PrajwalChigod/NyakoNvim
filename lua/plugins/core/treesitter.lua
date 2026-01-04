@@ -53,10 +53,10 @@ return {
 						return vim.api.nvim_buf_line_count(buf) > max_lines
 					end,
 					keymaps = {
-						init_selection = "<C-space>",
-						node_incremental = "<C-space>",
-						scope_incremental = "<C-S-space>",
-						node_decremental = "<M-space>",
+						init_selection = "<C-n>",    -- Ctrl+N to start selection (n = node)
+						node_incremental = "<C-n>",  -- Ctrl+N to expand selection
+						scope_incremental = "<C-m>", -- Ctrl+M to jump to scope (m = more/macro)
+						node_decremental = "<C-p>",  -- Ctrl+P to shrink selection (p = previous)
 					},
 				},
 
