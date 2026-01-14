@@ -7,11 +7,11 @@ return {
 	cmd = { "ToggleTerm", "TermExec" },
 	keys = {
 		{
-			"<localleader>t",
+			"<localleader>tb",
 			function()
 				vim.cmd("term")
 			end,
-			desc = "Toggle last terminal",
+			desc = "Toggle terminal buffer",
 		},
 		{
 			"<localleader>tf",

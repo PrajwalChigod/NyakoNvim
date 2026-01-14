@@ -365,7 +365,7 @@
 
 | Key | Mode | Description |
 |-----|------|-------------|
-| `<leader>g` | Normal | Open LazyGit |
+| `<leader>gg` | Normal | Open LazyGit |
 | `<leader>gs` | Normal/Visual | Stage hunk |
 | `<leader>gr` | Normal/Visual | Reset hunk |
 | `<leader>gp` | Normal | Preview hunk |
@@ -406,6 +406,7 @@
 | Key | Mode | Description |
 |-----|------|-------------|
 | `<Esc>` | Terminal | Exit terminal mode |
+| `<localleader>tb` | Normal | Toggle terminal buffer |
 | `<localleader>tf` | Normal | Toggle floating terminal |
 | `<localleader>th` | Normal | Toggle horizontal terminal |
 | `<localleader>tv` | Normal | Toggle vertical terminal |

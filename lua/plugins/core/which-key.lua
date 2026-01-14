@@ -237,7 +237,8 @@ return {
 			{ "<leader>de", desc = "Evaluate" },
 
 			-- Git (<leader>g)
-			{ "<leader>g", desc = "Open LazyGit" },
+			{ "<leader>g", group = "Git" },
+			{ "<leader>gg", desc = "Open LazyGit" },
 			{ "<leader>gs", desc = "Stage hunk" },
 			{ "<leader>gr", desc = "Reset hunk" },
 			{ "<leader>gp", desc = "Preview hunk" },
@@ -279,6 +280,7 @@ return {
 
 			-- Terminal (<localleader>t)
 			{ "<localleader>t", group = "Terminal" },
+			{ "<localleader>tb", desc = "Terminal buffer" },
 			{ "<localleader>tf", desc = "Floating" },
 			{ "<localleader>th", desc = "Horizontal" },
 			{ "<localleader>tv", desc = "Vertical" },
