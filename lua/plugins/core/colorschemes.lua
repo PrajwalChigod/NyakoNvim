@@ -133,6 +133,12 @@ return {
 	},
 
 	{
+		"slugbyte/lackluster.nvim",
+		lazy = true,
+		opts = {},
+	},
+
+	{
 		"zenbones-theme/zenbones.nvim",
 		lazy = true,
 		dependencies = { "rktjmp/lush.nvim" },
