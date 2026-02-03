@@ -16,10 +16,6 @@ return {
 		require("bufferline").setup({
 			options = {
 				themable = true,
-				indicator = {
-					icon = "▎",
-					style = "icon",
-				},
 				max_name_length = 20,
 				max_prefix_length = 20,
 				tab_size = 12,
@@ -42,8 +38,8 @@ return {
 						separator = true,
 					},
 				},
-				show_duplicate_prefix = false,
-				separator_style = "thick",
+				show_buffer_icons = false,
+				separator_style = "thin",
 				hover = {
 					enabled = true,
 					delay = 300,
