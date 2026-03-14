@@ -88,47 +88,39 @@ return {
 					},
 				},
 
-				-- Python
-				basedpyright = {
+				-- Python (ty)
+				ty = {
 					settings = {
-						basedpyright = {
-							analysis = {
-								typeCheckingMode = "off", -- change it to "basic" or "strict" depending on your use case NOTE: Expect LSP performance degradation depending on the option you choose.
-								autoSearchPaths = true,
-								useLibraryCodeForTypes = true,
-								autoImportCompletions = true,
-								diagnosticMode = "openFilesOnly", -- change it to "workspace" if you want to scan entire project. NOTE: Expect LSP performance degradation on the option you choose.
-								reportMissingImports = true,
-								reportUnusedImport = true,
-								reportUnusedVariable = { "all" },
-								reportUndefinedVariable = true,
-								reportOptionalMemberAccess = true,
-								reportOptionalSubscript = true,
-								reportOptionalIterable = true,
-								reportPrivateImportUsage = true,
-								reportIncompatibleMethodOverride = true,
-								-- Performance optimizations
-								logLevel = "Error", -- Reduce logging overhead
-								exclude = {
-									"**/node_modules",
-									"**/__pycache__",
-									"**/.*",
-									"**/.venv",
-									"**/venv",
+						ty = {
+							diagnosticMode = "openFilesOnly",
+							showSyntaxErrors = true,
+							completions = {
+								autoImport = true,
+							},
+							configuration = {
+								rules = {
+									["invalid-method-override"] = "warn",
+									["not-iterable"] = "warn",
+									["not-subscriptable"] = "warn",
+									["possibly-missing-attribute"] = "warn",
+									["possibly-missing-import"] = "warn",
+									["possibly-unresolved-reference"] = "warn",
+									["unresolved-import"] = "warn",
+									["unresolved-reference"] = "warn",
 								},
-								ignore = { "**/node_modules", "**/__pycache__" },
+								src = {
+									exclude = {
+										"**/node_modules",
+										"**/__pycache__",
+										"**/.venv",
+										"**/venv",
+									},
+								},
 							},
 						},
 					},
-				},
-				pyrefly = {
-					settings = {
-						python = {
-							pyrefly = {
-								displayTypeErrors = "force-on",
-								disableLanguageServices = true,
-							},
-						},
+					init_options = {
+						logLevel = "error",
 					},
 				},
 
@@ -240,21 +232,12 @@ return {
 				settings = servers.lua_ls.settings,
 			}
 
-			-- Python (basedpyright)
-			vim.lsp.config.basedpyright = {
-				cmd = { "basedpyright-langserver", "--stdio" },
-				filetypes = { "python" },
-				root_markers = { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", "Pipfile", ".git" },
-				capabilities = capabilities,
-				settings = servers.basedpyright.settings,
-			}
-
-			-- Python (Pyrefly) - keep completions/renames in basedpyright, only type checking here
-			vim.lsp.config.pyrefly = {
-				cmd = { "pyrefly", "lsp" },
+			-- Python (ty)
+			vim.lsp.config.ty = {
+				cmd = { "ty", "server" },
 				filetypes = { "python" },
 				root_markers = {
-					"pyrefly.toml",
+					"ty.toml",
 					"pyproject.toml",
 					"setup.py",
 					"setup.cfg",
@@ -263,7 +246,8 @@ return {
 					".git",
 				},
 				capabilities = capabilities,
-				settings = servers.pyrefly.settings,
+				settings = servers.ty.settings,
+				init_options = servers.ty.init_options,
 			}
 
 			-- TypeScript/JavaScript
@@ -330,7 +314,7 @@ return {
 			-- Enable LSP servers on-demand per filetype for faster startup
 			local lsp_filetypes = {
 				lua = { "lua_ls" },
-				python = { "basedpyright", "pyrefly" },
+				python = { "ty" },
 				javascript = { "ts_ls" },
 				typescript = { "ts_ls" },
 				javascriptreact = { "ts_ls" },

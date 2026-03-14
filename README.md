@@ -366,7 +366,7 @@ LSP servers are automatically managed by Mason. Install via `:Mason` in Neovim:
 | Language                  | LSP Server      | Mason Install Command                      |
 |-------------------------  |-----------------|--------------------------------------------|
 | **Lua**                   | `lua_ls`        | `:MasonInstall lua-language-server`        |
-| **Python**                | `basedpyright`  | `:MasonInstall basedpyright`               |
+| **Python**                | `ty`            | `:MasonInstall ty`                         |
 | **JavaScript/TypeScript** | `ts_ls`         | `:MasonInstall typescript-language-server` |
 | **Rust**                  | `rust_analyzer` | `:MasonInstall rust-analyzer`              |
 | **C/C++**                 | `clangd`        | `:MasonInstall clangd`                     |
@@ -376,7 +376,7 @@ LSP servers are automatically managed by Mason. Install via `:Mason` in Neovim:
 
 ### Quick Install All LSP Servers
 ```vim
-:MasonInstall lua-language-server basedpyright typescript-language-server rust-analyzer clangd zls bash-language-server taplo
+:MasonInstall lua-language-server ty typescript-language-server rust-analyzer clangd zls bash-language-server taplo
 ```
 
 ## 5. Available Debug Tools and Installation Commands
@@ -498,7 +498,7 @@ Complete reference matrix for all configured languages and their tooling:
 
 | Language      | LSP Server      | Linter             | Formatter           | Debugger            | Mason Install Commands                                                  |
 |---------------|-----------------|--------------------|--------------------|---------------------|--------------------------------------------------------------------------|
-| **Python**    | `basedpyright`  | `ruff`             | `ruff`             | `debugpy`           | `basedpyright`, `ruff`, `debugpy`                                        |
+| **Python**    | `ty`            | `ruff`             | `ruff`             | `debugpy`           | `ty`, `ruff`, `debugpy`                                                 |
 | **JavaScript** | `ts_ls`        | `eslint`           | `prettier`         | `js-debug-adapter`  | `typescript-language-server`, `eslint_d`, `prettier`, `js-debug-adapter` |
 | **TypeScript** | `ts_ls`        | `eslint`           | `prettier`         | `js-debug-adapter`  | `typescript-language-server`, `eslint_d`, `prettier`, `js-debug-adapter` |
 | **Lua**       | `lua_ls`        | `luacheck`         | `stylua`           | ❌                  | `lua-language-server`, `luacheck`, `stylua`                              |
@@ -519,7 +519,10 @@ Complete reference matrix for all configured languages and their tooling:
 ### Install All Tools At Once
 ```vim
 " LSP Servers
-:MasonInstall lua-language-server basedpyright typescript-language-server rust-analyzer clangd zls bash-language-server taplo
+:MasonInstall lua-language-server ty typescript-language-server rust-analyzer clangd zls bash-language-server taplo
+
+" If Mason is not managing `ty` in your environment, install it with:
+" uv tool install ty
 
 " Debug Adapters
 :MasonInstall debugpy js-debug-adapter delve codelldb bash-debug-adapter
