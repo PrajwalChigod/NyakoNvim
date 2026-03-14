@@ -34,7 +34,7 @@ return {
 		end,
 	},
 	{
-		"rebelot/kanagawa.nvim",
+		"PrajwalChigod/kanagawa.nvim",
 		lazy = true,
 		opts = {},
 	},

@@ -146,6 +146,11 @@ opt.foldmethod = "indent"
 opt.foldlevel = 99
 opt.foldenable = false -- Don't fold by default, but folds are available
 
+
+opt.wrap = true
+opt.linebreak = true
+opt.breakindent = true
+
 -- Note: Built-in plugin disabling is handled in lua/config/lazy.lua for consistency
 
 -- Performance: Improve diff algorithm
