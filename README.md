@@ -119,13 +119,14 @@ The following tools are required for full functionality:
 - **fzf** - For fuzzy finding
 - **fd** - For faster file finding performance
 - **C compiler** - Required for Treesitter parsers (gcc, clang, or MSVC)
+- **tree-sitter CLI** - Required for `nvim-treesitter` parser install/update on the `main` branch (`tree-sitter-cli` on Homebrew)
 
 ### Installation Commands
 
 #### macOS
 ```bash
 # Core dependencies
-brew install bat ripgrep fzf fd
+brew install bat ripgrep fzf fd tree-sitter-cli
 
 # C compiler is included with Xcode Command Line Tools
 xcode-select --install
@@ -134,13 +135,13 @@ xcode-select --install
 #### Ubuntu/Debian
 ```bash
 # Core dependencies
-sudo apt install bat ripgrep fzf fd-find build-essential
+sudo apt install bat ripgrep fzf fd-find build-essential tree-sitter-cli
 ```
 
 #### Arch Linux
 ```bash
 # Core dependencies
-sudo pacman -S bat ripgrep fzf fd base-devel
+sudo pacman -S bat ripgrep fzf fd tree-sitter base-devel
 ```
 
 ### Project Setup
