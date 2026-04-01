@@ -60,7 +60,7 @@ opt.wrap = false
 opt.scrolloff = 4
 opt.sidescrolloff = 8
 opt.cursorline = false -- Disable for large projects (reduces redraws)
-opt.colorcolumn = "120"
+opt.colorcolumn = "180"
 
 -- Blinking Cursor
 opt.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor,sm:block-blinkwait175-blinkoff150-blinkon175"
@@ -93,7 +93,7 @@ opt.fileencoding = "utf-8"
 -- Performance optimizations
 opt.updatetime = 500 -- Increased for large projects (default 4000ms, was 200ms)
 opt.redrawtime = 1500 -- Prevent slow redraws from hanging editor
-opt.synmaxcol = 180 -- Limit syntax highlighting on long lines
+-- opt.synmaxcol = 180 -- Limit syntax highlighting on long lines
 
 -- Large project optimizations
 opt.maxmempattern = 5000 -- Limit regex memory usage (default: 1000)

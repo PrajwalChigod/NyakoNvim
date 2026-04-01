@@ -103,7 +103,7 @@ NyakoNvim comes pre-configured with LSP, formatting, linting, and debugging for:
 
 ## 1. Requirements
 
-- **Neovim >= 0.11.0**
+- **Neovim >= 0.12.0**
 - Git
 - A terminal with true color support
 - A [Nerd Font](https://www.nerdfonts.com/) (recommended for proper icon display)
@@ -473,7 +473,7 @@ Here's what powers NyakoNvim:
 | **lazy.nvim** | Plugin manager | Lightning-fast lazy loading, zero config needed |
 | **blink.cmp** | Completion | Fastest completion engine, no delays |
 | **fzf-lua** | Fuzzy finder | Find anything instantly - files, text, commands |
-| **nvim-lspconfig** | LSP client | Full IDE features - autocomplete, go-to-def, refactor |
+| **Built-in Neovim LSP** | LSP client | Native `vim.lsp.config` and `vim.lsp.enable` with full IDE features |
 | **conform.nvim** | Formatter | Auto-format on save, multiple formatters per file |
 | **nvim-lint** | Linter | Real-time error detection across 10+ languages |
 | **nvim-dap** | Debugger | Full debugging with breakpoints, watches, stepping |

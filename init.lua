@@ -1,6 +1,6 @@
 -- Check Neovim version requirement
-if vim.fn.has("nvim-0.11") == 0 then
-	vim.api.nvim_echo({ { "This configuration requires Neovim 0.11 or later" } }, true, { err = true })
+if vim.fn.has("nvim-0.12") == 0 then
+	vim.api.nvim_echo({ { "This configuration requires Neovim 0.12 or later" } }, true, { err = true })
 	vim.cmd("cquit") -- Exit with error code
 end
 
@@ -16,6 +16,7 @@ require("config.options")
 require("config.lazy")
 require("config.diagnostics")
 require("config.quickfix")
+require("config.lsp")
 
 require("config.keymaps")
 require("config.autocmds")

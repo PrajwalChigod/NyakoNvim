@@ -171,7 +171,7 @@ keymap("n", "<leader>lw", function()
 
 	-- Restart LSP to apply changes
 	vim.defer_fn(function()
-		vim.cmd("LspRestart")
+		vim.cmd("lsp restart")
 		vim.notify("LSP restarted to apply workspace settings", vim.log.levels.INFO)
 	end, 100)
 end, { desc = "Toggle LSP Workspace Scanning" })
