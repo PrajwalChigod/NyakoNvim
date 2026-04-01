@@ -141,7 +141,7 @@ opt.listchars = { tab = "⋅ ", trail = "·", nbsp = "␣" }
 opt.cmdheight = 1
 opt.showmode = false
 
--- Folding (using indent method - simpler and more reliable)
+-- Folding (indent fallback; Treesitter enables foldexpr when queries exist)
 opt.foldmethod = "indent"
 opt.foldlevel = 99
 opt.foldenable = false -- Don't fold by default, but folds are available
