@@ -245,8 +245,8 @@ return {
 			for _, buf in ipairs(buffers) do
 				-- Only delete loaded, normal buffers (not special buffers)
 				if vim.api.nvim_buf_is_loaded(buf) then
-					local buftype = vim.api.nvim_buf_get_option(buf, "buftype")
-					local modified = vim.api.nvim_buf_get_option(buf, "modified")
+					local buftype = vim.bo[buf].buftype
+					local modified = vim.bo[buf].modified
 
 					-- Skip special buffers (terminal, quickfix, etc.) and modified buffers
 					if buftype == "" and not modified then

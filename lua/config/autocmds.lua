@@ -8,14 +8,14 @@ local general_group = vim.api.nvim_create_augroup("GeneralSettings", { clear = t
 vim.api.nvim_create_autocmd("TextYankPost", {
 	group = general_group,
 	callback = function()
-		vim.highlight.on_yank({ higroup = "IncSearch", timeout = 150 })
+		vim.hl.on_yank({ higroup = "IncSearch", timeout = 150 })
 	end,
 })
 
 -- Helper: Check if buffer is too large (>512KB or >3000 lines)
 local function is_large_buffer(bufnr)
 	bufnr = bufnr or vim.api.nvim_get_current_buf()
-	local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(bufnr))
+	local ok, stats = pcall(vim.uv.fs_stat, vim.api.nvim_buf_get_name(bufnr))
 	if ok and stats and stats.size > 512 * 1024 then
 		return true
 	end
@@ -91,7 +91,7 @@ vim.api.nvim_create_autocmd("VimResized", {
 vim.api.nvim_create_autocmd("BufReadPre", {
 	group = general_group,
 	callback = function(event)
-		local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(event.buf))
+		local ok, stats = pcall(vim.uv.fs_stat, vim.api.nvim_buf_get_name(event.buf))
 		if ok and stats and stats.size > 512 * 1024 then -- 512KB (was 1MB)
 			local size_mb = string.format("%.2f", stats.size / (1024 * 1024))
 			vim.notify(

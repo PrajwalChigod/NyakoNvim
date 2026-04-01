@@ -1,13 +1,13 @@
 -- Check Neovim version requirement
 if vim.fn.has("nvim-0.11") == 0 then
-	vim.api.nvim_err_writeln("This configuration requires Neovim 0.11 or later")
+	vim.api.nvim_echo({ { "This configuration requires Neovim 0.11 or later" } }, true, { err = true })
 	vim.cmd("cquit") -- Exit with error code
 end
 
 -- Bootstrap loader with error handling
 local ok, loader = pcall(require, "utils.loader")
 if not ok then
-	vim.api.nvim_err_writeln("Failed to load utils.loader: " .. tostring(loader))
+	vim.api.nvim_echo({ { "Failed to load utils.loader: " .. tostring(loader) } }, true, { err = true })
 	vim.cmd("cquit")
 end
 loader.bootstrap()
