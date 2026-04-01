@@ -7,14 +7,16 @@ return {
 			"nvim-treesitter/nvim-treesitter-textobjects",
 		},
 		config = function()
-			require("nvim-treesitter.configs").setup({
-				-- Only install essential parsers upfront for faster startup
-				-- Other parsers will be auto-installed on-demand
-				ensure_installed = {
-					"lua", -- Neovim config
-					"vim", -- Vim commands
-					"vimdoc", -- Vim help files
-				},
+				require("nvim-treesitter.configs").setup({
+					-- Only install essential parsers upfront for faster startup
+					-- Other parsers will be auto-installed on-demand
+					ensure_installed = {
+						"bash", -- Noice cmdline highlighting
+						"lua", -- Neovim config
+						"regex", -- Noice search/cmdline highlighting
+						"vim", -- Vim commands
+						"vimdoc", -- Vim help files
+					},
 
 				-- Install parsers synchronously (only applied to `ensure_installed`)
 				sync_install = false,

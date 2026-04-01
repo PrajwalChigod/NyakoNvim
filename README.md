@@ -548,7 +548,7 @@ Complete reference matrix for all configured languages and their tooling:
 ## 🎓 Learning NyakoNvim
 
 ### First Steps
-1. **Open the dashboard**: Launch `nvim` without arguments to see the welcome screen
+1. **Open Neovim**: Launch `nvim` without arguments to see Neovim's default startup screen
 2. **Check keybindings**: Press `<Space>` (leader key) and wait - which-key will show you all options
 3. **Find files**: `<Space>ff` to fuzzy find files, `<Space>fr` to live grep
 4. **Explore config**: `<Space>ec` to browse the configuration
