@@ -14,7 +14,7 @@ return {
 				group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
 				callback = function(event)
 					local bufnr = event.buf
-					local opts = { buffer = bufnr, silent = true }
+					local opts = { buf = bufnr, silent = true }
 
 					-- Override default LSP keymaps to use fzf-lua
 					vim.keymap.set("n", "grr", function()
