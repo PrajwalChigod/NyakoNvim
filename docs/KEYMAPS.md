@@ -454,16 +454,6 @@
 | `<C-Space>` | Insert | Accept completion |
 | `<S-Tab>` | Insert | Previous snippet/completion |
 
-## Dashboard
-
-| Key | Mode | Description |
-|-----|------|-------------|
-| `f` | Dashboard | Find files |
-| `r` | Dashboard | Recent files |
-| `g` | Dashboard | Live grep |
-| `s` | Dashboard | Restore session |
-| `c` | Dashboard | Edit config |
-| `q` | Dashboard | Quit |
 
 ---
 
