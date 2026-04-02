@@ -32,25 +32,12 @@ return {
 		build = ":TSUpdate",
 		config = function()
 			local ts = require("nvim-treesitter")
-			local essential_parsers = {
-				"bash",
-				"lua",
-				"markdown",
-				"markdown_inline",
-				"regex",
-				"vim",
-				"vimdoc",
-			}
 			local available_parsers = {}
 			for _, lang in ipairs(ts.get_available()) do
 				available_parsers[lang] = true
 			end
 
 			ts.setup()
-
-			if vim.fn.executable("tree-sitter") == 1 then
-				ts.install(essential_parsers)
-			end
 
 			vim.api.nvim_create_autocmd("FileType", {
 				group = vim.api.nvim_create_augroup("nyako-treesitter", { clear = true }),
