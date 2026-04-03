@@ -28,11 +28,11 @@ A sleek, purr-fectly crafted Neovim configuration that's fast, lightweight, and 
 - **Session persistence**: Pick up exactly where you left off
 
 ### 🎨 Beautiful & Modern UI
-- **Catppuccin Macchiato theme**: Easy on the eyes with custom color tweaks (default theme)
-- **6 colorscheme options**: Switch between catppuccin, tokyonight, gruvbox, rose-pine, kanagawa, and onedark with `<leader>cp`
-- **Clean status line**: Essential info without clutter via [lualine](https://github.com/nvim-lualine/lualine.nvim)
+- **Kanagawa Tora theme**: Fast startup with a warm, high-contrast default palette
+- **3 colorscheme options**: Switch between kanagawa, catppuccin, and lackluster with `<leader>cp`
+- **Clean status line**: Essential info without clutter via [mini.statusline](https://github.com/nvim-mini/mini.statusline)
 - **Smooth animations**: Enhanced UI with [noice.nvim](https://github.com/folke/noice.nvim)
-- **Smart buffer tabs**: Visual buffer management with [bufferline](https://github.com/akinsho/bufferline.nvim)
+- **Smart buffer tabs**: Lightweight visual buffer management via [mini.tabline](https://github.com/nvim-mini/mini.tabline)
 
 ### 🛠️ Batteries Included
 - **Full DAP debugging**: Step through Python, JavaScript, Rust, C/C++, Go, and more
@@ -160,8 +160,9 @@ sudo pacman -S bat ripgrep fzf fd tree-sitter base-devel
    ```bash
    nvim
    ```
-    As soon as you start nvim, you might see some errors, Don't worry, its just that plugins are not installed.
-    Install all the plugins with command ```:Lazy install```
+     As soon as you start nvim, you might see some errors, Don't worry, its just that plugins are not installed.
+     Install all the plugins with command ```:Lazy install```
+     Install Tree-sitter parsers manually with commands like ```:TSInstall lua``` or ```:TSInstall python``` for the languages you use.
 
 ## Customization
 
@@ -479,16 +480,16 @@ Here's what powers NyakoNvim:
 | **nvim-lint** | Linter | Real-time error detection across 10+ languages |
 | **nvim-dap** | Debugger | Full debugging with breakpoints, watches, stepping |
 | **nvim-treesitter** | Parser | Smart syntax highlighting, code navigation, text objects |
-| **gitsigns.nvim** | Git integration | See changes inline, stage hunks, blame, diff |
+| **mini.diff** + **mini-git** | Git integration | See changes inline, stage hunks, blame, and open diff views |
 | **flash.nvim** | Motion | Jump anywhere with 2 keystrokes |
 | **fyler.nvim** | File explorer | Tree-based file manager for editing filesystem like a buffer |
-| **catppuccin** | Theme | Beautiful, carefully crafted color scheme |
+| **kanagawa.nvim** | Theme | Fast default colorscheme with the `tora` variant |
 | **which-key** | Keybind helper | Never forget a keybinding again |
 | **toggleterm** | Terminal | Integrated terminals - floating, split, tabbed |
 
 ### Colorscheme System
 NyakoNvim includes a flexible colorscheme system:
-- **6 pre-configured themes**: catppuccin, tokyonight, gruvbox, rose-pine, kanagawa, onedark
+- **3 pre-configured themes**: kanagawa, catppuccin, lackluster
 - **Live preview picker**: Press `<leader>cp` to browse and preview themes with fzf-lua
 - **Persistent selections**: Theme changes are automatically saved and restored on next startup
 - **Smart lazy-loading**: Only the active theme loads at startup for optimal performance
@@ -537,7 +538,7 @@ Complete reference matrix for all configured languages and their tooling:
 
 
 ### Configuration Notes
-- **TreeSitter Parsers**: Automatically installed via `ensure_installed` list and `auto_install = true`
+- **TreeSitter Parsers**: Managed by `nvim-treesitter` on the `main` branch. Install the languages you want with `:TSInstall <parser>` and update them later with `:TSUpdate`.
 - **Rust**: Uses built-in `rust fmt` and `clippy` via `rust_analyzer` LSP
 - **Zig**: Uses built-in `zig fmt` for formatting
 - **C/C++**: Linting handled by `clangd` LSP with clang-tidy integration

@@ -71,9 +71,8 @@
 |-----|------|-------------|
 | `<Tab>` | Normal | Next buffer |
 | `<S-Tab>` | Normal | Previous buffer |
-| `<leader>bp` | Normal | Pin/unpin buffer |
 | `<leader>bd` | Normal | Delete current buffer |
-| `<leader>bx` | Normal | Delete non-pinned buffers |
+| `<leader>bx` | Normal | Delete hidden buffers |
 | `<leader>bo` | Normal | Delete other buffers |
 | `<leader>tn` | Normal | New tab |
 | `<leader>tc` | Normal | Close current tab |
@@ -269,47 +268,31 @@
 | `J` | Visual | Move line down |
 | `K` | Visual | Move line up |
 
-## Surround (nvim-surround)
+## Surround (mini.surround)
 
 ### Add Surround
 | Key | Mode | Description |
 |-----|------|-------------|
 | `ys{motion}{char}` | Normal | Surround motion with character (e.g., `ysiw"` = surround word with quotes) |
 | `yss{char}` | Normal | Surround entire line (e.g., `yss)` = surround line with parentheses) |
-| `yS{motion}{char}` | Normal | Surround motion (linewise with newlines) |
-| `ySS{char}` | Normal | Surround line (linewise with newlines) |
 | `S{char}` | Visual | Surround selection |
-| `gS{char}` | Visual | Surround selection (linewise with newlines) |
-| `<C-g>s{char}` | Insert | Surround selection |
-| `<C-g>S{char}` | Insert | Surround line (linewise with newlines) |
 
 ### Change Surround
 | Key | Mode | Description |
 |-----|------|-------------|
 | `cs{old}{new}` | Normal | Change surround (e.g., `cs"'` = change `"` to `'`) |
-| `cS{old}{new}` | Normal | Change surround (linewise with newlines) |
 
 ### Delete Surround
 | Key | Mode | Description |
 |-----|------|-------------|
 | `ds{char}` | Normal | Delete surround (e.g., `ds"` = remove quotes) |
 
-### Aliases (shortcuts for common pairs)
-- `a` = `>` (angle brackets)
-- `b` = `)` (round brackets/parentheses)
-- `B` = `}` (curly Brackets)
-- `r` = `]` (square bRackets)
-- `q` = any quote (`"`, `'`, `` ` ``)
-- `s` = any surround (`}`, `]`, `)`, `>`, quotes)
-- `t` = HTML/XML tag
-
 **Examples:**
 - `ysiw"` = surround inner word with quotes
 - `yss)` = surround line with parentheses
 - `cs"'` = change double quotes to single quotes
-- `ds{` = delete surrounding braces
-- `dsb` = delete surrounding parentheses (using alias)
-- `ySiwB` = surround word with braces on new lines
+- `ds)` = delete surrounding parentheses
+- `cstdiv<CR>` = change current tag to `div`
 
 ## Flash Navigation
 
@@ -368,16 +351,14 @@
 | `<leader>gg` | Normal | Open LazyGit |
 | `<leader>gs` | Normal/Visual | Stage hunk |
 | `<leader>gr` | Normal/Visual | Reset hunk |
-| `<leader>gp` | Normal | Preview hunk |
+| `<leader>gp` | Normal | Toggle diff overlay |
 | `<leader>gb` | Normal | Blame line |
 | `<leader>gd` | Normal | Diff this |
 | `<leader>gS` | Normal | Stage buffer |
 | `<leader>gR` | Normal | Reset buffer |
-| `<leader>gu` | Normal | Undo stage hunk |
 | `<leader>gD` | Normal | Diff this ~ |
 | `<leader>gt` | Normal | Toggle signs |
-| `<leader>glb` | Normal | Toggle line blame |
-| `<leader>gld` | Normal | Toggle deleted |
+| `<leader>glb` | Normal | Blame buffer |
 | `<leader>gco` | Normal | Pick ours in conflict |
 | `<leader>gct` | Normal | Pick theirs in conflict |
 | `<leader>gcb` | Normal | Keep both sides in conflict |

@@ -1,6 +1,5 @@
 return {
 	"folke/flash.nvim",
-	event = "VeryLazy",
 	opts = {
 		modes = {
 			-- Disable f/F/t/T integration (we're not using these motions)
@@ -20,7 +19,7 @@ return {
 		},
 		{
 			"S",
-			mode = "n", -- Visual mode reserved for nvim-surround
+			mode = "n", -- Visual mode reserved for surround add
 			function()
 				require("flash").treesitter()
 			end,

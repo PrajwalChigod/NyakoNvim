@@ -218,9 +218,8 @@ return {
 
 			-- Buffer (<leader>b)
 			{ "<leader>b", group = "Buffer" },
-			{ "<leader>bp", desc = "Pin/unpin" },
 			{ "<leader>bd", desc = "Delete current" },
-			{ "<leader>bx", desc = "Delete non-pinned" },
+			{ "<leader>bx", desc = "Delete hidden" },
 			{ "<leader>bo", desc = "Delete others" },
 
 			-- Debug (<leader>d)
@@ -241,16 +240,14 @@ return {
 			{ "<leader>gg", desc = "Open LazyGit" },
 			{ "<leader>gs", desc = "Stage hunk" },
 			{ "<leader>gr", desc = "Reset hunk" },
-			{ "<leader>gp", desc = "Preview hunk" },
+			{ "<leader>gp", desc = "Toggle diff overlay" },
 			{ "<leader>gb", desc = "Blame line" },
 			{ "<leader>gd", desc = "Diff this" },
 			{ "<leader>gS", desc = "Stage buffer" },
 			{ "<leader>gR", desc = "Reset buffer" },
-			{ "<leader>gu", desc = "Undo stage" },
 			{ "<leader>gD", desc = "Diff this ~" },
 			{ "<leader>gt", desc = "Toggle signs" },
-			{ "<leader>glb", desc = "Toggle line blame" },
-			{ "<leader>gld", desc = "Toggle deleted" },
+			{ "<leader>glb", desc = "Blame buffer" },
 
 			-- Session (<leader>q)
 			{ "<leader>q", group = "Session" },
@@ -258,10 +255,10 @@ return {
 			{ "<leader>ql", desc = "Restore last session" },
 			{ "<leader>qd", desc = "Stop session recording" },
 
-			-- Surround (native nvim-surround keymaps)
-			-- Normal mode: ys{motion}{char}, yss, yS, ySS
-			-- Visual mode: S, gS
-			-- Change: cs{old}{new}, cS{old}{new}
+			-- Surround (mini.surround with classic-style mappings)
+			-- Normal mode: ys{motion}{char}, yss
+			-- Visual mode: S{char}
+			-- Change: cs{old}{new}
 			-- Delete: ds{char}
 			-- See KEYMAPS.md for full documentation
 

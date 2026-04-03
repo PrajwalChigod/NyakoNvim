@@ -28,7 +28,6 @@ return {
 				laststatus = 0, -- turn off the statusline in zen mode
 			},
 			twilight = { enabled = false }, -- enable to start Twilight when zen mode opens
-			gitsigns = { enabled = false }, -- disables git signs
 			tmux = { enabled = false }, -- disables the tmux statusline
 			-- this will change the font size on kitty when in zen mode
 			kitty = {

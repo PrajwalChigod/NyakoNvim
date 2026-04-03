@@ -1,6 +1,6 @@
 local M = {}
 
-local DEFAULT_COLORSCHEME = "catppuccin"
+local DEFAULT_COLORSCHEME = "kanagawa-tora"
 
 local function get_colorscheme_path()
 	return vim.fs.joinpath(vim.fn.stdpath("data"), "colorscheme.json")

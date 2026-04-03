@@ -74,13 +74,13 @@ return {
 	{
 		"nvim-treesitter/nvim-treesitter",
 		branch = "main",
-		event = { "BufReadPost", "BufNewFile" },
-		cmd = { "TSInstall", "TSUpdate", "TSUninstall", "TSLog", "TSConfigInfo" },
+		event = "VimEnter",
 		build = ":TSUpdate",
 		config = function()
 			local ts = require("nvim-treesitter")
 			local available_parsers = {}
 			local query_support = {}
+
 			for _, lang in ipairs(ts.get_available()) do
 				available_parsers[lang] = true
 			end
@@ -104,9 +104,6 @@ return {
 
 				local ok = pcall(vim.treesitter.start, bufnr, lang)
 				if not ok then
-					if vim.fn.executable("tree-sitter") == 1 then
-						ts.install({ lang })
-					end
 					return
 				end
 
@@ -138,11 +135,9 @@ return {
 				desc = "Enable Treesitter features",
 			})
 
-			vim.schedule(function()
-				for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
-					enable_treesitter(bufnr)
-				end
-			end)
+			for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+				enable_treesitter(bufnr)
+			end
 		end,
 	},
 	{

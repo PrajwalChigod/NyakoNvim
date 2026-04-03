@@ -1,6 +1,6 @@
 return {
 	"tiagovla/scope.nvim",
-	event = "VeryLazy",
+	event = { "TabNew", "SessionLoadPost" },
 	config = function()
 		require("scope").setup()
 	end,

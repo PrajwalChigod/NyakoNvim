@@ -4,6 +4,9 @@ return {
 		event = "InsertEnter",
 		version = "v0.*",
 		opts = {
+			signature = {
+				enabled = false,
+			},
 			keymap = {
 				["<Tab>"] = { "accept", "snippet_forward", "fallback" },
 				["<S-Tab>"] = { "snippet_backward", "fallback" },
@@ -12,6 +15,7 @@ return {
 				use_nvim_cmp_as_default = true,
 			},
 			sources = {
+				default = { "lsp", "path", "buffer" },
 				providers = {
 					buffer = {
 						min_keyword_length = 4,

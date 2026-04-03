@@ -1,15 +1,27 @@
 return {
 	{
-		"catppuccin/nvim",
-		name = "catppuccin",
+		"PrajwalChigod/kanagawa.nvim",
 		lazy = false,
 		priority = 1000,
+		opts = {
+			theme = "tora",
+			background = {
+				dark = "tora",
+				light = "lotus",
+			},
+			compile = false,
+		},
+	},
+	{
+		"catppuccin/nvim",
+		name = "catppuccin",
+		lazy = true,
 		config = function()
 			require("catppuccin").setup({
 				flavour = "macchiato",
 				term_colors = true,
 				compile = {
-					enabled = true,
+					enabled = false,
 					path = vim.fn.stdpath("cache") .. "/catppuccin",
 					suffix = "_compiled",
 				},
@@ -32,11 +44,6 @@ return {
 				},
 			})
 		end,
-	},
-	{
-		"PrajwalChigod/kanagawa.nvim",
-		lazy = true,
-		opts = {},
 	},
 	{
 		"slugbyte/lackluster.nvim",

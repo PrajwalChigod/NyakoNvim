@@ -81,10 +81,20 @@ local function cleanup_after_session()
 	pcall(vim.cmd, "filetype detect")
 	pcall(vim.cmd, "doautocmd BufRead")
 
-	local gitsigns = package.loaded["gitsigns"]
-	if gitsigns and type(gitsigns.refresh) == "function" then
+	local minidiff = package.loaded["mini.diff"]
+	local minigit = package.loaded["mini.git"]
+	if minidiff or minigit then
 		vim.schedule(function()
-			pcall(gitsigns.refresh)
+			for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+				if vim.api.nvim_buf_is_loaded(buf) and vim.bo[buf].buftype == "" then
+					if minidiff and type(minidiff.enable) == "function" then
+						pcall(minidiff.enable, buf)
+					end
+					if minigit and type(minigit.enable) == "function" then
+						pcall(minigit.enable, buf)
+					end
+				end
+			end
 		end)
 	end
 end

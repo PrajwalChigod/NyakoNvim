@@ -4,14 +4,6 @@ if vim.fn.has("nvim-0.12") == 0 then
 	vim.cmd("cquit") -- Exit with error code
 end
 
--- Bootstrap loader with error handling
-local ok, loader = pcall(require, "utils.loader")
-if not ok then
-	vim.api.nvim_echo({ { "Failed to load utils.loader: " .. tostring(loader) } }, true, { err = true })
-	vim.cmd("cquit")
-end
-loader.bootstrap()
-
 require("config.options")
 require("config.lazy")
 require("config.diagnostics")
@@ -23,10 +15,20 @@ require("config.autocmds")
 require("config.session")
 require("config.neovide")
 
+vim.api.nvim_create_autocmd("VimEnter", {
+	once = true,
+	callback = function()
+		local ok, loader = pcall(require, "utils.loader")
+		if ok then
+			loader.bootstrap()
+		end
+	end,
+})
+
 local utils = require("utils")
 
 local preferred = utils.load_colorscheme()
-local fallback = "catppuccin"
+local fallback = "kanagawa-tora"
 
 local ok, err = pcall(vim.cmd.colorscheme, preferred)
 if not ok then

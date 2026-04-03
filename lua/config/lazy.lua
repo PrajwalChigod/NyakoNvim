@@ -11,42 +11,66 @@ if not vim.uv.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- Check if directory has .lua files (recursively)
-local function has_lua_files(dir_path)
-	local ok, iter = pcall(vim.fs.dir, dir_path)
-	if not ok then
-		return false
-	end
-
-	for name, type in iter do
-		-- Skip hidden files and README
-		if type == "file" and name:match("%.lua$") and name ~= "README.lua" then
-			return true
-		elseif type == "directory" and not name:match("^%.") then
-			-- Recursively check subdirectories
-			if has_lua_files(dir_path .. "/" .. name) then
-				return true
-			end
-		end
-	end
-	return false
-end
-
 -- Build plugin spec
 local spec = {
 	{ import = "plugins.core" },
 }
 
--- Add extras import if directory has .lua files
+local function path_exists(path)
+	return vim.uv.fs_stat(path) ~= nil
+end
+
+local function dir_has_lua_files(path)
+	local matches = vim.fs.find(function(name, file_path)
+		return name:match("%.lua$") and name ~= "README.lua" and vim.fn.isdirectory(file_path) == 0
+	end, {
+		path = path,
+		limit = 1,
+		type = "file",
+		upward = false,
+	})
+
+	return #matches > 0
+end
+
+local function is_valid_plugin_name(name)
+	return type(name) == "string" and name:match("^[%w%-%.]+/[%w%-%.]+$") ~= nil
+end
+
+local function load_disabled_specs(path)
+	if not path_exists(path) then
+		return {}
+	end
+
+	local ok, disabled = pcall(dofile, path)
+	if not ok or type(disabled) ~= "table" then
+		return {}
+	end
+
+	local normalized = {}
+	for _, item in ipairs(disabled) do
+		if type(item) == "string" then
+			if is_valid_plugin_name(item) then
+				table.insert(normalized, { item, enabled = false })
+			end
+		elseif type(item) == "table" then
+			local copy = vim.tbl_deep_extend("force", {}, item)
+			copy.enabled = false
+			table.insert(normalized, copy)
+		end
+	end
+
+	return normalized
+end
+
+-- Add extras import if directory exists
 local config_root = vim.fn.stdpath("config")
 local extras_path = config_root .. "/lua/plugins/extras"
-if has_lua_files(extras_path) then
+if dir_has_lua_files(extras_path) then
 	table.insert(spec, { import = "plugins.extras" })
 end
 
--- Load disabled plugins
-local loader = require("utils.loader")
-local disabled = loader.collect_disabled_specs()
+local disabled = load_disabled_specs(config_root .. "/lua/config/disabled.lua")
 if #disabled > 0 then
 	vim.list_extend(spec, disabled)
 end
@@ -92,7 +116,7 @@ require("lazy").setup(spec, {
 	},
 	install = {
     missing = false,
-		colorscheme = { "catppuccin" },
+		colorscheme = { "kanagawa" },
 	},
 	concurrency = 10, -- Faster parallel plugin loading (default is 5)
 })
