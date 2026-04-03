@@ -7,6 +7,39 @@ return {
 	config = function()
 		local statusline = require("mini.statusline")
 
+		local function git_branch()
+			if statusline.is_truncated(40) then
+				return ""
+			end
+
+			local summary = vim.b.minigit_summary
+			return summary and summary.head_name or ""
+		end
+
+		local function diff_summary()
+			if statusline.is_truncated(75) then
+				return ""
+			end
+
+			local summary = vim.b.minidiff_summary
+			if not summary then
+				return ""
+			end
+
+			local parts = {}
+			if (summary.add or 0) > 0 then
+				table.insert(parts, "+" .. summary.add)
+			end
+			if (summary.change or 0) > 0 then
+				table.insert(parts, "~" .. summary.change)
+			end
+			if (summary.delete or 0) > 0 then
+				table.insert(parts, "-" .. summary.delete)
+			end
+
+			return table.concat(parts, " ")
+		end
+
 		local function project_root_relative_name()
 			local buf_name = vim.api.nvim_buf_get_name(0)
 			if buf_name == "" then
@@ -43,8 +76,8 @@ return {
 			content = {
 				active = function()
 					local mode, mode_hl = statusline.section_mode({ trunc_width = 120 })
-					local git = statusline.section_git({ trunc_width = 40 })
-					local diff = statusline.section_diff({ trunc_width = 75 })
+					local git = git_branch()
+					local diff = diff_summary()
 					local filename = project_root_relative_name()
 					local info = fileinfo()
 
