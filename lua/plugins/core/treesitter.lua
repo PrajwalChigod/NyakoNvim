@@ -24,67 +24,132 @@ local function textobject_fn(module, method, query, query_group)
 	end
 end
 
+local textobject_keys = {
+	{ "af", textobject_fn("nvim-treesitter-textobjects.select", "select_textobject", "@function.outer", "textobjects"), mode = { "x", "o" }, desc = "Select function outer" },
+	{ "if", textobject_fn("nvim-treesitter-textobjects.select", "select_textobject", "@function.inner", "textobjects"), mode = { "x", "o" }, desc = "Select function inner" },
+	{ "ac", textobject_fn("nvim-treesitter-textobjects.select", "select_textobject", "@class.outer", "textobjects"), mode = { "x", "o" }, desc = "Select class outer" },
+	{ "ic", textobject_fn("nvim-treesitter-textobjects.select", "select_textobject", "@class.inner", "textobjects"), mode = { "x", "o" }, desc = "Select class inner" },
+	{ "ap", textobject_fn("nvim-treesitter-textobjects.select", "select_textobject", "@parameter.outer", "textobjects"), mode = { "x", "o" }, desc = "Select parameter outer" },
+	{ "ip", textobject_fn("nvim-treesitter-textobjects.select", "select_textobject", "@parameter.inner", "textobjects"), mode = { "x", "o" }, desc = "Select parameter inner" },
+	{ "ab", textobject_fn("nvim-treesitter-textobjects.select", "select_textobject", "@block.outer", "textobjects"), mode = { "x", "o" }, desc = "Select block outer" },
+	{ "ib", textobject_fn("nvim-treesitter-textobjects.select", "select_textobject", "@block.inner", "textobjects"), mode = { "x", "o" }, desc = "Select block inner" },
+	{ "al", textobject_fn("nvim-treesitter-textobjects.select", "select_textobject", "@loop.outer", "textobjects"), mode = { "x", "o" }, desc = "Select loop outer" },
+	{ "il", textobject_fn("nvim-treesitter-textobjects.select", "select_textobject", "@loop.inner", "textobjects"), mode = { "x", "o" }, desc = "Select loop inner" },
+	{ "aa", textobject_fn("nvim-treesitter-textobjects.select", "select_textobject", "@attribute.outer", "textobjects"), mode = { "x", "o" }, desc = "Select attribute outer" },
+	{ "ia", textobject_fn("nvim-treesitter-textobjects.select", "select_textobject", "@attribute.inner", "textobjects"), mode = { "x", "o" }, desc = "Select attribute inner" },
+	{ "]f", textobject_fn("nvim-treesitter-textobjects.move", "goto_next_start", "@function.outer", "textobjects"), mode = { "n", "x", "o" }, desc = "Next function start" },
+	{ "[f", textobject_fn("nvim-treesitter-textobjects.move", "goto_previous_start", "@function.outer", "textobjects"), mode = { "n", "x", "o" }, desc = "Previous function start" },
+	{ "]F", textobject_fn("nvim-treesitter-textobjects.move", "goto_next_end", "@function.outer", "textobjects"), mode = { "n", "x", "o" }, desc = "Next function end" },
+	{ "[F", textobject_fn("nvim-treesitter-textobjects.move", "goto_previous_end", "@function.outer", "textobjects"), mode = { "n", "x", "o" }, desc = "Previous function end" },
+	{ "]c", textobject_fn("nvim-treesitter-textobjects.move", "goto_next_start", "@class.outer", "textobjects"), mode = { "n", "x", "o" }, desc = "Next class start" },
+	{ "[c", textobject_fn("nvim-treesitter-textobjects.move", "goto_previous_start", "@class.outer", "textobjects"), mode = { "n", "x", "o" }, desc = "Previous class start" },
+	{ "]C", textobject_fn("nvim-treesitter-textobjects.move", "goto_next_end", "@class.outer", "textobjects"), mode = { "n", "x", "o" }, desc = "Next class end" },
+	{ "[C", textobject_fn("nvim-treesitter-textobjects.move", "goto_previous_end", "@class.outer", "textobjects"), mode = { "n", "x", "o" }, desc = "Previous class end" },
+	{ "]p", textobject_fn("nvim-treesitter-textobjects.move", "goto_next_start", "@parameter.outer", "textobjects"), mode = { "n", "x", "o" }, desc = "Next parameter start" },
+	{ "[p", textobject_fn("nvim-treesitter-textobjects.move", "goto_previous_start", "@parameter.outer", "textobjects"), mode = { "n", "x", "o" }, desc = "Previous parameter start" },
+	{ "]P", textobject_fn("nvim-treesitter-textobjects.move", "goto_next_end", "@parameter.outer", "textobjects"), mode = { "n", "x", "o" }, desc = "Next parameter end" },
+	{ "[P", textobject_fn("nvim-treesitter-textobjects.move", "goto_previous_end", "@parameter.outer", "textobjects"), mode = { "n", "x", "o" }, desc = "Previous parameter end" },
+	{ "]k", textobject_fn("nvim-treesitter-textobjects.move", "goto_next_start", "@block.outer", "textobjects"), mode = { "n", "x", "o" }, desc = "Next block start" },
+	{ "[k", textobject_fn("nvim-treesitter-textobjects.move", "goto_previous_start", "@block.outer", "textobjects"), mode = { "n", "x", "o" }, desc = "Previous block start" },
+	{ "]K", textobject_fn("nvim-treesitter-textobjects.move", "goto_next_end", "@block.outer", "textobjects"), mode = { "n", "x", "o" }, desc = "Next block end" },
+	{ "[K", textobject_fn("nvim-treesitter-textobjects.move", "goto_previous_end", "@block.outer", "textobjects"), mode = { "n", "x", "o" }, desc = "Previous block end" },
+	{ "]S", textobject_fn("nvim-treesitter-textobjects.swap", "swap_next", "@parameter.inner", "textobjects"), mode = "n", desc = "Swap next parameter" },
+	{ "[S", textobject_fn("nvim-treesitter-textobjects.swap", "swap_previous", "@parameter.inner", "textobjects"), mode = "n", desc = "Swap previous parameter" },
+	{ "]s", textobject_fn("nvim-treesitter-textobjects.swap", "swap_next", "@function.outer", "textobjects"), mode = "n", desc = "Swap next function" },
+	{ "[s", textobject_fn("nvim-treesitter-textobjects.swap", "swap_previous", "@function.outer", "textobjects"), mode = "n", desc = "Swap previous function" },
+}
+
+local function set_default_fold_opts(bufnr)
+	local winid = vim.fn.bufwinid(bufnr)
+	if winid == -1 then
+		return nil
+	end
+
+	vim.wo[winid].foldmethod = "indent"
+	vim.wo[winid].foldexpr = "0"
+	return winid
+end
+
 return {
 	{
 		"nvim-treesitter/nvim-treesitter",
 		branch = "main",
-		lazy = false,
+		event = { "BufReadPost", "BufNewFile" },
+		cmd = { "TSInstall", "TSUpdate", "TSUninstall", "TSLog", "TSConfigInfo" },
 		build = ":TSUpdate",
 		config = function()
 			local ts = require("nvim-treesitter")
 			local available_parsers = {}
+			local query_support = {}
 			for _, lang in ipairs(ts.get_available()) do
 				available_parsers[lang] = true
 			end
 
 			ts.setup()
 
+			local function enable_treesitter(bufnr)
+				if not vim.api.nvim_buf_is_valid(bufnr) or not vim.api.nvim_buf_is_loaded(bufnr) then
+					return
+				end
+
+				local winid = set_default_fold_opts(bufnr)
+				if vim.bo[bufnr].buftype ~= "" or is_large_file(bufnr) then
+					return
+				end
+
+				local lang = vim.treesitter.language.get_lang(vim.bo[bufnr].filetype)
+				if not lang or lang == "" or not available_parsers[lang] then
+					return
+				end
+
+				local ok = pcall(vim.treesitter.start, bufnr, lang)
+				if not ok then
+					if vim.fn.executable("tree-sitter") == 1 then
+						ts.install({ lang })
+					end
+					return
+				end
+
+				local support = query_support[lang]
+				if not support then
+					support = {
+						indents = #vim.api.nvim_get_runtime_file("queries/" .. lang .. "/indents.scm", true) > 0,
+						folds = #vim.api.nvim_get_runtime_file("queries/" .. lang .. "/folds.scm", true) > 0,
+					}
+					query_support[lang] = support
+				end
+
+				if support.indents then
+					vim.bo[bufnr].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+				end
+
+				if winid and support.folds then
+					vim.wo[winid].foldexpr = "v:lua.vim.treesitter.foldexpr()"
+					vim.wo[winid].foldmethod = "expr"
+				end
+			end
+
 			vim.api.nvim_create_autocmd("FileType", {
 				group = vim.api.nvim_create_augroup("nyako-treesitter", { clear = true }),
 				pattern = "*",
 				callback = function(args)
-					local bufnr = args.buf
-					vim.wo[0][0].foldmethod = "indent"
-					vim.wo[0][0].foldexpr = "0"
-
-					if vim.bo[bufnr].buftype ~= "" or is_large_file(bufnr) then
-						return
-					end
-
-					local lang = vim.treesitter.language.get_lang(vim.bo[bufnr].filetype)
-					if not lang or lang == "" then
-						return
-					end
-
-					if not available_parsers[lang] then
-						return
-					end
-
-					local ok = pcall(vim.treesitter.start, bufnr, lang)
-					if not ok then
-						if vim.fn.executable("tree-sitter") == 1 then
-							ts.install({ lang })
-						end
-						return
-					end
-
-					if #vim.api.nvim_get_runtime_file("queries/" .. lang .. "/indents.scm", true) > 0 then
-						vim.bo[bufnr].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-					end
-
-					if #vim.api.nvim_get_runtime_file("queries/" .. lang .. "/folds.scm", true) > 0 then
-						vim.wo[0][0].foldexpr = "v:lua.vim.treesitter.foldexpr()"
-						vim.wo[0][0].foldmethod = "expr"
-					end
+					enable_treesitter(args.buf)
 				end,
 				desc = "Enable Treesitter features",
 			})
+
+			vim.schedule(function()
+				for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+					enable_treesitter(bufnr)
+				end
+			end)
 		end,
 	},
 	{
 		"nvim-treesitter/nvim-treesitter-textobjects",
 		branch = "main",
-		lazy = false,
+		dependencies = { "nvim-treesitter/nvim-treesitter" },
+		keys = textobject_keys,
 		config = function()
 			require("nvim-treesitter-textobjects").setup({
 				select = {
@@ -94,45 +159,6 @@ return {
 					set_jumps = true,
 				},
 			})
-
-			local keymaps = {
-				{ { "x", "o" }, "af", textobject_fn("nvim-treesitter-textobjects.select", "select_textobject", "@function.outer", "textobjects"), "Select function outer" },
-				{ { "x", "o" }, "if", textobject_fn("nvim-treesitter-textobjects.select", "select_textobject", "@function.inner", "textobjects"), "Select function inner" },
-				{ { "x", "o" }, "ac", textobject_fn("nvim-treesitter-textobjects.select", "select_textobject", "@class.outer", "textobjects"), "Select class outer" },
-				{ { "x", "o" }, "ic", textobject_fn("nvim-treesitter-textobjects.select", "select_textobject", "@class.inner", "textobjects"), "Select class inner" },
-				{ { "x", "o" }, "ap", textobject_fn("nvim-treesitter-textobjects.select", "select_textobject", "@parameter.outer", "textobjects"), "Select parameter outer" },
-				{ { "x", "o" }, "ip", textobject_fn("nvim-treesitter-textobjects.select", "select_textobject", "@parameter.inner", "textobjects"), "Select parameter inner" },
-				{ { "x", "o" }, "ab", textobject_fn("nvim-treesitter-textobjects.select", "select_textobject", "@block.outer", "textobjects"), "Select block outer" },
-				{ { "x", "o" }, "ib", textobject_fn("nvim-treesitter-textobjects.select", "select_textobject", "@block.inner", "textobjects"), "Select block inner" },
-				{ { "x", "o" }, "al", textobject_fn("nvim-treesitter-textobjects.select", "select_textobject", "@loop.outer", "textobjects"), "Select loop outer" },
-				{ { "x", "o" }, "il", textobject_fn("nvim-treesitter-textobjects.select", "select_textobject", "@loop.inner", "textobjects"), "Select loop inner" },
-				{ { "x", "o" }, "aa", textobject_fn("nvim-treesitter-textobjects.select", "select_textobject", "@attribute.outer", "textobjects"), "Select attribute outer" },
-				{ { "x", "o" }, "ia", textobject_fn("nvim-treesitter-textobjects.select", "select_textobject", "@attribute.inner", "textobjects"), "Select attribute inner" },
-				{ { "n", "x", "o" }, "]f", textobject_fn("nvim-treesitter-textobjects.move", "goto_next_start", "@function.outer", "textobjects"), "Next function start" },
-				{ { "n", "x", "o" }, "[f", textobject_fn("nvim-treesitter-textobjects.move", "goto_previous_start", "@function.outer", "textobjects"), "Previous function start" },
-				{ { "n", "x", "o" }, "]F", textobject_fn("nvim-treesitter-textobjects.move", "goto_next_end", "@function.outer", "textobjects"), "Next function end" },
-				{ { "n", "x", "o" }, "[F", textobject_fn("nvim-treesitter-textobjects.move", "goto_previous_end", "@function.outer", "textobjects"), "Previous function end" },
-				{ { "n", "x", "o" }, "]c", textobject_fn("nvim-treesitter-textobjects.move", "goto_next_start", "@class.outer", "textobjects"), "Next class start" },
-				{ { "n", "x", "o" }, "[c", textobject_fn("nvim-treesitter-textobjects.move", "goto_previous_start", "@class.outer", "textobjects"), "Previous class start" },
-				{ { "n", "x", "o" }, "]C", textobject_fn("nvim-treesitter-textobjects.move", "goto_next_end", "@class.outer", "textobjects"), "Next class end" },
-				{ { "n", "x", "o" }, "[C", textobject_fn("nvim-treesitter-textobjects.move", "goto_previous_end", "@class.outer", "textobjects"), "Previous class end" },
-				{ { "n", "x", "o" }, "]p", textobject_fn("nvim-treesitter-textobjects.move", "goto_next_start", "@parameter.outer", "textobjects"), "Next parameter start" },
-				{ { "n", "x", "o" }, "[p", textobject_fn("nvim-treesitter-textobjects.move", "goto_previous_start", "@parameter.outer", "textobjects"), "Previous parameter start" },
-				{ { "n", "x", "o" }, "]P", textobject_fn("nvim-treesitter-textobjects.move", "goto_next_end", "@parameter.outer", "textobjects"), "Next parameter end" },
-				{ { "n", "x", "o" }, "[P", textobject_fn("nvim-treesitter-textobjects.move", "goto_previous_end", "@parameter.outer", "textobjects"), "Previous parameter end" },
-				{ { "n", "x", "o" }, "]k", textobject_fn("nvim-treesitter-textobjects.move", "goto_next_start", "@block.outer", "textobjects"), "Next block start" },
-				{ { "n", "x", "o" }, "[k", textobject_fn("nvim-treesitter-textobjects.move", "goto_previous_start", "@block.outer", "textobjects"), "Previous block start" },
-				{ { "n", "x", "o" }, "]K", textobject_fn("nvim-treesitter-textobjects.move", "goto_next_end", "@block.outer", "textobjects"), "Next block end" },
-				{ { "n", "x", "o" }, "[K", textobject_fn("nvim-treesitter-textobjects.move", "goto_previous_end", "@block.outer", "textobjects"), "Previous block end" },
-				{ "n", "]S", textobject_fn("nvim-treesitter-textobjects.swap", "swap_next", "@parameter.inner", "textobjects"), "Swap next parameter" },
-				{ "n", "[S", textobject_fn("nvim-treesitter-textobjects.swap", "swap_previous", "@parameter.inner", "textobjects"), "Swap previous parameter" },
-				{ "n", "]s", textobject_fn("nvim-treesitter-textobjects.swap", "swap_next", "@function.outer", "textobjects"), "Swap next function" },
-				{ "n", "[s", textobject_fn("nvim-treesitter-textobjects.swap", "swap_previous", "@function.outer", "textobjects"), "Swap previous function" },
-			}
-
-			for _, keymap in ipairs(keymaps) do
-				vim.keymap.set(keymap[1], keymap[2], keymap[3], { desc = keymap[4] })
-			end
 		end,
 	},
 }

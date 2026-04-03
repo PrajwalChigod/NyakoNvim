@@ -3,20 +3,15 @@ return {
 	dependencies = { "nvim-mini/mini.icons" },
 	branch = "stable",
 	cmd = "Fyler",
-	event = "VeryLazy",
 	keys = {
 		{
 			"-",
-			function()
-				require("fyler").open({ kind = "split_left_most" })
-			end,
+			"<Cmd>Fyler kind=split_left_most<CR>",
 			desc = "Open fyler at the current file",
 		},
 		{
 			"_",
-			function()
-				require("fyler").open({ kind = "float" })
-			end,
+			"<Cmd>Fyler kind=float<CR>",
 			desc = "Open fyler in floating window",
 		},
 	},

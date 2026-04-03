@@ -2,7 +2,7 @@ return {
 	"akinsho/bufferline.nvim",
 	version = "*",
 	dependencies = { "nvim-tree/nvim-web-devicons" },
-	event = "VeryLazy",
+	event = { "BufReadPost", "BufNewFile" },
 	keys = {
 		{ "<leader>bp", "<Cmd>BufferLineTogglePin<CR>", desc = "Pin/unpin buffer" },
 		{ "<Tab>", "<Cmd>BufferLineCycleNext<CR>", desc = "Next buffer", mode = "n" },
@@ -21,10 +21,11 @@ return {
 				tab_size = 12,
 				diagnostics = "nvim_lsp",
 				diagnostics_update_in_insert = false,
-				diagnostics_indicator = function(count, level, diagnostics_dict, context)
+				diagnostics_indicator = function(count, _, _, context)
 					if context.buffer:current() then
 						return ""
 					end
+
 					return count > 0 and " " .. count or ""
 				end,
 				custom_filter = function(buf_number)
@@ -40,11 +41,6 @@ return {
 				},
 				show_buffer_icons = false,
 				separator_style = "thin",
-				hover = {
-					enabled = true,
-					delay = 300,
-					reveal = { "close" },
-				},
 				sort_by = "insert_after_current",
 			},
 		})

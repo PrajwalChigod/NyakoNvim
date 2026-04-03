@@ -1,10 +1,14 @@
 return {
 	"nvim-lualine/lualine.nvim",
 	event = "VeryLazy",
-	dependencies = { "nvim-tree/nvim-web-devicons" },
+	dependencies = {
+		"nvim-tree/nvim-web-devicons",
+		"folke/noice.nvim",
+	},
 	config = function()
 		-- Delay in milliseconds to wait for colorscheme to fully load before refreshing UI
 		local COLORSCHEME_REFRESH_DELAY = 100
+		local noice_mode = require("noice").api.statusline.mode
 		require("lualine").setup({
 			options = {
 				theme = "auto",
@@ -12,7 +16,7 @@ return {
 				component_separators = { left = "", right = "" },
 				section_separators = { left = "", right = "" },
 				disabled_filetypes = {
-					statusline = {},
+					statusline = { "fyler" },
 					winbar = {},
 				},
 				ignore_focus = {},
@@ -30,12 +34,12 @@ return {
 				lualine_c = { { "filename", path = 1 } },
 				lualine_x = {
 					{
-						require("noice").api.statusline.mode.get,
-						cond = require("noice").api.statusline.mode.has,
+						noice_mode.get,
+						cond = noice_mode.has,
 						color = { fg = "#ff9e64" },
 					},
 					"encoding",
-					"filetype" -- Removed fileformat (rarely needed)
+					"filetype", -- Removed fileformat (rarely needed)
 				},
 				lualine_y = { "progress" },
 				lualine_z = { "location" },
@@ -65,4 +69,3 @@ return {
 		})
 	end,
 }
-
