@@ -3,7 +3,6 @@ local MAX_FILE_SIZE = 1024 * 1024
 
 return {
 	"ibhagwan/fzf-lua",
-	dependencies = { "nvim-tree/nvim-web-devicons" },
 	keys = {
 		-- Find (by name/location)
 		{
@@ -143,8 +142,8 @@ return {
 				cmd = "fd --type f --hidden --follow --exclude .git --exclude node_modules --exclude .next --exclude target --exclude build --exclude dist --exclude .venv --exclude venv --exclude .cache",
 				prompt = "Files❯ ",
 				multiprocess = true,
-				git_icons = true,
-				file_icons = true,
+				git_icons = false,
+				file_icons = false,
 			},
 			git = {
 				files = {

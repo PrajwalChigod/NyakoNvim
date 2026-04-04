@@ -46,13 +46,16 @@ return {
 			default_format_opts = {
 				lsp_format = "fallback",
 			},
-			format_on_save = false, -- Disabled by default
+			format_on_save = {
+				timeout_ms = 500,
+				lsp_format = "fallback",
+			},
 			notify_on_error = true,
 			notify_no_formatters = false,
 			log_level = vim.log.levels.ERROR,
 		})
 
-		vim.g.conform_format_on_save_enabled = vim.g.conform_format_on_save_enabled or false
+		vim.g.conform_format_on_save_enabled = vim.g.conform_format_on_save_enabled or true
 
 		-- Get formatter name for current filetype
 		local function get_formatter_name()
