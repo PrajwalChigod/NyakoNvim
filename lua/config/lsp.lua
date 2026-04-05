@@ -218,6 +218,20 @@ local servers = {
 		filetypes = { "zig" },
 		root_markers = { "build.zig", ".git" },
 	},
+	gopls = {
+		cmd = { "gopls" },
+		filetypes = { "go", "gomod", "gowork", "gotmpl" },
+		root_markers = { "go.work", "go.mod", ".git" },
+		settings = {
+			gopls = {
+				analyses = {
+					unusedparams = true,
+				},
+				staticcheck = true,
+				gofumpt = true,
+			},
+		},
+	},
 	bashls = {
 		cmd = { "bash-language-server", "start" },
 		filetypes = { "sh", "bash" },
@@ -263,6 +277,10 @@ local lsp_filetypes = {
 	cuda = { "clangd" },
 	proto = { "clangd" },
 	zig = { "zls" },
+	go = { "gopls" },
+	gomod = { "gopls" },
+	gowork = { "gopls" },
+	gotmpl = { "gopls" },
 	sh = { "bashls" },
 	bash = { "bashls" },
 	toml = { "taplo" },
@@ -280,3 +298,14 @@ vim.api.nvim_create_autocmd("FileType", {
 		end
 	end,
 })
+
+vim.api.nvim_create_user_command("LspAttached", function()
+  local clients = vim.lsp.get_clients({ bufnr = 0 })
+  if #clients == 0 then
+    print("No LSP attached")
+    return
+  end
+  for _, c in ipairs(clients) do
+    print(c.name)
+  end
+end, {})
