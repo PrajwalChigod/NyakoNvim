@@ -48,11 +48,6 @@ return {
 			{ "r", desc = "Remote flash", mode = "o" },
 			{ "R", desc = "Treesitter search", mode = { "o", "x" } },
 
-			-- Treesitter Selection
-			{ "<C-space>", desc = "Init/Increment selection" },
-			{ "<C-S-space>", desc = "Scope incremental" },
-			{ "<M-space>", desc = "Node decremental" },
-
 			-- Text Objects
 			{ "ih", desc = "Git hunk", mode = { "o", "x" } },
 
@@ -123,9 +118,6 @@ return {
 			{ "gc", desc = "Comment", mode = "v" },
 			{ "S", desc = "Surround selection", mode = "v" },
 			{ "gS", desc = "Surround selection (linewise)", mode = "v" },
-			{ "<C-space>", desc = "Increment selection", mode = "v" },
-			{ "<C-S-space>", desc = "Scope incremental", mode = "v" },
-			{ "<M-space>", desc = "Node decremental", mode = "v" },
 
 			-- ===============================================
 			-- INSERT MODE
@@ -142,14 +134,8 @@ return {
 			{ "<C-g>s", desc = "Surround selection", mode = "i" },
 			{ "<C-g>S", desc = "Surround line (linewise)", mode = "i" },
 
-			-- Completion
-			{ "<C-n>", desc = "Next completion", mode = "i" },
-			{ "<C-p>", desc = "Previous completion", mode = "i" },
-			{ "<C-d>", desc = "Scroll doc down", mode = "i" },
-			{ "<C-f>", desc = "Scroll doc up", mode = "i" },
-			{ "<Tab>", desc = "Accept completion", mode = "i" },
-			{ "<CR>", desc = "Accept completion", mode = "i" },
-			{ "<C-Space>", desc = "Accept completion", mode = "i" },
+			-- Completion (blink.cmp)
+			{ "<Tab>", desc = "Accept / Next snippet", mode = "i" },
 			{ "<S-Tab>", desc = "Previous snippet", mode = "i" },
 
 			-- ===============================================
@@ -187,8 +173,6 @@ return {
 			{ "<leader>fm", desc = "Marks" },
 			{ "<leader>fj", desc = "Jumps" },
 			{ "<leader>fl", desc = "Resume last search" },
-			{ "<leader>fa", desc = "Symbols (current file)" },
-			{ "<leader>fA", desc = "Symbols (workspace)" },
 
 			-- Search (<leader>s)
 			{ "<leader>s", group = "Search" },
