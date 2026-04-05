@@ -14,46 +14,14 @@
 | `n` / `N` | Normal | Next/Previous search (centered) |
 | `J` | Normal | Join lines (keep cursor position) |
 
-## Insert Mode Navigation
+## Insert Mode Operations
 
 > `<localleader>` is set to `;` (configured via `maplocalleader`).
 
-### Word & Line Movement
 | Key | Mode | Description |
 |-----|------|-------------|
-| `<A-.>` | Insert | End of line |
-| `<A-,>` | Insert | First non-blank character |
-| `<A-0>` | Insert | Beginning of line |
-| `<A-b>` | Insert | Previous word |
-| `<A-w>` | Insert | Next word start |
-| `<A-e>` | Insert | Next word end |
-
-### Directional Movement
-| Key | Mode | Description |
-|-----|------|-------------|
-| `<A-h>` | Insert | Move left |
-| `<A-j>` | Insert | Move down |
-| `<A-k>` | Insert | Move up |
-| `<A-l>` | Insert | Move right |
-
-### Function & Class Navigation
-| Key | Mode | Description |
-|-----|------|-------------|
-| `<A-J>` | Insert | Next function |
-| `<A-K>` | Insert | Previous function |
-| `<A-L>` | Insert | Next class |
-| `<A-H>` | Insert | Previous class |
-
-### Quick Edits
-| Key | Mode | Description |
-|-----|------|-------------|
-| `<A-d>` | Insert | Delete word forward |
+| `jj` | Insert | Exit insert mode |
 | `<A-D>` | Insert | Delete to end of line |
-| `<A-u>` | Insert | Delete to line start |
-| `<A-o>` | Insert | Insert line below |
-| `<A-O>` | Insert | Insert line above |
-| `<A-x>` | Insert | Delete character under cursor |
-| `<A-z>` | Insert | Undo |
 | `<A-c>` | Insert | Yank/copy current line |
 | `<A-p>` | Insert | Paste after cursor |
 
@@ -224,8 +192,8 @@
 | `<leader>fm` | Normal | Marks |
 | `<leader>fj` | Normal | Jumps |
 | `<leader>fl` | Normal | Resume last search |
-| `<leader>fa` | Normal | Symbols in current file (fzf) |
-| `<leader>fA` | Normal | Symbols in workspace (fzf) |
+| `gO` | Normal | Document symbols (LSP via fzf) |
+| `gW` | Normal | Workspace symbols (LSP via fzf) |
 
 ### Search (by content)
 | Key | Mode | Description |
@@ -306,13 +274,6 @@
 **Note**: `f/F/t/T` motions are disabled in favor of Flash navigation (`s` key). `;` is used as localleader.
 
 ## Treesitter
-
-### Selection
-| Key | Mode | Description |
-|-----|------|-------------|
-| `<C-space>` | Normal/Visual | Init/Increment selection |
-| `<C-S-space>` | Normal/Visual | Scope incremental |
-| `<M-space>` | Normal/Visual | Node decremental |
 
 ### Text Objects
 | Key | Mode | Description |
@@ -412,9 +373,10 @@
 
 | Key | Mode | Description |
 |-----|------|-------------|
-| `<leader>qs` | Normal | Restore session |
+| `<leader>qs` | Normal | Restore session for current directory |
 | `<leader>ql` | Normal | Restore last session |
-| `<leader>qd` | Normal | Stop session recording |
+| `<leader>qd` | Normal | Stop session recording (don't save on exit) |
+| `<leader>qx` | Normal | Delete current session |
 
 ## Zen Mode
 
@@ -426,14 +388,10 @@
 
 | Key | Mode | Description |
 |-----|------|-------------|
-| `<C-n>` | Insert | Next completion |
-| `<C-p>` | Insert | Previous completion |
-| `<C-d>` | Insert | Scroll docs down |
-| `<C-f>` | Insert | Scroll docs up |
-| `<Tab>` | Insert | Accept completion |
-| `<CR>` | Insert | Accept completion |
-| `<C-Space>` | Insert | Accept completion |
-| `<S-Tab>` | Insert | Previous snippet/completion |
+| `<Tab>` | Insert | Accept completion / Next snippet position |
+| `<S-Tab>` | Insert | Previous snippet position |
+
+> Note: Uses default blink.cmp keymaps for navigation. Documentation auto-show is disabled by default.
 
 
 ---

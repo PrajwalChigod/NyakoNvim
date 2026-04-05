@@ -57,13 +57,14 @@ mv ~/.config/nvim ~/.config/nvim.backup
 git clone https://github.com/PrajwalChigod/NyakoNvim.git ~/.config/nvim
 
 # Install dependencies (macOS)
-brew install bat ripgrep fzf fd
+brew install bat ripgrep fzf fd tree-sitter
 
-# Launch Neovim - plugins install automatically!
+# Launch Neovim and install plugins
 nvim
+# Then run :Lazy install
 ```
 
-**That's it!** 🎉 Open a file and start coding. See [full installation guide](#2-dependencies-and-project-installation-setup) for other platforms.
+**That's it!** See [full installation guide](#2-dependencies-and-project-installation-setup) for other platforms and language setup.
 
 ## 🌍 Supported Languages
 
@@ -160,9 +161,14 @@ sudo pacman -S bat ripgrep fzf fd tree-sitter base-devel
    ```bash
    nvim
    ```
-     As soon as you start nvim, you might see some errors, Don't worry, its just that plugins are not installed.
-     Install all the plugins with command ```:Lazy install```
-     Install Tree-sitter parsers manually with commands like ```:TSInstall lua``` or ```:TSInstall python``` for the languages you use.
+   On first launch, plugins are not automatically installed. Install them with:
+   ```vim
+   :Lazy install
+   ```
+   Then install TreeSitter parsers for languages you use:
+   ```vim
+   :TSInstall lua python typescript rust
+   ```
 
 ## Customization
 
@@ -318,18 +324,26 @@ vim.api.nvim_create_autocmd('FileType', {
 lua/
 ├── plugins/
 │   ├── core/          # Default plugins (committed to repo)
+│   │   ├── blink.lua      # Completion engine
+│   │   ├── fzf-lua.lua    # Fuzzy finder
+│   │   ├── git.lua        # Git integration (mini.diff, mini-git, lazygit)
+│   │   ├── treesitter.lua # Syntax highlighting & text objects
+│   │   └── ...            # Other plugin configs
 │   └── extras/        # Your custom plugins (git-ignored)
 ├── config/
-│   ├── options.lua
-│   ├── keymaps.lua
-│   ├── autocmds.lua
+│   ├── options.lua    # Editor options
+│   ├── keymaps.lua    # Key mappings
+│   ├── autocmds.lua   # Autocommands
+│   ├── lsp.lua        # LSP server configurations
+│   ├── diagnostics.lua # Diagnostic settings
+│   ├── lazy.lua       # Plugin manager setup
 │   ├── disabled.lua   # Disable plugins (git-ignored)
-│   ├── extras/        # Custom config files (git-ignored)
-│   │   ├── keymaps.lua    # Your custom keymaps
-│   │   ├── autocmds.lua   # Your custom autocmds
-│   │   └── options.lua    # Your custom options
-│   └── ...
+│   └── extras/        # Custom config files (git-ignored)
+│       ├── keymaps.lua    # Your custom keymaps
+│       ├── autocmds.lua   # Your custom autocmds
+│       └── options.lua    # Your custom options
 └── utils/
+    ├── init.lua       # Colorscheme persistence
     └── loader.lua     # Plugin & config loader
 ```
 
@@ -370,6 +384,7 @@ LSP servers are automatically managed by Mason. Install via `:Mason` in Neovim:
 | **Lua**                   | `lua_ls`        | `:MasonInstall lua-language-server`        |
 | **Python**                | `ty`            | `:MasonInstall ty`                         |
 | **JavaScript/TypeScript** | `ts_ls`         | `:MasonInstall typescript-language-server` |
+| **Go**                    | `gopls`         | `:MasonInstall gopls`                      |
 | **Rust**                  | `rust_analyzer` | `:MasonInstall rust-analyzer`              |
 | **C/C++**                 | `clangd`        | `:MasonInstall clangd`                     |
 | **Zig**                   | `zls`           | `:MasonInstall zls`                        |
@@ -378,7 +393,7 @@ LSP servers are automatically managed by Mason. Install via `:Mason` in Neovim:
 
 ### Quick Install All LSP Servers
 ```vim
-:MasonInstall lua-language-server ty typescript-language-server rust-analyzer clangd zls bash-language-server taplo
+:MasonInstall lua-language-server ty typescript-language-server gopls rust-analyzer clangd zls bash-language-server taplo
 ```
 
 ## 5. Available Debug Tools and Installation Commands
@@ -480,7 +495,7 @@ Here's what powers NyakoNvim:
 | **nvim-lint** | Linter | Real-time error detection across 10+ languages |
 | **nvim-dap** | Debugger | Full debugging with breakpoints, watches, stepping |
 | **nvim-treesitter** | Parser | Smart syntax highlighting, code navigation, text objects |
-| **mini.diff** + **mini-git** | Git integration | See changes inline, stage hunks, blame, and open diff views |
+| **mini.diff** + **mini-git** + **lazygit** | Git integration | See changes inline, stage hunks, blame, diff views, and full TUI |
 | **flash.nvim** | Motion | Jump anywhere with 2 keystrokes |
 | **fyler.nvim** | File explorer | Tree-based file manager for editing filesystem like a buffer |
 | **kanagawa.nvim** | Theme | Fast default colorscheme with the `tora` variant |
@@ -505,6 +520,7 @@ Complete reference matrix for all configured languages and their tooling:
 | **TypeScript** | `ts_ls`        | `eslint`           | `prettier`         | `js-debug-adapter`  | `typescript-language-server`, `eslint_d`, `prettier`, `js-debug-adapter` |
 | **Lua**       | `lua_ls`        | `luacheck`         | `stylua`           | ❌                  | `lua-language-server`, `luacheck`, `stylua`                              |
 | **Rust**      | `rust_analyzer` | via LSP (clippy)   | via LSP            | `codelldb`          | `rust-analyzer`, `codelldb`                                              |
+| **Go**        | `gopls`         | via LSP            | via LSP (gofumpt)  | `delve`             | `gopls`, `delve`                                                         |
 | **C**         | `clangd`        | via LSP            | `clang-format`     | `codelldb`          | `clangd`, `clang-format`, `codelldb`                                     |
 | **C++**       | `clangd`        | via LSP            | `clang-format`     | `codelldb`          | `clangd`, `clang-format`, `codelldb`                                     |
 | **Zig**       | `zls`           | via LSP            | `zig fmt`          | `codelldb`          | `zls`, `codelldb`                                                        |
@@ -521,7 +537,7 @@ Complete reference matrix for all configured languages and their tooling:
 ### Install All Tools At Once
 ```vim
 " LSP Servers
-:MasonInstall lua-language-server ty typescript-language-server rust-analyzer clangd zls bash-language-server taplo
+:MasonInstall lua-language-server ty typescript-language-server gopls rust-analyzer clangd zls bash-language-server taplo
 
 " If Mason is not managing `ty` in your environment, install it with:
 " uv tool install ty
@@ -542,8 +558,9 @@ Complete reference matrix for all configured languages and their tooling:
 - **Rust**: Uses built-in `rust fmt` and `clippy` via `rust_analyzer` LSP
 - **Zig**: Uses built-in `zig fmt` for formatting
 - **C/C++**: Linting handled by `clangd` LSP with clang-tidy integration
-- **Python**: `ruff` handles both linting and formatting for optimal performance
+- **Python**: `ruff` handles both linting and formatting; `ty` provides LSP
 - **JavaScript/TypeScript**: Uses same tooling (ESLint, Prettier, ts_ls)
+- **Go**: Uses `gopls` for LSP with gofumpt formatting and staticcheck enabled
 
 ---
 
@@ -552,26 +569,27 @@ Complete reference matrix for all configured languages and their tooling:
 ### First Steps
 1. **Open Neovim**: Launch `nvim` without arguments to see Neovim's default startup screen
 2. **Check keybindings**: Press `<Space>` (leader key) and wait - which-key will show you all options
-3. **Find files**: `<Space>ff` to fuzzy find files, `<Space>fr` to live grep
-4. **Explore config**: `<Space>ec` to browse the configuration
+3. **Find files**: `<Space>ff` to fuzzy find files, `<Space>sg` for live grep
+4. **Explore config**: `<Space>ce` to browse the configuration
 
 ### Essential Keybindings
 - **Leader key**: `<Space>` - Most commands start here
+- **Local leader**: `;` - Used for terminal and quickfix operations
 - **File navigation**: `<Space>ff` (find files), `-` (file explorer)
 - **Buffer management**: `<Tab>` (next buffer), `<Shift-Tab>` (previous buffer)
 - **LSP actions**: `gd` (go to definition), `grr` (find references), `gra` (code actions)
 - **Git**: `<Space>g` prefix for all git operations
-- **Fuzzy find**: `<Space>f` prefix for all search operations
+- **Fuzzy find**: `<Space>f` prefix for find by name, `<Space>s` for search by content
 - **Colorscheme picker**: `<Space>cp` to browse and apply themes with live preview
 
 📖 **Full keymap reference**: See [KEYMAPS.md](./docs/KEYMAPS.md) for the complete cheatsheet
 
 ### Pro Tips
-- **Session restore**: `<Space>qs` restores your last session with all buffers and splits
-- **Format on save**: Enabled by default for all configured languages
-- **Insert mode LSP**: Press `<C-g>` in insert mode for LSP actions without leaving insert
+- **Session restore**: `<Space>qs` restores your session for current directory, `<Space>ql` for last session
+- **Format on save**: Enabled by default for all configured languages (toggle with `:FormatToggle`)
 - **Flash navigation**: Press `s` in normal mode, type 2 chars, jump anywhere instantly
-- **Buffer pinning**: Pin important buffers with `<Space>bi` to prevent accidental closing
+- **Flash treesitter**: Press `S` in normal mode to select treesitter nodes
+- **Terminal**: Use `;tf` for floating terminal, `;th` for horizontal split
 
 ---
 
