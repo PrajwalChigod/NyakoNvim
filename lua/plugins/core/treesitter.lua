@@ -59,22 +59,24 @@ local textobject_keys = {
 	{ "[s", textobject_fn("nvim-treesitter-textobjects.swap", "swap_previous", "@function.outer", "textobjects"), mode = "n", desc = "Swap previous function" },
 }
 
-local function set_default_fold_opts(bufnr)
+local function set_fallback_opts(bufnr)
 	local winid = vim.fn.bufwinid(bufnr)
+
+	vim.bo[bufnr].indentexpr = ""
+
 	if winid == -1 then
-		return nil
+		return
 	end
 
 	vim.wo[winid].foldmethod = "indent"
 	vim.wo[winid].foldexpr = "0"
-	return winid
 end
 
 return {
 	{
 		"nvim-treesitter/nvim-treesitter",
 		branch = "main",
-		event = "VimEnter",
+		event = { "BufReadPost", "BufNewFile" },
 		build = ":TSUpdate",
 		config = function()
 			local ts = require("nvim-treesitter")
@@ -92,18 +94,21 @@ return {
 					return
 				end
 
-				local winid = set_default_fold_opts(bufnr)
+				local winid = vim.fn.bufwinid(bufnr)
 				if vim.bo[bufnr].buftype ~= "" or is_large_file(bufnr) then
+					set_fallback_opts(bufnr)
 					return
 				end
 
 				local lang = vim.treesitter.language.get_lang(vim.bo[bufnr].filetype)
 				if not lang or lang == "" or not available_parsers[lang] then
+					set_fallback_opts(bufnr)
 					return
 				end
 
 				local ok = pcall(vim.treesitter.start, bufnr, lang)
 				if not ok then
+					set_fallback_opts(bufnr)
 					return
 				end
 
@@ -118,11 +123,16 @@ return {
 
 				if support.indents then
 					vim.bo[bufnr].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+				else
+					vim.bo[bufnr].indentexpr = ""
 				end
 
-				if winid and support.folds then
+				if winid ~= -1 and support.folds then
 					vim.wo[winid].foldexpr = "v:lua.vim.treesitter.foldexpr()"
 					vim.wo[winid].foldmethod = "expr"
+				elseif winid ~= -1 then
+					vim.wo[winid].foldmethod = "indent"
+					vim.wo[winid].foldexpr = "0"
 				end
 			end
 
