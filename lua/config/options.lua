@@ -141,8 +141,9 @@ opt.listchars = { tab = "⋅ ", trail = "·", nbsp = "␣" }
 opt.cmdheight = 1
 opt.showmode = false
 
--- Folding (indent fallback; Treesitter enables foldexpr when queries exist)
-opt.foldmethod = "indent"
+-- Folding (prefer Treesitter; fall back to indent folding per-buffer when needed)
+opt.foldmethod = "expr"
+opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 opt.foldlevel = 99
 opt.foldenable = false -- Don't fold by default, but folds are available
 

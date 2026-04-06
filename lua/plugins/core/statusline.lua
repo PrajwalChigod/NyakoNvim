@@ -7,6 +7,15 @@ return {
 	config = function()
 		local statusline = require("mini.statusline")
 
+		local function recording_status()
+			local register = vim.fn.reg_recording()
+			if register == "" or statusline.is_truncated(100) then
+				return ""
+			end
+
+			return "REC @" .. register
+		end
+
 		local function git_branch()
 			if statusline.is_truncated(40) then
 				return ""
@@ -87,7 +96,7 @@ return {
 						"%<",
 						{ hl = "MiniStatuslineFilename", strings = { filename } },
 						"%=",
-						{ hl = "MiniStatuslineFileinfo", strings = { info, "%P", "%l:%c" } },
+						{ hl = "MiniStatuslineFileinfo", strings = { recording_status(), info, "%P", "%l:%c" } },
 					})
 				end,
 				inactive = function()
@@ -98,6 +107,22 @@ return {
 					})
 				end,
 			},
+		})
+
+		local recording_group = vim.api.nvim_create_augroup("MiniStatuslineRecording", { clear = true })
+		vim.api.nvim_create_autocmd("RecordingEnter", {
+			group = recording_group,
+			callback = function()
+				vim.cmd("redrawstatus")
+			end,
+		})
+		vim.api.nvim_create_autocmd("RecordingLeave", {
+			group = recording_group,
+			callback = function()
+				vim.schedule(function()
+					vim.cmd("redrawstatus")
+				end)
+			end,
 		})
 
 		vim.api.nvim_create_autocmd("FileType", {
