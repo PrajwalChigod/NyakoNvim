@@ -118,7 +118,6 @@ keymap("n", "<leader>tn", "<cmd>tabnew<CR>", { desc = "Open new tab" })
 keymap("n", "<leader>tc", "<cmd>tabclose<CR>", { desc = "Close current tab" })
 keymap("n", "<leader>tb", "<cmd>tab sb<CR>", { desc = "Open buffer in new tab" })
 
--- Enhanced tab workflow with scope.nvim
 keymap("n", "<leader>tf", function()
   vim.cmd("tabnew")
   -- Optional: open a file picker in the new tab
