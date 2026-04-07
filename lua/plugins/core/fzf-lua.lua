@@ -166,6 +166,16 @@ return {
 					width = 0.50,
 				},
 				live_preview = true,
+				actions = {
+					["default"] = function(selected)
+						local scheme = selected[1]
+						vim.cmd.colorscheme(scheme)
+						local ok, err = require("utils").save_colorscheme(scheme)
+						if not ok then
+							vim.notify("Failed to save colorscheme: " .. tostring(err), vim.log.levels.WARN)
+						end
+					end,
+				},
 			},
 		})
 	end,
