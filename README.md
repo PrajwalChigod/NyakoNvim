@@ -44,7 +44,6 @@ A sleek, purr-fectly crafted Neovim configuration that's fast, lightweight, and 
 ### 🧠 Smart Features
 - **Flash navigation**: Jump anywhere on screen with [flash.nvim](https://github.com/folke/flash.nvim)
 - **Auto-pairs & surround**: Intelligent bracket/quote handling
-- **Scope-aware buffers**: Tab-local buffer management
 - **Format on save**: Consistent code style with [conform.nvim](https://github.com/stevearc/conform.nvim)
 
 ## 📦 Quick Start
@@ -506,7 +505,7 @@ Here's what powers NyakoNvim:
 NyakoNvim includes a flexible colorscheme system:
 - **3 pre-configured themes**: kanagawa, catppuccin, lackluster
 - **Live preview picker**: Press `<leader>cp` to browse and preview themes with fzf-lua
-- **Persistent selections**: Theme changes are automatically saved and restored on next startup
+- **Persistent selections**: Theme choice is saved on explicit selection from the picker and restored on next startup
 - **Smart lazy-loading**: Only the active theme loads at startup for optimal performance
 
 ## 9. Tooling Matrix

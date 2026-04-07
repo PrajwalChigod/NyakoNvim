@@ -18,6 +18,7 @@ return {
 			},
 		})
 
+		vim.schedule(function()
 		wk.add({
 			-- ===============================================
 			-- NORMAL MODE
@@ -267,5 +268,6 @@ return {
 			{ "<localleader>tv", desc = "Vertical" },
 			{ "<localleader>tt", desc = "Tab" },
 		})
+		end)
 	end,
 }
