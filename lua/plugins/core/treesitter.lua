@@ -80,12 +80,7 @@ return {
 		build = ":TSUpdate",
 		config = function()
 			local ts = require("nvim-treesitter")
-			local available_parsers = {}
 			local query_support = {}
-
-			for _, lang in ipairs(ts.get_available()) do
-				available_parsers[lang] = true
-			end
 
 			ts.setup()
 
@@ -101,7 +96,7 @@ return {
 				end
 
 				local lang = vim.treesitter.language.get_lang(vim.bo[bufnr].filetype)
-				if not lang or lang == "" or not available_parsers[lang] then
+				if not lang or lang == "" then
 					set_fallback_opts(bufnr)
 					return
 				end
@@ -138,16 +133,14 @@ return {
 
 			vim.api.nvim_create_autocmd("FileType", {
 				group = vim.api.nvim_create_augroup("nyako-treesitter", { clear = true }),
-				pattern = "*",
 				callback = function(args)
 					enable_treesitter(args.buf)
 				end,
 				desc = "Enable Treesitter features",
 			})
 
-			for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
-				enable_treesitter(bufnr)
-			end
+			-- Handle the buffer that triggered this plugin load (FileType fired before BufReadPost)
+			enable_treesitter(vim.api.nvim_get_current_buf())
 		end,
 	},
 	{

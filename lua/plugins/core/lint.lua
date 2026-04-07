@@ -1,7 +1,10 @@
 return {
 	"mfussenegger/nvim-lint",
 	lazy = true,
-	event = { "BufReadPre", "BufNewFile" },
+	keys = {
+		{ "gl", desc = "Run linter" },
+	},
+	cmd = { "LintInfo" },
 	config = function()
 		local lint = require("lint")
 

@@ -5,17 +5,21 @@ return {
 		"MunifTanjim/nui.nvim",
 		"rcarriga/nvim-notify",
 	},
-	opts = {
-		cmdline = {
-			view = "cmdline_popup",
-		},
-		views = {
-			cmdline_popup = {
-				position = {
-					row = 5,
-					col = "50%",
+	config = function()
+		vim.schedule(function()
+			require("noice").setup({
+				cmdline = {
+					view = "cmdline_popup",
 				},
-			},
-		},
-	},
+				views = {
+					cmdline_popup = {
+						position = {
+							row = 5,
+							col = "50%",
+						},
+					},
+				},
+			})
+		end)
+	end,
 }
