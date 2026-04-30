@@ -1,26 +1,9 @@
-local max_filesize = 50 * 1024
-local max_lines = 5000
-
-local function is_large_file(bufnr)
-	local name = vim.api.nvim_buf_get_name(bufnr)
-	if name ~= "" then
-		local ok, stats = pcall(vim.uv.fs_stat, name)
-		if ok and stats and stats.size > max_filesize then
-			return true
-		end
-	end
-
-	return vim.api.nvim_buf_line_count(bufnr) > max_lines
-end
-
-local function textobject_fn(module, method, query, query_group)
+local function textobject_fn(module, method, query, group)
 	return function()
-		local bufnr = vim.api.nvim_get_current_buf()
-		if is_large_file(bufnr) then
+		if require("utils.treesitter").is_large_file(vim.api.nvim_get_current_buf()) then
 			return
 		end
-
-		require(module)[method](query, query_group)
+		require(module)[method](query, group)
 	end
 end
 
@@ -59,104 +42,29 @@ local textobject_keys = {
 	{ "[s", textobject_fn("nvim-treesitter-textobjects.swap", "swap_previous", "@function.outer", "textobjects"), mode = "n", desc = "Swap previous function" },
 }
 
-local function set_fallback_opts(bufnr)
-	local winid = vim.fn.bufwinid(bufnr)
-
-	vim.bo[bufnr].indentexpr = ""
-
-	if winid == -1 then
-		return
-	end
-
-	vim.wo[winid].foldmethod = "indent"
-	vim.wo[winid].foldexpr = "0"
-end
-
 return {
 	{
 		"nvim-treesitter/nvim-treesitter",
 		branch = "main",
-		event = { "BufReadPost", "BufNewFile" },
+		lazy = false,
 		build = ":TSUpdate",
-		config = function()
-			local ts = require("nvim-treesitter")
-			local query_support = {}
-
-			ts.setup()
-
-			local function enable_treesitter(bufnr)
-				if not vim.api.nvim_buf_is_valid(bufnr) or not vim.api.nvim_buf_is_loaded(bufnr) then
-					return
-				end
-
-				local winid = vim.fn.bufwinid(bufnr)
-				if vim.bo[bufnr].buftype ~= "" or is_large_file(bufnr) then
-					set_fallback_opts(bufnr)
-					return
-				end
-
-				local lang = vim.treesitter.language.get_lang(vim.bo[bufnr].filetype)
-				if not lang or lang == "" then
-					set_fallback_opts(bufnr)
-					return
-				end
-
-				local ok = pcall(vim.treesitter.start, bufnr, lang)
-				if not ok then
-					set_fallback_opts(bufnr)
-					return
-				end
-
-				local support = query_support[lang]
-				if not support then
-					support = {
-						indents = #vim.api.nvim_get_runtime_file("queries/" .. lang .. "/indents.scm", true) > 0,
-						folds = #vim.api.nvim_get_runtime_file("queries/" .. lang .. "/folds.scm", true) > 0,
-					}
-					query_support[lang] = support
-				end
-
-				if support.indents then
-					vim.bo[bufnr].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-				else
-					vim.bo[bufnr].indentexpr = ""
-				end
-
-				if winid ~= -1 and support.folds then
-					vim.wo[winid].foldexpr = "v:lua.vim.treesitter.foldexpr()"
-					vim.wo[winid].foldmethod = "expr"
-				elseif winid ~= -1 then
-					vim.wo[winid].foldmethod = "indent"
-					vim.wo[winid].foldexpr = "0"
-				end
-			end
-
-			vim.api.nvim_create_autocmd("FileType", {
-				group = vim.api.nvim_create_augroup("nyako-treesitter", { clear = true }),
-				callback = function(args)
-					enable_treesitter(args.buf)
-				end,
-				desc = "Enable Treesitter features",
-			})
-
-			-- Handle the buffer that triggered this plugin load (FileType fired before BufReadPost)
-			enable_treesitter(vim.api.nvim_get_current_buf())
-		end,
 	},
 	{
 		"nvim-treesitter/nvim-treesitter-textobjects",
 		branch = "main",
 		dependencies = { "nvim-treesitter/nvim-treesitter" },
 		keys = textobject_keys,
-		config = function()
-			require("nvim-treesitter-textobjects").setup({
-				select = {
-					lookahead = true,
-				},
-				move = {
-					set_jumps = true,
-				},
-			})
-		end,
+		opts = {
+			select = { enable = true, lookahead = true, keymaps = {} },
+			move = {
+				enable = true,
+				set_jumps = true,
+				goto_next_start = {},
+				goto_previous_start = {},
+				goto_next_end = {},
+				goto_previous_end = {},
+			},
+			swap = { enable = true, swap_next = {}, swap_previous = {} },
+		},
 	},
 }
