@@ -182,6 +182,27 @@ vim.api.nvim_create_autocmd("QuickFixCmdPost", {
 
 
 -- ===============================================
+-- DIFF MODE
+-- ===============================================
+
+local diff_group = vim.api.nvim_create_augroup("DiffFolding", { clear = true })
+
+-- Enable diff folding per-window when entering diff mode; restore on exit
+vim.api.nvim_create_autocmd("OptionSet", {
+	group = diff_group,
+	pattern = "diff",
+	callback = function()
+		if vim.v.option_new == 1 then
+			vim.w.saved_foldmethod = vim.wo.foldmethod
+			vim.wo.foldmethod = "diff"
+		elseif vim.w.saved_foldmethod then
+			vim.wo.foldmethod = vim.w.saved_foldmethod
+			vim.w.saved_foldmethod = nil
+		end
+	end,
+})
+
+-- ===============================================
 -- LOAD CUSTOM AUTOCMDS
 -- ===============================================
 -- Load user-defined autocmds from lua/config/extras/autocmds.lua (gitignored)
