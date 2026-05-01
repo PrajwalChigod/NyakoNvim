@@ -14,7 +14,7 @@ return {
 		config = function()
 			require("git-conflict").setup({
 				default_mappings = false,
-				disable_diagnostics = true,
+				disable_diagnostics = false,
 				highlights = {
 					incoming = "DiffAdd",
 					current = "DiffText",
@@ -53,7 +53,9 @@ return {
 				pattern = "GitConflictDetected",
 				group = augroup,
 				callback = function()
-					set_conflict_keymaps(vim.api.nvim_get_current_buf())
+					local buf = vim.api.nvim_get_current_buf()
+					vim.diagnostic.enable(false, { bufnr = buf })
+					set_conflict_keymaps(buf)
 				end,
 			})
 
@@ -61,7 +63,9 @@ return {
 				pattern = "GitConflictResolved",
 				group = augroup,
 				callback = function()
-					del_conflict_keymaps(vim.api.nvim_get_current_buf())
+					local buf = vim.api.nvim_get_current_buf()
+					vim.diagnostic.enable(true, { bufnr = buf })
+					del_conflict_keymaps(buf)
 				end,
 			})
 		end,

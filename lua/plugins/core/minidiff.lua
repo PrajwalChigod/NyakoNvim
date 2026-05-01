@@ -7,7 +7,7 @@ return {
 
 			diff.setup({
 				view = {
-					style = "number",
+					style = "sign",
 					signs = { add = "| ", change = "| ", delete = "| " },
 				},
 				delay = {
