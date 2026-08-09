@@ -11,7 +11,7 @@ return {
 		},
 		{
 			"_",
-			"<Cmd>Fyler kind=float<CR>",
+			"<Cmd>Fyler kind=floating<CR>",
 			desc = "Open fyler in floating window",
 		},
 	},
