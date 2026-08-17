@@ -15,5 +15,9 @@ return {
 			desc = "Open fyler in floating window",
 		},
 	},
-	opts = {},
+	opts = {
+		extensions = {
+			git = { enabled = true },
+		},
+	},
 }

@@ -13,28 +13,34 @@ return {
 		},
 	},
 	{
-		"catppuccin/nvim",
+		"PrajwalChigod/catppuccin",
 		name = "catppuccin",
 		lazy = true,
 		config = function()
 			require("catppuccin").setup({
-				flavour = "macchiato",
+				flavour = "espresso",
 				term_colors = true,
-				compile = {
-					enabled = false,
-					path = vim.fn.stdpath("cache") .. "/catppuccin",
-					suffix = "_compiled",
-				},
 				background = {
 					light = "latte",
-					dark = "macchiato",
+					dark = "espresso",
 				},
 				dim_inactive = {
-					enabled = false,
+					enabled = true,
+					shade = "light",
+					percentage = 0.15,
 				},
 				styles = {
 					comments = { "italic" },
 					conditionals = { "italic" },
+				},
+				lsp_styles = {
+					underlines = {
+						errors = { "undercurl" },
+						hints = { "undercurl" },
+						warnings = { "undercurl" },
+						information = { "undercurl" },
+						ok = { "undercurl" },
+					},
 				},
 				integrations = {
 					cmp = false,
