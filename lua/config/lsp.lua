@@ -64,6 +64,11 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		)
 
 		vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
+
+		local client = vim.lsp.get_client_by_id(event.data.client_id)
+		if client and client:supports_method("textDocument/inlayHint") then
+			vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+		end
 	end,
 })
 
@@ -229,6 +234,13 @@ local servers = {
 				},
 				staticcheck = true,
 				gofumpt = true,
+				hints = {
+					assignVariableTypes = true,
+					compositeLiteralFields = true,
+					constantValues = true,
+					parameterNames = true,
+					rangeVariableTypes = true,
+				},
 			},
 		},
 	},
