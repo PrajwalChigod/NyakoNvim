@@ -220,6 +220,17 @@ return {
 			{ "<leader>du", desc = "UI" },
 			{ "<leader>de", desc = "Evaluate" },
 
+			-- Test (<leader>T)
+			{ "<leader>T", group = "Test" },
+			{ "<leader>Tt", desc = "Run nearest" },
+			{ "<leader>Tf", desc = "Run file" },
+			{ "<leader>Td", desc = "Debug nearest" },
+			{ "<leader>Tl", desc = "Run last" },
+			{ "<leader>Ts", desc = "Toggle summary" },
+			{ "<leader>To", desc = "Show output" },
+			{ "<leader>TO", desc = "Toggle output panel" },
+			{ "<leader>TS", desc = "Stop" },
+
 			-- Git (<leader>g)
 			{ "<leader>g", group = "Git" },
 			{ "<leader>gg", desc = "Open LazyGit" },
