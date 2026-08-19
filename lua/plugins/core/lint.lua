@@ -22,6 +22,9 @@ return {
 			-- Lua
 			lua = { "luacheck" },
 
+			-- Go
+			go = { "golangcilint" },
+
 			-- Systems programming (Rust uses clippy via LSP, C/C++ via clangd)
 			-- rust = {}, -- Handled by rust-analyzer LSP
 			-- c = {},    -- Handled by clangd LSP

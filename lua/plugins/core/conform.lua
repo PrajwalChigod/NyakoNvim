@@ -35,6 +35,9 @@ return {
 				cpp = { "clang-format" },
 				zig = { "zig_fmt" },
 
+				-- Go (goimports fixes imports, gofumpt formats)
+				go = { "goimports", "gofumpt" },
+
 				-- Shell scripting
 				sh = { "shfmt" },
 				bash = { "shfmt" },
