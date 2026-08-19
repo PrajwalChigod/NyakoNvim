@@ -28,6 +28,7 @@ return {
 			-- LSP Information
 			{ "gh", desc = "Hover Documentation" },
 			{ "gs", desc = "Signature Help" },
+			{ "gi", desc = "Toggle Inlay Hints" },
 
 			-- Enhanced Movement
 			{ "gG", desc = "Go to end of file" },
