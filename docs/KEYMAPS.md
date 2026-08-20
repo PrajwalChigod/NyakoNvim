@@ -320,13 +320,22 @@
 | `<leader>gD` | Normal | Diff this ~ |
 | `<leader>gt` | Normal | Toggle signs |
 | `<leader>glb` | Normal | Blame buffer |
-| `<leader>gco` | Normal | Pick ours in conflict |
-| `<leader>gct` | Normal | Pick theirs in conflict |
-| `<leader>gcb` | Normal | Keep both sides in conflict |
-| `<leader>gcn` | Normal | Keep none in conflict |
-| `]x` | Normal | Next conflict marker |
-| `[x` | Normal | Previous conflict marker |
+| `<leader>gm` | Normal | Pick a conflicted file (fzf) and open the 3-pane merge tool |
+| `<leader>gM` | Normal | Close diffview |
+| `<leader>gh` | Normal | File history (current file) |
 | `ih` | Visual/Operator | Git hunk text object |
+
+### Merge Conflicts (diffview merge-tool)
+Active only inside the MERGED pane of the `<leader>gm` 3-pane view (LOCAL/BASE/REMOTE on top, MERGED on bottom). The view also auto-opens on `BufReadPost` when a buffer has real conflict markers during an active merge/rebase/cherry-pick/revert.
+
+| Key | Mode | Description |
+|-----|------|-------------|
+| `co` | Normal | Take LOCAL (ours) |
+| `ct` | Normal | Take REMOTE (theirs) |
+| `cb` | Normal | Take BASE |
+| `]x` | Normal | Next conflict |
+| `[x` | Normal | Previous conflict |
+| `q` | Normal | Close diffview |
 
 ## Debug (DAP)
 
@@ -360,6 +369,12 @@
 |-----|------|-------------|
 | `<leader>ce` | Normal | Edit Neovim config |
 | `<leader>cr` | Normal | Reload config & sync plugins |
+
+## Notifications (Noice)
+
+| Key | Mode | Description |
+|-----|------|-------------|
+| `<localleader>nd` | Normal | Dismiss visible messages/notifications immediately |
 
 ## Editor Operations
 
