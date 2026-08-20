@@ -9,9 +9,40 @@ return {
 			"DiffviewFileHistory",
 		},
 		keys = {
-			{ "<leader>gm", "<cmd>DiffviewOpen --merge-tool<CR>", desc = "Git: Open 3-pane merge tool" },
-			{ "<leader>gM", "<cmd>DiffviewClose<CR>",             desc = "Git: Close diffview" },
-			{ "<leader>gh", "<cmd>DiffviewFileHistory %<CR>",     desc = "Git: File history" },
+			{
+				"<leader>gm",
+				function()
+					local files = vim.tbl_filter(function(f)
+						return f ~= ""
+					end, vim.fn.systemlist("git diff --name-only --diff-filter=U"))
+
+					if vim.v.shell_error ~= 0 then
+						vim.notify("Not inside a git repo (or git error)", vim.log.levels.ERROR)
+						return
+					end
+					if #files == 0 then
+						vim.notify("No conflicted files", vim.log.levels.INFO)
+						return
+					end
+
+					-- fzf-lua is only added to the runtimepath by lazy.nvim once one of
+					-- its own `keys` is pressed; force-load it since we're calling it
+					-- programmatically here instead.
+					require("lazy").load({ plugins = { "fzf-lua" } })
+					require("fzf-lua").fzf_exec(files, {
+						prompt = "Conflicts❯ ",
+						actions = {
+							["default"] = function(selected)
+								vim.cmd("edit " .. vim.fn.fnameescape(selected[1]))
+								vim.cmd("DiffviewOpen --merge-tool")
+							end,
+						},
+					})
+				end,
+				desc = "Git: pick conflicted file (3-pane merge tool)",
+			},
+			{ "<leader>gM", "<cmd>DiffviewClose<CR>",         desc = "Git: Close diffview" },
+			{ "<leader>gh", "<cmd>DiffviewFileHistory %<CR>", desc = "Git: File history" },
 		},
 		config = function()
 			local actions = require("diffview.actions")

@@ -127,6 +127,11 @@ opt.wildignore:append({
 -- Better diff performance
 opt.diffopt:append("internal,algorithm:patience")
 
+-- Diff mode: fill missing/absent lines with a blank instead of "-" dashes,
+-- so conflict panes (diffview merge-tool, git mergetool) show plain
+-- background color instead of a distracting dashed line through them
+opt.fillchars:append({ diff = " " })
+
 -- Improved completion
 opt.completeopt = "menuone,noselect,preview" -- Better than just "menuone,noselect"
 

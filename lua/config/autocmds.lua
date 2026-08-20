@@ -203,6 +203,70 @@ vim.api.nvim_create_autocmd("OptionSet", {
 })
 
 -- ===============================================
+-- GIT MERGE CONFLICTS
+-- ===============================================
+
+local merge_group = vim.api.nvim_create_augroup("GitMergeAutoTool", { clear = true })
+
+-- Detect real conflict markers at the start of a line ("<<<<<<< ").
+local function has_conflict_markers(bufnr)
+	for _, line in ipairs(vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)) do
+		if line:match("^<<<<<<< ") then
+			return true
+		end
+	end
+	return false
+end
+
+-- Check whether the repo containing `dir` is mid merge/rebase/cherry-pick/revert.
+local function git_has_merge_state(dir)
+	local git_dir = vim.fn.systemlist({ "git", "-C", dir, "rev-parse", "--git-dir" })[1]
+	if vim.v.shell_error ~= 0 or not git_dir or git_dir == "" then
+		return false
+	end
+	if not git_dir:match("^/") then
+		git_dir = dir .. "/" .. git_dir
+	end
+	for _, marker in ipairs({ "MERGE_HEAD", "rebase-merge", "rebase-apply", "CHERRY_PICK_HEAD", "REVERT_HEAD" }) do
+		if vim.uv.fs_stat(git_dir .. "/" .. marker) then
+			return true
+		end
+	end
+	return false
+end
+
+local function diffview_is_open()
+	local ok, lib = pcall(require, "diffview.lib")
+	return ok and lib.get_current_view() ~= nil
+end
+
+-- Mirror what `git mergetool` gives you automatically: the moment you open a
+-- file that actually has unresolved conflict markers during a real
+-- merge/rebase/cherry-pick, pop open diffview's LOCAL/BASE/REMOTE + MERGED
+-- layout. Skipped while already inside a diffview so it doesn't fight you.
+vim.api.nvim_create_autocmd("BufReadPost", {
+	group = merge_group,
+	callback = function(event)
+		local bufname = vim.api.nvim_buf_get_name(event.buf)
+		if bufname == "" or vim.bo[event.buf].buftype ~= "" then
+			return
+		end
+		if is_large_buffer(event.buf) or diffview_is_open() then
+			return
+		end
+		if not has_conflict_markers(event.buf) then
+			return
+		end
+		if not git_has_merge_state(vim.fn.fnamemodify(bufname, ":h")) then
+			return
+		end
+		vim.schedule(function()
+			vim.cmd("DiffviewOpen --merge-tool")
+		end)
+	end,
+})
+
+-- ===============================================
 -- LOAD CUSTOM AUTOCMDS
 -- ===============================================
 -- Load user-defined autocmds from lua/config/extras/autocmds.lua (gitignored)
