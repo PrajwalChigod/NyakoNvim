@@ -115,7 +115,7 @@ require("lazy").setup(spec, {
 		border = "rounded",
 	},
 	install = {
-    missing = false,
+		missing = true,
 		colorscheme = { "kanagawa" },
 	},
 	concurrency = 10, -- Faster parallel plugin loading (default is 5)

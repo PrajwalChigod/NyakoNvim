@@ -1,72 +1,92 @@
 local M = {}
 
-local default_session_dir = vim.fn.stdpath("state") .. "/sessions/"
+local session_dir = vim.fn.stdpath("state") .. "/sessions/"
+local stopped = false
+
+vim.o.sessionoptions = "buffers,curdir,tabpages,winsize,help,globals,skiprtp,folds"
 
 -- Check if opened with a directory argument
 local function is_directory_launch()
 	return vim.fn.argc() == 1 and vim.fn.isdirectory(vim.fn.argv(0)) == 1
 end
 
-local function with_trailing_sep(dir)
-	if dir:sub(-1) ~= "/" and dir:sub(-1) ~= "\\" then
-		return dir .. "/"
-	end
-	return dir
+local function sanitize(cwd)
+	return (cwd:gsub("[\\/:]+", "%%"))
 end
 
-local function session_dir()
-	local config = package.loaded["persistence.config"]
-	if config and config.options and config.options.dir then
-		return with_trailing_sep(config.options.dir)
-	end
-	return with_trailing_sep(default_session_dir)
+local function session_file(cwd)
+	return session_dir .. sanitize(cwd) .. ".vim"
 end
 
-local function session_candidates()
-	local cwd = vim.fn.getcwd()
-	if cwd == "" then
-		return {}
+local function last_session()
+	local files = vim.fn.glob(session_dir .. "*.vim", false, true)
+	if type(files) ~= "table" or #files == 0 then
+		return nil
 	end
 
-	local sanitized = cwd:gsub("[\\/:]+", "%%")
-	local pattern = session_dir() .. sanitized .. "*.vim"
-	local matches = vim.fn.glob(pattern, false, true)
+	table.sort(files, function(a, b)
+		return vim.fn.getftime(a) > vim.fn.getftime(b)
+	end)
 
-	if type(matches) == "table" then
-		return matches
-	end
-
-	return {}
+	return files[1]
 end
 
--- Get persistence plugin (assume it's installed)
-local function get_persistence()
-	local ok, persistence = pcall(require, "persistence")
-	if ok then
-		return persistence
-	end
-
-	-- Lazy load if not already loaded
-	local lazy_ok, lazy = pcall(require, "lazy")
-	if lazy_ok then
-		lazy.load({ plugins = { "persistence.nvim" } })
-		ok, persistence = pcall(require, "persistence")
-		if ok then
-			return persistence
-		end
-	end
-
-	return nil
+function M.current()
+	local file = session_file(vim.fn.getcwd())
+	return vim.fn.filereadable(file) == 1 and file or nil
 end
 
--- Check if a session file exists for current directory
-local function has_session(persistence)
-	if not persistence then
+function M.save()
+	if stopped then
+		return
+	end
+	if #vim.api.nvim_list_uis() == 0 then
+		return -- headless, nothing to persist
+	end
+
+	vim.fn.mkdir(session_dir, "p")
+	pcall(vim.cmd, "mksession! " .. vim.fn.fnameescape(session_file(vim.fn.getcwd())))
+end
+
+function M.load(opts)
+	opts = opts or {}
+
+	local file = opts.last and last_session() or session_file(vim.fn.getcwd())
+	if not file or vim.fn.filereadable(file) ~= 1 then
 		return false
 	end
 
-	local session_file = persistence.current()
-	return session_file and vim.fn.filereadable(session_file) == 1
+	pcall(vim.cmd, "silent! source " .. vim.fn.fnameescape(file))
+	return true
+end
+
+function M.stop()
+	stopped = true
+end
+
+function M.delete()
+	local file = M.current()
+	if file then
+		vim.fn.delete(file)
+	end
+	stopped = true
+end
+
+-- Check if a session file exists for current directory
+local function has_session()
+	return M.current() ~= nil
+end
+
+-- Must run before sourcing a session file: mksession's "silent only" only
+-- reaps normal windows, so a focused float (e.g. lazy.nvim's install UI)
+-- survives as the current window and gets hijacked by the restore script's
+-- subsequent "edit" commands instead of being closed.
+local function close_floats()
+	for _, win in ipairs(vim.api.nvim_list_wins()) do
+		if vim.api.nvim_win_get_config(win).relative ~= "" then
+			pcall(vim.api.nvim_win_close, win, true)
+		end
+	end
 end
 
 -- Remove directory buffer and trigger filetype detection
@@ -75,6 +95,17 @@ local function cleanup_after_session()
 		local name = vim.api.nvim_buf_get_name(buf)
 		if name ~= "" and vim.fn.isdirectory(name) == 1 then
 			pcall(vim.api.nvim_buf_delete, buf, { force = true })
+		end
+	end
+
+	-- Defensive: catch lazy.nvim re-rendering its window after close_floats() ran.
+	for _, win in ipairs(vim.api.nvim_list_wins()) do
+		if vim.api.nvim_win_get_config(win).relative ~= "" then
+			local buf = vim.api.nvim_win_get_buf(win)
+			local ft = vim.bo[buf].filetype
+			if ft == "lazy" or ft == "lazy_backdrop" then
+				pcall(vim.api.nvim_win_close, win, true)
+			end
 		end
 	end
 
@@ -100,8 +131,9 @@ local function cleanup_after_session()
 end
 
 -- Load session and cleanup
-local function load_session(persistence)
-	persistence.load()
+local function load_session()
+	close_floats()
+	M.load()
 	vim.schedule(cleanup_after_session)
 end
 
@@ -134,6 +166,10 @@ local function open_file_explorer()
 end
 
 function M.setup()
+	vim.api.nvim_create_autocmd("VimLeavePre", {
+		callback = M.save,
+	})
+
 	if not is_directory_launch() then
 		return
 	end
@@ -141,19 +177,14 @@ function M.setup()
 	vim.api.nvim_create_autocmd("VimEnter", {
 		once = true,
 		callback = function()
-			local sessions = session_candidates()
-			if sessions[1] == nil then
+			close_floats()
+
+			if not has_session() then
 				open_file_explorer()
 				return
 			end
 
-			local persistence = get_persistence()
-			if not persistence or not has_session(persistence) then
-				open_file_explorer()
-				return
-			end
-
-			load_session(persistence)
+			load_session()
 		end,
 	})
 end

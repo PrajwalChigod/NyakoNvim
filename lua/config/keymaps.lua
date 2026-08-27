@@ -109,6 +109,26 @@ keymap("n", "<localleader>q", quickfix.toggle, { desc = "Toggle quickfix list" }
 keymap("n", "<localleader>qa", quickfix.add_line, { desc = "Add line to quickfix list" })
 keymap("n", "<leader>qc", quickfix.clear, { desc = "Clear quickfix list" })
 
+-- ===============================================
+-- SESSION
+-- ===============================================
+
+keymap("n", "<leader>qs", function()
+	require("config.session").load()
+end, { desc = "Restore session for current directory" })
+
+keymap("n", "<leader>ql", function()
+	require("config.session").load({ last = true })
+end, { desc = "Restore last session" })
+
+keymap("n", "<leader>qd", function()
+	require("config.session").stop()
+end, { desc = "Stop session recording (don't save on exit)" })
+
+keymap("n", "<leader>qx", function()
+	require("config.session").delete()
+end, { desc = "Delete current session" })
+
 
 -- ===============================================
 -- TAB MANAGEMENT
