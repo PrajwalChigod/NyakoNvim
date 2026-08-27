@@ -27,8 +27,48 @@ local function is_large_buffer(bufnr)
 	return false
 end
 
+-- Remove undofiles older than 10 days
+local function clean_old_undofiles()
+	local undodir = vim.fn.expand("~/.vim/undodir")
+	local uv = vim.uv
+
+	uv.fs_opendir(undodir, function(open_err, dir)
+		if open_err or not dir then
+			return -- directory doesn't exist yet, nothing to clean
+		end
+
+		local cutoff = os.time() - (10 * 24 * 60 * 60)
+
+		local function read_next()
+			uv.fs_readdir(dir, function(read_err, entries)
+				if read_err or not entries then
+					uv.fs_closedir(dir, function() end)
+					return
+				end
+
+				for _, entry in ipairs(entries) do
+					if entry.type == "file" then
+						local path = undodir .. "/" .. entry.name
+						uv.fs_stat(path, function(stat_err, stat)
+							if not stat_err and stat and stat.mtime.sec < cutoff then
+								uv.fs_unlink(path, function() end)
+							end
+						end)
+					end
+				end
+
+				read_next()
+			end)
+		end
+
+		read_next()
+	end, 50)
+end
+
 -- Defer non-critical autocommands for faster startup
 vim.defer_fn(function()
+	clean_old_undofiles()
+
 	-- Combined BufWritePre: remove trailing whitespace and auto-create directories
 	vim.api.nvim_create_autocmd("BufWritePre", {
 		group = general_group,
@@ -98,17 +138,6 @@ vim.api.nvim_create_autocmd("BufReadPre", {
 				string.format("Large file detected (%s MB). Performance may be affected.", size_mb),
 				vim.log.levels.WARN
 			)
-		end
-	end,
-})
-
--- Clean old undofiles (>10 days) on startup
-vim.api.nvim_create_autocmd("VimEnter", {
-	group = general_group,
-	callback = function()
-		local undodir = vim.fn.expand("~/.vim/undodir")
-		if vim.fn.isdirectory(undodir) == 1 then
-			vim.fn.system(string.format("find %s -type f -mtime +10 -delete", undodir))
 		end
 	end,
 })
