@@ -1,9 +1,10 @@
 local M = {}
 
-local DEFAULT_COLORSCHEME = "kanagawa-tora"
+M.DEFAULT_COLORSCHEME = "catppuccin-espresso"
+local DEFAULT_COLORSCHEME = M.DEFAULT_COLORSCHEME
 
 local function get_colorscheme_path()
-	return vim.fs.joinpath(vim.fn.stdpath("data"), "colorscheme.json")
+	return vim.fs.joinpath(vim.fn.stdpath("data"), "colorscheme.txt")
 end
 
 function M.save_colorscheme(colorscheme)
@@ -12,14 +13,7 @@ function M.save_colorscheme(colorscheme)
 	end
 
 	local path = get_colorscheme_path()
-	local data = { colorscheme = colorscheme }
-
-	local json_ok, json_str = pcall(vim.json.encode, data)
-	if not json_ok then
-		return false, "Failed to encode JSON: " .. tostring(json_str)
-	end
-
-	local write_ok, write_err = pcall(vim.fn.writefile, { json_str }, path)
+	local write_ok, write_err = pcall(vim.fn.writefile, { colorscheme }, path)
 	if not write_ok then
 		return false, "Failed to write colorscheme file: " .. tostring(write_err)
 	end
@@ -35,16 +29,11 @@ function M.load_colorscheme()
 	end
 
 	local read_ok, content = pcall(vim.fn.readfile, path)
-	if not read_ok or not content or #content == 0 then
+	if not read_ok or not content or content[1] == nil or content[1] == "" then
 		return DEFAULT_COLORSCHEME
 	end
 
-	local json_ok, data = pcall(vim.json.decode, table.concat(content))
-	if not json_ok or type(data) ~= "table" or type(data.colorscheme) ~= "string" then
-		return DEFAULT_COLORSCHEME
-	end
-
-	return data.colorscheme
+	return content[1]
 end
 
 return M

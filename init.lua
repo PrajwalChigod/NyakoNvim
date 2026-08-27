@@ -28,7 +28,7 @@ vim.api.nvim_create_autocmd("VimEnter", {
 local utils = require("utils")
 
 local preferred = utils.load_colorscheme()
-local fallback = "kanagawa-tora"
+local fallback = utils.DEFAULT_COLORSCHEME
 
 local ok, err = pcall(vim.cmd.colorscheme, preferred)
 if not ok then
