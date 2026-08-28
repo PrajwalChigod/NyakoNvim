@@ -73,6 +73,34 @@ vim.api.nvim_create_autocmd("LspAttach", {
 				vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr }), { bufnr = bufnr })
 			end, vim.tbl_extend("force", opts, { desc = "LSP Toggle Inlay Hints" }))
 		end
+
+		-- Highlight other usages of the symbol under the cursor
+		if client and client:supports_method("textDocument/documentHighlight") then
+			local highlight_group = vim.api.nvim_create_augroup("lsp-document-highlight-" .. bufnr, { clear = true })
+
+			vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+				group = highlight_group,
+				buffer = bufnr,
+				callback = vim.lsp.buf.document_highlight,
+			})
+
+			vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI", "BufLeave" }, {
+				group = highlight_group,
+				buffer = bufnr,
+				callback = vim.lsp.buf.clear_references,
+			})
+
+			-- Clean up the buffer-local augroup when the client detaches
+			vim.api.nvim_create_autocmd("LspDetach", {
+				group = vim.api.nvim_create_augroup("lsp-document-highlight-detach-" .. bufnr, { clear = true }),
+				buffer = bufnr,
+				callback = function(detach_event)
+					if detach_event.data.client_id == event.data.client_id then
+						pcall(vim.api.nvim_del_augroup_by_id, highlight_group)
+					end
+				end,
+			})
+		end
 	end,
 })
 
