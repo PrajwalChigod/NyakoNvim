@@ -279,6 +279,9 @@ return {
 			{ "<localleader>th", desc = "Horizontal" },
 			{ "<localleader>tv", desc = "Vertical" },
 			{ "<localleader>tt", desc = "Tab" },
+			{ "<localleader>tr", desc = "Run command (notify on exit)" },
+			{ "<localleader>tc", desc = "Toggle most recent run-command terminal" },
+			{ "<localleader>ts", desc = "Select terminal" },
 		})
 		end)
 	end,

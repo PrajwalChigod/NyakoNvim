@@ -362,6 +362,12 @@ Active only inside the MERGED pane of the `<leader>gm` 3-pane view (LOCAL/BASE/R
 | `<localleader>th` | Normal | Toggle horizontal terminal |
 | `<localleader>tv` | Normal | Toggle vertical terminal |
 | `<localleader>tt` | Normal | Toggle tab terminal |
+| `<localleader>tr` | Normal | Run a command in a terminal; notifies with exit code when it finishes |
+| `<localleader>tc` | Normal | Toggle most recent run-command terminal (from `tr`) |
+| `<localleader>ts` | Normal | Select a terminal from all open/tracked terminals (`:TermSelect`) |
+| `<C-\>` | Normal, Terminal | Toggle whichever terminal was last used (float/horizontal/vertical/tab/run-command) |
+| `<C-h/j/k/l>` | Terminal (toggleterm only) | Move to the window left/below/above/right without leaving terminal mode |
+| `<C-w>` | Terminal (toggleterm only) | Leave terminal mode and enter window-command mode (`<C-w>` prefix) |
 
 ## Config Operations
 
