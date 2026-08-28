@@ -1,8 +1,7 @@
 return {
 	{
 		"PrajwalChigod/kanagawa.nvim",
-		lazy = false,
-		priority = 1000,
+		lazy = true,
 		opts = {
 			theme = "tora",
 			background = {
