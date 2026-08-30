@@ -405,6 +405,17 @@ Active only inside the MERGED pane of the `<leader>gm` 3-pane view (LOCAL/BASE/R
 |-----|------|-------------|
 | `<leader>z` | Normal | Toggle Zen Mode (distraction-free) |
 
+## Markdown
+
+| Key | Mode | Description |
+|-----|------|-------------|
+| `<localleader>rm` | Normal | Toggle rendered markdown (off by default; renders in place until toggled off) |
+| `<localleader>rh` | Normal | Fuzzy-jump to any heading in the buffer (fzf-lua) |
+| `]]` | Normal | Next heading (markdown buffers only) |
+| `[[` | Normal | Previous heading (markdown buffers only) |
+
+> `]]` / `[[` and `<localleader>rh` push a jumplist entry, so `<C-o>`/`<C-i>` retraces heading jumps like other jump motions.
+
 ## Completion (Blink.cmp)
 
 | Key | Mode | Description |

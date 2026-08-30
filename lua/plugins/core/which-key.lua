@@ -272,6 +272,11 @@ return {
 			{ "]s", desc = "Swap with next function" },
 			{ "[s", desc = "Swap with previous function" },
 
+			-- Markdown (<localleader>r)
+			{ "<localleader>r", group = "Markdown" },
+			{ "<localleader>rm", desc = "Toggle Markdown Rendering" },
+			{ "<localleader>rh", desc = "Jump to heading" },
+
 			-- Terminal (<localleader>t)
 			{ "<localleader>t", group = "Terminal" },
 			{ "<localleader>tb", desc = "Terminal buffer" },
