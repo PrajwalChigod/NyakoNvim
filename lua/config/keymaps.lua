@@ -144,6 +144,9 @@ keymap("n", "<leader>tf", function()
   require("fzf-lua").files()
 end, { desc = "New tab with file picker" })
 
+keymap("n", "]t", "<cmd>tabnext<CR>", { desc = "Next tab" })
+keymap("n", "[t", "<cmd>tabprevious<CR>", { desc = "Previous tab" })
+
 -- ===============================================
 -- TERMINAL OPERATIONS
 -- ===============================================
