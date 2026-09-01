@@ -45,13 +45,13 @@ return {
 
 			local parts = {}
 			if (summary.add or 0) > 0 then
-				table.insert(parts, "+" .. summary.add)
+				table.insert(parts, "%#MiniDiffSignAdd#+" .. summary.add)
 			end
 			if (summary.change or 0) > 0 then
-				table.insert(parts, "~" .. summary.change)
+				table.insert(parts, "%#MiniDiffSignChange#~" .. summary.change)
 			end
 			if (summary.delete or 0) > 0 then
-				table.insert(parts, "-" .. summary.delete)
+				table.insert(parts, "%#MiniDiffSignDelete#-" .. summary.delete)
 			end
 
 			return table.concat(parts, " ")
@@ -92,7 +92,8 @@ return {
 			use_icons = false,
 			content = {
 				active = function()
-					local mode, mode_hl = statusline.section_mode({ trunc_width = 120 })
+					local mode, mode_hl = statusline.section_mode({ trunc_width = math.huge })
+					local tab = tab_name()
 					local git = git_branch()
 					local diff = diff_summary()
 					local filename = project_root_relative_name()
@@ -104,7 +105,7 @@ return {
 						"%<",
 						{ hl = "MiniStatuslineFilename", strings = { filename } },
 						"%=",
-						{ hl = "MiniStatuslineFileinfo", strings = { recording_status(), info, "%P", "%l:%c" } },
+						{ hl = "MiniStatuslineFileinfo", strings = { recording_status(), info, "%P", "%l:%c", tab } },
 					})
 				end,
 				inactive = function()
