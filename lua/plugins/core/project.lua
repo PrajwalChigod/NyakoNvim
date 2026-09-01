@@ -61,10 +61,10 @@ return {
 			"<leader>pr",
 			function()
 				if _G.ProjectManager then
-					_G.ProjectManager.remove_project()
+					_G.ProjectManager.switch_to_project(nil, false, true)
 				end
 			end,
-			desc = "Remove project",
+			desc = "Open projects (ctrl-x to delete)",
 		},
 	},
 	config = function()
@@ -183,58 +183,6 @@ return {
 		end
 
 		-- ========================================
-		-- REMOVE PROJECT
-		-- ========================================
-
-		function M.remove_project()
-			local projects = load_projects()
-
-			if vim.tbl_isempty(projects) then
-				vim.notify("No projects to remove", vim.log.levels.WARN)
-				return
-			end
-
-			-- Convert to fzf-lua format
-			local entries = {}
-			for name, path in pairs(projects) do
-				table.insert(entries, string.format("%s → %s", name, path))
-			end
-
-			-- Sort entries alphabetically
-			table.sort(entries)
-
-			require("fzf-lua").fzf_exec(entries, {
-				prompt = "Remove Project❯ ",
-				winopts = {
-					height = 0.50,
-					width = 0.70,
-				},
-				actions = {
-					["default"] = function(selected)
-						if not selected or #selected == 0 then
-							return
-						end
-
-						-- Extract project name from selection
-						local name = selected[1]:match("^(.-)%s+→")
-
-						-- Confirm deletion
-						vim.ui.select({ "Yes", "No" }, {
-							prompt = string.format("Remove project '%s'?", name),
-						}, function(choice)
-							if choice == "Yes" then
-								projects[name] = nil
-								if save_projects(projects) then
-									vim.notify(string.format("Removed project '%s'", name), vim.log.levels.INFO)
-								end
-							end
-						end)
-					end,
-				},
-			})
-		end
-
-		-- ========================================
 		-- HELPER FUNCTIONS
 		-- ========================================
 
@@ -277,19 +225,32 @@ return {
 			-- Sort entries alphabetically
 			table.sort(entries)
 
+			-- Reopen the picker in the same mode (used after an inline delete)
+			local function reopen()
+				M.switch_to_project(split_cmd, clear_bufs, new_tab)
+			end
+
 			require("fzf-lua").fzf_exec(entries, {
 				prompt = "Projects❯ ",
 				winopts = {
 					height = 0.50,
 					width = 0.70,
 				},
+				fzf_opts = {
+					["--header"] = ":: <cr> switch  ·  <c-x> delete",
+					["--preview-window"] = "right:50%",
+				},
+				preview = [[path=$(echo {} | sed "s/^[^→]*→ //"); ]]
+					.. [[if [ -d "$path" ]; then eza --tree --level=2 --icons --color=always "$path" 2>/dev/null || ls -la "$path"; ]]
+					.. [[else echo "Path not found: $path"; fi]],
 				actions = {
 					["default"] = function(selected)
 						if not selected or #selected == 0 then
 							return
 						end
 
-						-- Extract path from selection
+						-- Extract name and path from selection
+						local name = selected[1]:match("^(.-)%s+→")
 						local path = selected[1]:match("→%s+(.+)$")
 
 						-- Handle new tab
@@ -297,6 +258,8 @@ return {
 							vim.cmd("tabnew")
 							-- Use tcd (tab-local directory) so each tab has its own directory
 							vim.cmd("tcd " .. vim.fn.fnameescape(path))
+							-- Name the new tab after the project so it's identifiable at a glance
+							vim.t.tab_name = name
 							vim.notify(string.format("Opened project in new tab: %s", path), vim.log.levels.INFO)
 							require("fzf-lua").files({ cwd = path })
 						-- Handle splits
@@ -323,6 +286,26 @@ return {
 							-- Open file picker
 							require("fzf-lua").files({ cwd = path })
 						end
+					end,
+					["ctrl-x"] = function(selected)
+						if not selected or #selected == 0 then
+							return
+						end
+
+						-- Extract project name from selection
+						local name = selected[1]:match("^(.-)%s+→")
+						if not name then
+							return
+						end
+
+						local current_projects = load_projects()
+						current_projects[name] = nil
+						if save_projects(current_projects) then
+							vim.notify(string.format("Removed project '%s'", name), vim.log.levels.INFO)
+						end
+
+						-- Reopen the picker so browsing/deleting can continue
+						reopen()
 					end,
 				},
 			})
