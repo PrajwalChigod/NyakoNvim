@@ -16,6 +16,14 @@ return {
 			return "REC @" .. register
 		end
 
+		local function tab_name()
+			local name = vim.t.tab_name
+			if not name or name == "" then
+				return ""
+			end
+			return "[" .. name .. "]"
+		end
+
 		local function git_branch()
 			if statusline.is_truncated(40) then
 				return ""

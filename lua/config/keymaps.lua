@@ -147,6 +147,20 @@ end, { desc = "New tab with file picker" })
 keymap("n", "]t", "<cmd>tabnext<CR>", { desc = "Next tab" })
 keymap("n", "[t", "<cmd>tabprevious<CR>", { desc = "Previous tab" })
 
+keymap("n", "<leader>tr", function()
+  vim.ui.input({
+    prompt = "Tab name: ",
+    default = vim.t.tab_name or "",
+  }, function(name)
+    if name == nil then
+      return -- cancelled
+    end
+    vim.t.tab_name = name ~= "" and name or nil
+    vim.cmd("redrawstatus")
+    vim.cmd("redrawtabline")
+  end)
+end, { desc = "Rename current tab" })
+
 -- ===============================================
 -- TERMINAL OPERATIONS
 -- ===============================================
