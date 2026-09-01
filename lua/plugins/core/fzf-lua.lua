@@ -138,7 +138,7 @@ return {
 				prompt = "Files❯ ",
 				multiprocess = true,
 				git_icons = false,
-				file_icons = "mini",
+				file_icons = false,
 			},
 			git = {
 				files = {
