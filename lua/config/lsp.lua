@@ -166,31 +166,34 @@ local servers = {
 			logLevel = "error",
 		},
 	},
-	ts_ls = {
-		cmd = { "typescript-language-server", "--stdio" },
+	vtsls = {
+		cmd = { "vtsls", "--stdio" },
 		filetypes = { "javascript", "typescript", "javascriptreact", "typescriptreact" },
 		root_markers = { "tsconfig.json", "package.json", ".git" },
 		settings = {
+			vtsls = {
+				-- Check with the project's own TypeScript when it has one, not the copy
+				-- bundled with vtsls (the default).
+				autoUseWorkspaceTsdk = true,
+			},
 			typescript = {
 				inlayHints = {
-					includeInlayParameterNameHints = "literals",
-					includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-					includeInlayFunctionParameterTypeHints = true,
-					includeInlayVariableTypeHints = false,
-					includeInlayPropertyDeclarationTypeHints = true,
-					includeInlayFunctionLikeReturnTypeHints = true,
-					includeInlayEnumMemberValueHints = false,
+					parameterNames = { enabled = "literals", suppressWhenArgumentMatchesName = true },
+					parameterTypes = { enabled = true },
+					variableTypes = { enabled = false },
+					propertyDeclarationTypes = { enabled = true },
+					functionLikeReturnTypes = { enabled = true },
+					enumMemberValues = { enabled = false },
 				},
 			},
 			javascript = {
 				inlayHints = {
-					includeInlayParameterNameHints = "literals",
-					includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-					includeInlayFunctionParameterTypeHints = true,
-					includeInlayVariableTypeHints = false,
-					includeInlayPropertyDeclarationTypeHints = true,
-					includeInlayFunctionLikeReturnTypeHints = true,
-					includeInlayEnumMemberValueHints = false,
+					parameterNames = { enabled = "literals", suppressWhenArgumentMatchesName = true },
+					parameterTypes = { enabled = true },
+					variableTypes = { enabled = false },
+					propertyDeclarationTypes = { enabled = true },
+					functionLikeReturnTypes = { enabled = true },
+					enumMemberValues = { enabled = false },
 				},
 			},
 		},
@@ -319,10 +322,10 @@ end
 local lsp_filetypes = {
 	lua = { "lua_ls" },
 	python = { "ty" },
-	javascript = { "ts_ls" },
-	typescript = { "ts_ls" },
-	javascriptreact = { "ts_ls" },
-	typescriptreact = { "ts_ls" },
+	javascript = { "vtsls" },
+	typescript = { "vtsls" },
+	javascriptreact = { "vtsls" },
+	typescriptreact = { "vtsls" },
 	rust = { "rust_analyzer" },
 	c = { "clangd" },
 	cpp = { "clangd" },

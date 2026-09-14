@@ -382,7 +382,7 @@ LSP servers are automatically managed by Mason. Install via `:Mason` in Neovim:
 |-------------------------  |-----------------|--------------------------------------------|
 | **Lua**                   | `lua_ls`        | `:MasonInstall lua-language-server`        |
 | **Python**                | `ty`            | `:MasonInstall ty`                         |
-| **JavaScript/TypeScript** | `ts_ls`         | `:MasonInstall typescript-language-server` |
+| **JavaScript/TypeScript** | `vtsls`         | `:MasonInstall vtsls`                      |
 | **Go**                    | `gopls`         | `:MasonInstall gopls`                      |
 | **Rust**                  | `rust_analyzer` | `:MasonInstall rust-analyzer`              |
 | **C/C++**                 | `clangd`        | `:MasonInstall clangd`                     |
@@ -392,7 +392,7 @@ LSP servers are automatically managed by Mason. Install via `:Mason` in Neovim:
 
 ### Quick Install All LSP Servers
 ```vim
-:MasonInstall lua-language-server ty typescript-language-server gopls rust-analyzer clangd zls bash-language-server taplo
+:MasonInstall lua-language-server ty vtsls gopls rust-analyzer clangd zls bash-language-server taplo
 ```
 
 ## 5. Available Debug Tools and Installation Commands
@@ -515,8 +515,8 @@ Complete reference matrix for all configured languages and their tooling:
 | Language      | LSP Server      | Linter             | Formatter           | Debugger            | Mason Install Commands                                                  |
 |---------------|-----------------|--------------------|--------------------|---------------------|--------------------------------------------------------------------------|
 | **Python**    | `ty`            | `ruff`             | `ruff`             | `debugpy`           | `ty`, `ruff`, `debugpy`                                                 |
-| **JavaScript** | `ts_ls`        | `eslint`           | `prettier`         | `js-debug-adapter`  | `typescript-language-server`, `eslint_d`, `prettier`, `js-debug-adapter` |
-| **TypeScript** | `ts_ls`        | `eslint`           | `prettier`         | `js-debug-adapter`  | `typescript-language-server`, `eslint_d`, `prettier`, `js-debug-adapter` |
+| **JavaScript** | `vtsls`        | `eslint`           | `prettier`         | `js-debug-adapter`  | `vtsls`, `eslint_d`, `prettier`, `js-debug-adapter`                      |
+| **TypeScript** | `vtsls`        | `eslint`           | `prettier`         | `js-debug-adapter`  | `vtsls`, `eslint_d`, `prettier`, `js-debug-adapter`                      |
 | **Lua**       | `lua_ls`        | `luacheck`         | `stylua`           | ❌                  | `lua-language-server`, `luacheck`, `stylua`                              |
 | **Rust**      | `rust_analyzer` | via LSP (clippy)   | via LSP            | `codelldb`          | `rust-analyzer`, `codelldb`                                              |
 | **Go**        | `gopls`         | via LSP            | via LSP (gofumpt)  | `delve`             | `gopls`, `delve`                                                         |
@@ -536,7 +536,7 @@ Complete reference matrix for all configured languages and their tooling:
 ### Install All Tools At Once
 ```vim
 " LSP Servers
-:MasonInstall lua-language-server ty typescript-language-server gopls rust-analyzer clangd zls bash-language-server taplo
+:MasonInstall lua-language-server ty vtsls gopls rust-analyzer clangd zls bash-language-server taplo
 
 " If Mason is not managing `ty` in your environment, install it with:
 " uv tool install ty
@@ -558,7 +558,7 @@ Complete reference matrix for all configured languages and their tooling:
 - **Zig**: Uses built-in `zig fmt` for formatting
 - **C/C++**: Linting handled by `clangd` LSP with clang-tidy integration
 - **Python**: `ruff` handles both linting and formatting; `ty` provides LSP
-- **JavaScript/TypeScript**: Uses same tooling (ESLint, Prettier, ts_ls)
+- **JavaScript/TypeScript**: Uses same tooling (ESLint, Prettier, vtsls)
 - **Go**: Uses `gopls` for LSP with gofumpt formatting and staticcheck enabled
 
 ---
