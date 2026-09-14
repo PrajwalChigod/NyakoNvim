@@ -104,8 +104,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
 	end,
 })
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-
 local servers = {
 	lua_ls = {
 		cmd = { "lua-language-server" },
@@ -301,9 +299,21 @@ local servers = {
 	},
 }
 
-for name, config in pairs(servers) do
-	config.capabilities = capabilities
-	vim.lsp.config[name] = config
+-- Registering these forces `vim.lsp` (and its submodules) to load, so defer it
+-- until a buffer actually needs a server instead of paying that cost on every
+-- startup regardless of filetype.
+local servers_registered = false
+local function ensure_servers_registered()
+	if servers_registered then
+		return
+	end
+	servers_registered = true
+
+	local capabilities = vim.lsp.protocol.make_client_capabilities()
+	for name, config in pairs(servers) do
+		config.capabilities = capabilities
+		vim.lsp.config[name] = config
+	end
 end
 
 local lsp_filetypes = {
@@ -337,6 +347,7 @@ vim.api.nvim_create_autocmd("FileType", {
 		if not servers_for_ft then
 			return
 		end
+		ensure_servers_registered()
 		for _, server_name in ipairs(servers_for_ft) do
 			vim.lsp.enable(server_name)
 		end
