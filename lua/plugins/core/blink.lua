@@ -4,8 +4,8 @@ return {
 		event = "InsertEnter",
 		version = "v0.*",
 		opts = {
-			signature = {
-				enabled = false,
+			fuzzy = {
+				implementation = "rust",
 			},
 			keymap = {
 				["<Tab>"] = { "accept", "snippet_forward", "fallback" },
@@ -38,9 +38,10 @@ return {
 				menu = {
 					border = "rounded",
 				},
-				documentation = {
-					auto_show = false,
-					auto_show_delay_ms = 500,
+				list = {
+					selection = {
+						auto_insert = false,
+					},
 				},
 			},
 		},
