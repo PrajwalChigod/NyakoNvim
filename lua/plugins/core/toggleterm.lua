@@ -38,7 +38,7 @@ return {
 		{
 			"<localleader>tv",
 			function()
-				toggle("vertical", { direction = "vertical", size = 80 })
+				toggle("vertical", { direction = "vertical" })
 			end,
 			desc = "Toggle vertical terminal",
 		},
@@ -115,6 +115,14 @@ return {
 		},
 	},
 	opts = {
+		-- Terminal:new() ignores a per-terminal `size`, so split sizes are set
+		-- here per direction (otherwise vertical falls back to 12 columns)
+		size = function(term)
+			if term.direction == "vertical" then
+				return math.floor(vim.o.columns * 0.4)
+			end
+			return math.floor(vim.o.lines * 0.3)
+		end,
 		hide_numbers = true,
 		shade_filetypes = {},
 		shade_terminals = true,
