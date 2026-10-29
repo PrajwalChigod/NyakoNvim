@@ -166,34 +166,34 @@ local servers = {
 			logLevel = "error",
 		},
 	},
-	vtsls = {
-		cmd = { "vtsls", "--stdio" },
+	ts_ls = {
+		cmd = { "typescript-language-server", "--stdio" },
 		filetypes = { "javascript", "typescript", "javascriptreact", "typescriptreact" },
 		root_markers = { "tsconfig.json", "package.json", ".git" },
+		-- ts_ls always checks with the project's own TypeScript, so there is no
+		-- equivalent of vtsls's autoUseWorkspaceTsdk to set. The hints are the
+		-- same ones vtsls had, under ts_ls's names.
 		settings = {
-			vtsls = {
-				-- Check with the project's own TypeScript when it has one, not the copy
-				-- bundled with vtsls (the default).
-				autoUseWorkspaceTsdk = true,
-			},
 			typescript = {
 				inlayHints = {
-					parameterNames = { enabled = "literals", suppressWhenArgumentMatchesName = true },
-					parameterTypes = { enabled = true },
-					variableTypes = { enabled = false },
-					propertyDeclarationTypes = { enabled = true },
-					functionLikeReturnTypes = { enabled = true },
-					enumMemberValues = { enabled = false },
+					includeInlayParameterNameHints = "literals",
+					includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+					includeInlayFunctionParameterTypeHints = true,
+					includeInlayVariableTypeHints = false,
+					includeInlayPropertyDeclarationTypeHints = true,
+					includeInlayFunctionLikeReturnTypeHints = true,
+					includeInlayEnumMemberValueHints = false,
 				},
 			},
 			javascript = {
 				inlayHints = {
-					parameterNames = { enabled = "literals", suppressWhenArgumentMatchesName = true },
-					parameterTypes = { enabled = true },
-					variableTypes = { enabled = false },
-					propertyDeclarationTypes = { enabled = true },
-					functionLikeReturnTypes = { enabled = true },
-					enumMemberValues = { enabled = false },
+					includeInlayParameterNameHints = "literals",
+					includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+					includeInlayFunctionParameterTypeHints = true,
+					includeInlayVariableTypeHints = false,
+					includeInlayPropertyDeclarationTypeHints = true,
+					includeInlayFunctionLikeReturnTypeHints = true,
+					includeInlayEnumMemberValueHints = false,
 				},
 			},
 		},
@@ -322,10 +322,10 @@ end
 local lsp_filetypes = {
 	lua = { "lua_ls" },
 	python = { "ty" },
-	javascript = { "vtsls" },
-	typescript = { "vtsls" },
-	javascriptreact = { "vtsls" },
-	typescriptreact = { "vtsls" },
+	javascript = { "ts_ls" },
+	typescript = { "ts_ls" },
+	javascriptreact = { "ts_ls" },
+	typescriptreact = { "ts_ls" },
 	rust = { "rust_analyzer" },
 	c = { "clangd" },
 	cpp = { "clangd" },
