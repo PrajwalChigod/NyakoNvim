@@ -123,7 +123,11 @@ vim.api.nvim_create_autocmd("VimResized", {
 			vim.fn.timer_stop(resize_timer)
 		end
 		resize_timer = vim.fn.timer_start(100, function()
-			vim.cmd("tabdo wincmd =")
+			-- tabdo ends on the last tab, so return to the one you were on.
+			-- noautocmd keeps tab-switch hooks (scope.nvim etc.) out of it.
+			local current = vim.api.nvim_tabpage_get_number(0)
+			vim.cmd("noautocmd tabdo wincmd =")
+			vim.cmd("noautocmd tabnext " .. current)
 			resize_timer = nil
 		end)
 	end,
