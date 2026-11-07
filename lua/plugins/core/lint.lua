@@ -34,7 +34,7 @@ return {
 			-- Configuration and markup
 			json = { "jsonlint" },
 			yaml = { "yamllint" },
-			markdown = { "markdownlint" },
+			markdown = { "markdownlint-cli2" },
 
 			-- Shell scripting
 			bash = { "shellcheck" },
