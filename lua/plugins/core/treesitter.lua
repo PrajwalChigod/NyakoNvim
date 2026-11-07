@@ -1,5 +1,11 @@
-local function textobject_fn(module, method, query, group)
+-- `diff_key`: in diff windows (diffview, merge tool, :Git diff) run Vim's own
+-- motion instead, so ]c / [c still jump between changes there.
+local function textobject_fn(module, method, query, group, diff_key)
 	return function()
+		if diff_key and vim.wo.diff then
+			vim.cmd.normal({ vim.v.count1 .. diff_key, bang = true })
+			return
+		end
 		if require("utils.treesitter").is_large_file(vim.api.nvim_get_current_buf()) then
 			return
 		end
@@ -24,8 +30,8 @@ local textobject_keys = {
 	{ "[f", textobject_fn("nvim-treesitter-textobjects.move", "goto_previous_start", "@function.outer", "textobjects"), mode = { "n", "x", "o" }, desc = "Previous function start" },
 	{ "]F", textobject_fn("nvim-treesitter-textobjects.move", "goto_next_end", "@function.outer", "textobjects"), mode = { "n", "x", "o" }, desc = "Next function end" },
 	{ "[F", textobject_fn("nvim-treesitter-textobjects.move", "goto_previous_end", "@function.outer", "textobjects"), mode = { "n", "x", "o" }, desc = "Previous function end" },
-	{ "]c", textobject_fn("nvim-treesitter-textobjects.move", "goto_next_start", "@class.outer", "textobjects"), mode = { "n", "x", "o" }, desc = "Next class start" },
-	{ "[c", textobject_fn("nvim-treesitter-textobjects.move", "goto_previous_start", "@class.outer", "textobjects"), mode = { "n", "x", "o" }, desc = "Previous class start" },
+	{ "]c", textobject_fn("nvim-treesitter-textobjects.move", "goto_next_start", "@class.outer", "textobjects", "]c"), mode = { "n", "x", "o" }, desc = "Next class start (next change in diffs)" },
+	{ "[c", textobject_fn("nvim-treesitter-textobjects.move", "goto_previous_start", "@class.outer", "textobjects", "[c"), mode = { "n", "x", "o" }, desc = "Previous class start (previous change in diffs)" },
 	{ "]C", textobject_fn("nvim-treesitter-textobjects.move", "goto_next_end", "@class.outer", "textobjects"), mode = { "n", "x", "o" }, desc = "Next class end" },
 	{ "[C", textobject_fn("nvim-treesitter-textobjects.move", "goto_previous_end", "@class.outer", "textobjects"), mode = { "n", "x", "o" }, desc = "Previous class end" },
 	{ "]p", textobject_fn("nvim-treesitter-textobjects.move", "goto_next_start", "@parameter.outer", "textobjects"), mode = { "n", "x", "o" }, desc = "Next parameter start" },
