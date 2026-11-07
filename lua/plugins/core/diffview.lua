@@ -33,8 +33,16 @@ return {
 						prompt = "Conflicts❯ ",
 						actions = {
 							["default"] = function(selected)
-								vim.cmd("edit " .. vim.fn.fnameescape(selected[1]))
-								vim.cmd("DiffviewOpen --merge-tool")
+								local file = selected[1]
+								-- Opening a conflicted file that isn't loaded yet starts the
+								-- merge tool by itself (GitMergeAutoTool in autocmds.lua).
+								-- Calling DiffviewOpen here as well would run two opens at
+								-- once, which makes both fail ("Not a repo").
+								local already_loaded = vim.fn.bufloaded(file) == 1
+								vim.cmd("edit " .. vim.fn.fnameescape(file))
+								if already_loaded then
+									vim.cmd("DiffviewOpen --merge-tool")
+								end
 							end,
 						},
 					})
