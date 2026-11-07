@@ -19,6 +19,10 @@ return {
 			})
 			-- Defaults (unchanged): ]h / [h jump to next/prev changed hunk,
 			-- ]H / [H jump to last/first hunk in the buffer.
+
+			vim.keymap.set("n", "<leader>gt", function()
+				require("mini.diff").toggle()
+			end, { desc = "Toggle signs" })
 		end,
 	},
 }
