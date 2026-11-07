@@ -159,7 +159,7 @@ return {
 			-- Config (<leader>c)
 			{ "<leader>c", group = "Config" },
 			{ "<leader>ce", desc = "Edit config" },
-			{ "<leader>cr", desc = "Reload config & sync plugins" },
+			{ "<leader>cr", desc = "Sync plugins" },
 			{ "<leader>cp", desc = "Colorscheme Picker" },
 
 

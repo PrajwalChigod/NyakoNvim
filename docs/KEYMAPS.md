@@ -373,7 +373,7 @@ Active only inside the MERGED pane of the `<leader>gm` 3-pane view (LOCAL/BASE/R
 | Key | Mode | Description |
 |-----|------|-------------|
 | `<leader>ce` | Normal | Edit Neovim config |
-| `<leader>cr` | Normal | Reload config & sync plugins |
+| `<leader>cr` | Normal | Sync plugins (restart Neovim for config changes) |
 
 ## Notifications (Noice)
 

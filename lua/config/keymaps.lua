@@ -31,18 +31,14 @@ keymap("n", "<leader>ce", function()
 	require("fzf-lua").files({ cwd = "~/.config/nvim" })
 end, { desc = "Edit Neovim config" })
 
--- Reload config and sync plugins
+-- Sync plugins. (lazy.nvim can't re-source the config in a running session;
+-- restart Neovim to pick up config changes.)
 keymap("n", "<leader>cr", function()
-	-- Save current file if modified
 	if vim.bo.modified then
 		vim.cmd("write")
 	end
-	-- Reload config
-	vim.cmd("source $MYVIMRC")
-	-- Sync plugins
 	vim.cmd("Lazy sync")
-	vim.notify("Config reloaded and plugins synced!", vim.log.levels.INFO)
-end, { desc = "Reload config and sync plugins" })
+end, { desc = "Sync plugins" })
 
 keymap("n", "<leader>cp", function()
 	require("fzf-lua").colorschemes()
