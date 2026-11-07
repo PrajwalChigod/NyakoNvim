@@ -93,24 +93,26 @@ vim.defer_fn(function()
 			end
 		end,
 	})
-
-	-- Remember cursor position
-	vim.api.nvim_create_autocmd("BufReadPost", {
-		group = general_group,
-		callback = function(event)
-			-- Skip for large files
-			if is_large_buffer(event.buf) then
-				return
-			end
-
-			local mark = vim.api.nvim_buf_get_mark(0, '"')
-			local lcount = vim.api.nvim_buf_line_count(0)
-			if mark[1] > 0 and mark[1] <= lcount then
-				pcall(vim.api.nvim_win_set_cursor, 0, mark)
-			end
-		end,
-	})
 end, 50)
+
+-- Remember cursor position. Not deferred: files passed on the command line
+-- are read during startup, before a deferred autocmd would exist.
+vim.api.nvim_create_autocmd("BufReadPost", {
+	group = general_group,
+	callback = function(event)
+		-- Skip large files, and git messages (they should start at the top)
+		local ft = vim.bo[event.buf].filetype
+		if is_large_buffer(event.buf) or ft == "gitcommit" or ft == "gitrebase" then
+			return
+		end
+
+		local mark = vim.api.nvim_buf_get_mark(event.buf, '"')
+		local lcount = vim.api.nvim_buf_line_count(event.buf)
+		if mark[1] > 0 and mark[1] <= lcount then
+			pcall(vim.api.nvim_win_set_cursor, 0, mark)
+		end
+	end,
+})
 
 -- Auto-resize splits when window is resized (debounced to prevent rapid redraws)
 local resize_timer = nil
