@@ -56,6 +56,8 @@ return {
 			local actions = require("diffview.actions")
 
 			require("diffview").setup({
+				-- No nvim-web-devicons in this config (diffview warns on every open otherwise)
+				use_icons = false,
 				view = {
 					merge_tool = {
 						-- LOCAL | BASE | REMOTE on top, MERGED on bottom
