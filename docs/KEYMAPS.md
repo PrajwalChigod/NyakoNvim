@@ -71,7 +71,6 @@
 ### LSP Performance
 | Key | Mode | Description |
 |-----|------|-------------|
-| `<leader>lw` | Normal | Toggle LSP workspace scanning (for large projects) |
 
 ## Diagnostics
 
