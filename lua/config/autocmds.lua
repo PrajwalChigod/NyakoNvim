@@ -163,6 +163,23 @@ vim.filetype.add({
 	},
 })
 
+-- Start treesitter for any filetype with an installed parser. The ftplugins in
+-- after/ftplugin still handle their languages (and indent); this covers the
+-- rest, e.g. rust, zig, sh, toml, json, yaml, html, css.
+vim.api.nvim_create_autocmd("FileType", {
+	group = dev_group,
+	callback = function(event)
+		if vim.bo[event.buf].buftype ~= "" or vim.treesitter.highlighter.active[event.buf] then
+			return
+		end
+		local lang = vim.treesitter.language.get_lang(event.match)
+		local ok, has_parser = pcall(vim.treesitter.language.add, lang or event.match)
+		if ok and has_parser then
+			require("utils.treesitter").start()
+		end
+	end,
+})
+
 -- ===============================================
 -- TERMINAL & QUICKFIX
 -- ===============================================
