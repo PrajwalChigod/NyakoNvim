@@ -1,5 +1,7 @@
 return {
 	"stevearc/conform.nvim",
+	-- Load before the first save too, so format-on-save works without pressing gf first.
+	event = "BufWritePre",
 	cmd = { "ConformInfo", "Format", "FormatToggle" },
 	keys = {
 		{ "gf", mode = "n", desc = "Format file" },
@@ -49,16 +51,21 @@ return {
 			default_format_opts = {
 				lsp_format = "fallback",
 			},
-			format_on_save = {
-				timeout_ms = 500,
-				lsp_format = "fallback",
-			},
+			-- The only format-on-save hook; :FormatToggle switches it via the global below.
+			format_on_save = function()
+				if not vim.g.conform_format_on_save_enabled then
+					return
+				end
+				return { timeout_ms = 500, lsp_format = "fallback" }
+			end,
 			notify_on_error = true,
 			notify_no_formatters = false,
 			log_level = vim.log.levels.ERROR,
 		})
 
-		vim.g.conform_format_on_save_enabled = vim.g.conform_format_on_save_enabled or true
+		if vim.g.conform_format_on_save_enabled == nil then
+			vim.g.conform_format_on_save_enabled = true
+		end
 
 		-- Get formatter name for current filetype
 		local function get_formatter_name()
@@ -98,15 +105,6 @@ return {
 		end, { desc = "Format current buffer or selection" })
 
 		vim.api.nvim_create_user_command("FormatToggle", toggle_format_on_save, { desc = "Toggle format on save" })
-
-		vim.api.nvim_create_autocmd("BufWritePre", {
-			group = vim.api.nvim_create_augroup("ConformFormatOnSave", { clear = true }),
-			callback = function()
-				if vim.g.conform_format_on_save_enabled then
-					conform.format({ lsp_format = "fallback" })
-				end
-			end,
-		})
 
 		vim.keymap.set("n", "gf", format_file, { desc = "Format file" })
 		vim.keymap.set("v", "gf", format_range, { desc = "Format range" })
