@@ -21,8 +21,10 @@ local function path_exists(path)
 end
 
 local function dir_has_lua_files(path)
-	local matches = vim.fs.find(function(name, file_path)
-		return name:match("%.lua$") and name ~= "README.lua" and vim.fn.isdirectory(file_path) == 0
+	-- `type = "file"` already skips directories. (The callback's second argument
+	-- is the containing folder, so an isdirectory() check on it never passed.)
+	local matches = vim.fs.find(function(name)
+		return name:match("%.lua$") and name ~= "README.lua"
 	end, {
 		path = path,
 		limit = 1,
