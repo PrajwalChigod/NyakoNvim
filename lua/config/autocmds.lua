@@ -154,30 +154,13 @@ vim.api.nvim_create_autocmd("BufReadPre", {
 
 local dev_group = vim.api.nvim_create_augroup("DevelopmentSettings", { clear = true })
 
--- Set correct filetype for various config files
-vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-	group = dev_group,
+-- Neovim already detects .env files ("env"), Dockerfiles and .gitlab-ci.yml.
+-- Only Jenkinsfile variants need adding.
+vim.filetype.add({
 	pattern = {
-		"*.env*",
-		".env*",
-		"Dockerfile*",
-		"*.dockerfile",
-		"*.jenkinsfile",
-		"Jenkinsfile*",
-		"*.gitlab-ci.yml",
+		["Jenkinsfile%..*"] = "groovy",
+		[".*%.jenkinsfile"] = "groovy",
 	},
-	callback = function()
-		local filename = vim.fn.expand("%:t")
-		if filename:match("%.env") or filename:match("^%.env") then
-			vim.bo.filetype = "sh"
-		elseif filename:match("Dockerfile") or filename:match("%.dockerfile$") then
-			vim.bo.filetype = "dockerfile"
-		elseif filename:match("jenkinsfile") or filename:match("Jenkinsfile") then
-			vim.bo.filetype = "groovy"
-		elseif filename:match("gitlab%-ci") then
-			vim.bo.filetype = "yaml"
-		end
-	end,
 })
 
 -- ===============================================
