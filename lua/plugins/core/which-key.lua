@@ -159,7 +159,7 @@ return {
 			-- Config (<leader>c)
 			{ "<leader>c", group = "Config" },
 			{ "<leader>ce", desc = "Edit config" },
-			{ "<leader>cr", desc = "Reload config & sync plugins" },
+			{ "<leader>cr", desc = "Sync plugins" },
 			{ "<leader>cp", desc = "Colorscheme Picker" },
 
 
@@ -237,11 +237,8 @@ return {
 			{ "<leader>gg", desc = "Open LazyGit" },
 			{ "<leader>gs", desc = "Stage hunk" },
 			{ "<leader>gr", desc = "Reset hunk" },
-			{ "<leader>gp", desc = "Toggle diff overlay" },
 			{ "<leader>gb", desc = "Blame line" },
 			{ "<leader>gd", desc = "Diff this" },
-			{ "<leader>gS", desc = "Stage buffer" },
-			{ "<leader>gR", desc = "Reset buffer" },
 			{ "<leader>gD", desc = "Diff this ~" },
 			{ "<leader>gt", desc = "Toggle signs" },
 			{ "<leader>glb", desc = "Blame buffer" },

@@ -143,7 +143,7 @@ return {
 			git = {
 				files = {
 					prompt = "GitFiles❯ ",
-					cmd = "git ls-files --exclude-standard",
+					cmd = "git ls-files --exclude-standard --deduplicate", -- conflicted files once, not per merge stage
 				},
 			},
 			grep = {

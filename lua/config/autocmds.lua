@@ -93,24 +93,26 @@ vim.defer_fn(function()
 			end
 		end,
 	})
-
-	-- Remember cursor position
-	vim.api.nvim_create_autocmd("BufReadPost", {
-		group = general_group,
-		callback = function(event)
-			-- Skip for large files
-			if is_large_buffer(event.buf) then
-				return
-			end
-
-			local mark = vim.api.nvim_buf_get_mark(0, '"')
-			local lcount = vim.api.nvim_buf_line_count(0)
-			if mark[1] > 0 and mark[1] <= lcount then
-				pcall(vim.api.nvim_win_set_cursor, 0, mark)
-			end
-		end,
-	})
 end, 50)
+
+-- Remember cursor position. Not deferred: files passed on the command line
+-- are read during startup, before a deferred autocmd would exist.
+vim.api.nvim_create_autocmd("BufReadPost", {
+	group = general_group,
+	callback = function(event)
+		-- Skip large files, and git messages (they should start at the top)
+		local ft = vim.bo[event.buf].filetype
+		if is_large_buffer(event.buf) or ft == "gitcommit" or ft == "gitrebase" then
+			return
+		end
+
+		local mark = vim.api.nvim_buf_get_mark(event.buf, '"')
+		local lcount = vim.api.nvim_buf_line_count(event.buf)
+		if mark[1] > 0 and mark[1] <= lcount then
+			pcall(vim.api.nvim_win_set_cursor, 0, mark)
+		end
+	end,
+})
 
 -- Auto-resize splits when window is resized (debounced to prevent rapid redraws)
 local resize_timer = nil
@@ -121,7 +123,11 @@ vim.api.nvim_create_autocmd("VimResized", {
 			vim.fn.timer_stop(resize_timer)
 		end
 		resize_timer = vim.fn.timer_start(100, function()
-			vim.cmd("tabdo wincmd =")
+			-- tabdo ends on the last tab, so return to the one you were on.
+			-- noautocmd keeps tab-switch hooks (scope.nvim etc.) out of it.
+			local current = vim.api.nvim_tabpage_get_number(0)
+			vim.cmd("noautocmd tabdo wincmd =")
+			vim.cmd("noautocmd tabnext " .. current)
 			resize_timer = nil
 		end)
 	end,
@@ -148,28 +154,28 @@ vim.api.nvim_create_autocmd("BufReadPre", {
 
 local dev_group = vim.api.nvim_create_augroup("DevelopmentSettings", { clear = true })
 
--- Set correct filetype for various config files
-vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-	group = dev_group,
+-- Neovim already detects .env files ("env"), Dockerfiles and .gitlab-ci.yml.
+-- Only Jenkinsfile variants need adding.
+vim.filetype.add({
 	pattern = {
-		"*.env*",
-		".env*",
-		"Dockerfile*",
-		"*.dockerfile",
-		"*.jenkinsfile",
-		"Jenkinsfile*",
-		"*.gitlab-ci.yml",
+		["Jenkinsfile%..*"] = "groovy",
+		[".*%.jenkinsfile"] = "groovy",
 	},
-	callback = function()
-		local filename = vim.fn.expand("%:t")
-		if filename:match("%.env") or filename:match("^%.env") then
-			vim.bo.filetype = "sh"
-		elseif filename:match("Dockerfile") or filename:match("%.dockerfile$") then
-			vim.bo.filetype = "dockerfile"
-		elseif filename:match("jenkinsfile") or filename:match("Jenkinsfile") then
-			vim.bo.filetype = "groovy"
-		elseif filename:match("gitlab%-ci") then
-			vim.bo.filetype = "yaml"
+})
+
+-- Start treesitter for any filetype with an installed parser. The ftplugins in
+-- after/ftplugin still handle their languages (and indent); this covers the
+-- rest, e.g. rust, zig, sh, toml, json, yaml, html, css.
+vim.api.nvim_create_autocmd("FileType", {
+	group = dev_group,
+	callback = function(event)
+		if vim.bo[event.buf].buftype ~= "" or vim.treesitter.highlighter.active[event.buf] then
+			return
+		end
+		local lang = vim.treesitter.language.get_lang(event.match)
+		local ok, has_parser = pcall(vim.treesitter.language.add, lang or event.match)
+		if ok and has_parser then
+			require("utils.treesitter").start()
 		end
 	end,
 })

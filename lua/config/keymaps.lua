@@ -31,18 +31,14 @@ keymap("n", "<leader>ce", function()
 	require("fzf-lua").files({ cwd = "~/.config/nvim" })
 end, { desc = "Edit Neovim config" })
 
--- Reload config and sync plugins
+-- Sync plugins. (lazy.nvim can't re-source the config in a running session;
+-- restart Neovim to pick up config changes.)
 keymap("n", "<leader>cr", function()
-	-- Save current file if modified
 	if vim.bo.modified then
 		vim.cmd("write")
 	end
-	-- Reload config
-	vim.cmd("source $MYVIMRC")
-	-- Sync plugins
 	vim.cmd("Lazy sync")
-	vim.notify("Config reloaded and plugins synced!", vim.log.levels.INFO)
-end, { desc = "Reload config and sync plugins" })
+end, { desc = "Sync plugins" })
 
 keymap("n", "<leader>cp", function()
 	require("fzf-lua").colorschemes()
@@ -170,47 +166,6 @@ keymap("t", "<Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
 -- Disable Q key (ex mode)
 keymap("n", "Q", "<nop>")
-
--- ===============================================
--- LSP PERFORMANCE TOGGLE
--- ===============================================
-
--- Toggle LSP workspace scanning (for large projects)
--- Use this when you need project-wide rename/references but experience slowness
-keymap("n", "<leader>lw", function()
-	local clients = vim.lsp.get_clients()
-	if #clients == 0 then
-		vim.notify("No LSP clients attached", vim.log.levels.WARN)
-		return
-	end
-
-	for _, client in ipairs(clients) do
-		if client.server_capabilities and client.server_capabilities.workspace then
-			local current = client.server_capabilities.workspace.workspaceFolders
-			if current and current.supported == false then
-				-- Enable workspace scanning
-				client.server_capabilities.workspace.workspaceFolders = {
-					supported = true,
-					changeNotifications = true,
-				}
-				vim.notify("LSP Workspace scanning ENABLED for " .. client.name, vim.log.levels.INFO)
-			else
-				-- Disable workspace scanning
-				client.server_capabilities.workspace.workspaceFolders = {
-					supported = false,
-					changeNotifications = false,
-				}
-				vim.notify("LSP Workspace scanning DISABLED for " .. client.name, vim.log.levels.INFO)
-			end
-		end
-	end
-
-	-- Restart LSP to apply changes
-	vim.defer_fn(function()
-		vim.cmd("lsp restart")
-		vim.notify("LSP restarted to apply workspace settings", vim.log.levels.INFO)
-	end, 100)
-end, { desc = "Toggle LSP Workspace Scanning" })
 
 -- ===============================================
 -- FOLD OPERATIONS (Restrict to essential only)

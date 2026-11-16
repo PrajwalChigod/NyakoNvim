@@ -1,0 +1,1 @@
+require("utils.treesitter").start()

@@ -1,32 +1,19 @@
 -- ============================================================================
--- Diagnostics Configuration for Neovim 0.11
+-- Diagnostics Configuration
 -- Diagnostics are DISABLED by default and must be explicitly enabled
 -- ============================================================================
 
--- Configure diagnostic display
+-- How diagnostics look when shown. One config call: later calls replace whole
+-- keys (e.g. `signs`), which is what used to drop the custom sign icons.
 vim.diagnostic.config({
 	virtual_text = {
-		enabled = false,
 		source = "if_many",
 		prefix = "●",
 	},
 	float = {
-		enabled = false,
 		source = "if_many",
 		border = "rounded",
 	},
-	signs = {
-		enabled = false,
-	},
-	underline = {
-		enabled = false,
-	},
-	update_in_insert = false,
-	severity_sort = true,
-})
-
--- Diagnostic signs (modern approach)
-vim.diagnostic.config({
 	signs = {
 		text = {
 			[vim.diagnostic.severity.ERROR] = " ",
@@ -35,60 +22,19 @@ vim.diagnostic.config({
 			[vim.diagnostic.severity.INFO] = " ",
 		},
 	},
-})
-
--- Track diagnostics state
-local diagnostics_enabled = false
-
--- Disable diagnostics globally on startup
-vim.diagnostic.config({
-	virtual_text = false,
-	float = { enabled = false },
-	signs = false,
-	underline = false,
+	underline = true,
 	update_in_insert = false,
 	severity_sort = true,
 })
 
--- Toggle diagnostics function
+-- Hidden on startup. Diagnostics are still collected, so ]d / [d, gel and geq
+-- keep working while they're hidden.
+vim.diagnostic.enable(false)
+
 local function toggle_diagnostics()
-	if diagnostics_enabled then
-		-- Disable diagnostics
-		vim.diagnostic.config({
-			virtual_text = false,
-			float = { enabled = false },
-			signs = false,
-			underline = false,
-			update_in_insert = false,
-			severity_sort = true,
-		})
-		diagnostics_enabled = false
-		vim.notify("Diagnostics disabled", vim.log.levels.INFO)
-	else
-		-- Enable diagnostics
-		vim.diagnostic.config({
-			virtual_text = {
-				enabled = true,
-				source = "if_many",
-				prefix = "●",
-			},
-			float = {
-				enabled = true,
-				source = "if_many",
-				border = "rounded",
-			},
-			signs = {
-				enabled = true,
-			},
-			underline = {
-				enabled = true,
-			},
-			update_in_insert = false,
-			severity_sort = true,
-		})
-		diagnostics_enabled = true
-		vim.notify("Diagnostics enabled", vim.log.levels.INFO)
-	end
+	local enable = not vim.diagnostic.is_enabled()
+	vim.diagnostic.enable(enable)
+	vim.notify("Diagnostics " .. (enable and "enabled" or "disabled"), vim.log.levels.INFO)
 end
 
 -- Diagnostics keymaps with ge* pattern (diagnostic errors/issues)
@@ -101,7 +47,7 @@ vim.keymap.set("n", "geq", vim.diagnostic.setqflist, { desc = "Set quickfix with
 return {
 	toggle_diagnostics = toggle_diagnostics,
 	is_enabled = function()
-		return diagnostics_enabled
+		return vim.diagnostic.is_enabled()
 	end,
 }
 
