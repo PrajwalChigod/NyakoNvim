@@ -54,8 +54,8 @@ return {
 			{ "ih", desc = "Git hunk", mode = { "o", "x" } },
 
 			-- File Explorer
-			{ "-", desc = "Open file explorer" },
-			{ "_", desc = "Open file explorer (float)" },
+			{ "-", desc = "Toggle file explorer" },
+			{ "_", desc = "Toggle file explorer (float)" },
 
 			-- Buffer Navigation
 			{ "<Tab>", desc = "Next buffer" },

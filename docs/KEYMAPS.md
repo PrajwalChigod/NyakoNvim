@@ -173,8 +173,8 @@
 
 | Key | Mode | Description |
 |-----|------|-------------|
-| `-` | Normal | Open Fyler at the current file |
-| `_` | Normal | Open Fyler in floating window |
+| `-` | Normal | Toggle Fyler at the current file (closes it from any window) |
+| `_` | Normal | Toggle Fyler in floating window |
 
 ## Fuzzy Finding (FZF)
 
