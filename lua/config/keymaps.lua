@@ -64,6 +64,25 @@ keymap("i", "<A-p>", "<C-o>p", { desc = "Paste after cursor" })
 -- MOVEMENT & SEARCH
 -- ===============================================
 
+-- Ctrl+h/j/k/l move between splits; at the edge, ask Rex to focus the neighbouring pane
+local function navigate(direction, wincmd)
+	return function()
+		local win = vim.api.nvim_get_current_win()
+		vim.cmd("wincmd " .. wincmd)
+		if vim.api.nvim_get_current_win() ~= win or not vim.env.REX_SESSION or vim.fn.executable("rex") == 0 then
+			return
+		end
+		vim.system({
+			"rex", "api", "call", "-s", vim.env.REX_SESSION,
+			"session.focus_direction", vim.json.encode({ direction = direction }),
+		})
+	end
+end
+keymap("n", "<C-h>", navigate("left", "h"), { desc = "Navigate left" })
+keymap("n", "<C-j>", navigate("down", "j"), { desc = "Navigate down" })
+keymap("n", "<C-k>", navigate("up", "k"), { desc = "Navigate up" })
+keymap("n", "<C-l>", navigate("right", "l"), { desc = "Navigate right" })
+
 -- Quick jump to end of file (mirrors gg for top)
 keymap("n", "gG", "G", { desc = "Go to end of file" })
 
